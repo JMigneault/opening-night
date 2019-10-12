@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
     {
             Vector2 input = new Vector2(0, 0);
 
-            if(Input.GetKey(KeyCode.A))
+        if(Input.GetKey(KeyCode.A))
             {
                 input.x -= 1;
             }
