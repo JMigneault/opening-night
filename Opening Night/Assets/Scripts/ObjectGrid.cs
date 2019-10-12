@@ -54,7 +54,7 @@ public class ObjectGrid : MonoBehaviour
         Vector2 objPos = SSToGPos(screenPos);
         if (!gridObjects.ContainsKey(objKey))
         {
-            GameObject obj = Object.Instantiate(prefab, objPos, Quaternion.identity);
+            GameObject obj = Object.Instantiate(prefab, objPos, Quaternion.identity, this.transform);
             gridObjects.Add(objKey, obj);
             return obj;
         } else
