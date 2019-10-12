@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float decel = 1.2f;
     public BoxCollider2D Collider;
 
+    private bool canMove = true;
     private Rigidbody2D Rigid;
     private Animator CharAnimator;
 
@@ -46,16 +47,24 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(canMove)
+        {
             Vector2 input = new Vector2(0, 0);
 
-        if(Input.GetKey(KeyCode.A))
+            if(Input.GetKey(KeyCode.A))
             {
                 input.x -= 1;
+                Vector2 scale = transform.localScale;
+                scale.x = -.3f;
+                transform.localScale = scale;
             }
 
             if(Input.GetKey(KeyCode.D))
             {
                 input.x += 1;
+                Vector2 scale = transform.localScale;
+                scale.x = .3f;
+                transform.localScale = scale;
             }
 
             if(Input.GetKey(KeyCode.W))
@@ -111,5 +120,23 @@ public class PlayerMovement : MonoBehaviour
                     //CharAnimator.SetInteger("State", IDLE);
                 }
             }
+        }
+        else
+        {
+            Vector2 vel = Rigid.velocity.normalized;
+            Rigid.velocity = new Vector2(
+                Approach(0, Rigid.velocity.x, Mathf.Abs(vel.x) * decel),
+                Approach(0, Rigid.velocity.y, Mathf.Abs(vel.y) * decel)
+            );
+            if(Rigid.velocity.x == 0 && Rigid.velocity.y == 0)
+            {
+                //CharAnimator.SetInteger("State", IDLE);
+            }
+        }
+    }
+
+    public void SetCanMove(bool move)
+    {
+        canMove = move;
     }
 }

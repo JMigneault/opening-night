@@ -22,7 +22,11 @@ public class LightRadius : MonoBehaviour {
     {
         if(Input.GetKey(KeyCode.Space))
         {
+            player.GetComponent<PlayerMovement>().SetCanMove(false);
             range += Time.deltaTime * 20f;
+        }
+        else if (Input.GetKeyUp(KeyCode.Space)) {
+            player.GetComponent<PlayerMovement>().SetCanMove(true);
         }
         else
         {
