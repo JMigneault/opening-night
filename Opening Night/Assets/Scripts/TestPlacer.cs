@@ -6,8 +6,8 @@ using UnityEngine;
 public class TestPlacer : MonoBehaviour
 {
 
-    [SerializeField] GameObject gridObject;
-    [SerializeField] ObjectGrid objectGrid;
+    [SerializeField] private GameObject gridObject;
+    [SerializeField] private ObjectGrid objectGrid;
 
     // Update is called once per frame
     void Update()
