@@ -313,9 +313,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9b106bc06cbd9940a16ebc40c3a4584, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridObject: {fileID: 8728707833750754862, guid: 1af88f70b012ad94f9d8c16cd50ed637,
+  gridObject1: {fileID: 8728707833750754862, guid: 1af88f70b012ad94f9d8c16cd50ed637,
+    type: 3}
+  gridObject2: {fileID: 998824111282161119, guid: 0e4ed5e72424d474cab7f90fe4b08304,
+    type: 3}
+  gridObject3: {fileID: 5349933080884937051, guid: cf268986a1b03d144bb50bb8965db76d,
     type: 3}
   objectGrid: {fileID: 177316386}
+  traps:
+  - {fileID: 0}
+  - {fileID: 8728707833750754862, guid: 1af88f70b012ad94f9d8c16cd50ed637, type: 3}
+  - {fileID: 5349933080884937051, guid: cf268986a1b03d144bb50bb8965db76d, type: 3}
+  - {fileID: 998824111282161119, guid: 0e4ed5e72424d474cab7f90fe4b08304, type: 3}
+  currentTrap: {fileID: 0}
 --- !u!4 &1101825344
 Transform:
   m_ObjectHideFlags: 0

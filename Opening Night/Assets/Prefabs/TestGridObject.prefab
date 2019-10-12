@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4073990078791052138}
   - component: {fileID: 2687854395826904244}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: TestGridObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
