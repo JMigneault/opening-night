@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5349933080884937055}
   - component: {fileID: 5349933080884937052}
-  - component: {fileID: 3500292318504724545}
   - component: {fileID: 5349933080884937050}
   - component: {fileID: 5349933080884937054}
+  - component: {fileID: 1297475224324141042}
   m_Layer: 0
   m_Name: Doodler
   m_TagString: Untagged
@@ -83,19 +83,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3500292318504724545
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5349933080884937051}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8730149da74ed4c1c985c19b8839c8b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 500
 --- !u!50 &5349933080884937050
 Rigidbody2D:
   serializedVersion: 4
@@ -143,3 +130,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 1.95}
   m_EdgeRadius: 0
+--- !u!114 &1297475224324141042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5349933080884937051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 544a1e6ebc1cc1741a381aab67ed522c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSpeed: 5
+  accel: 0.65
+  decel: 1.2
+  Collider: {fileID: 5349933080884937054}
