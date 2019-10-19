@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class ForceMovementTrap : AbstractOnEnterTrap
 {
-    [SerializeField] private float time;
+    [SerializeField] private float slideSpeed = 5;
+
+    // 0 is right, 1 is forward, 2 is left, 3 is back
+    [SerializeField] private int direction = 1;
 
     protected override void ActivateTrap(Player player)
     {
-        StartCoroutine(ForceMovement(this.time, player));
+        //forces player to slide in a direction
+        player.Slide(slideSpeed, direction);
     }
 
     protected override void EndTrap(Player player)
@@ -19,12 +23,5 @@ public class ForceMovementTrap : AbstractOnEnterTrap
     protected override void DuringTrap(Player player)
     {
         // no effect
-    }
-
-    private IEnumerator ForceMovement(float time, Player player)
-    {
-        player.LockMovement();
-        yield return new WaitForSeconds(time);
-        player.UnlockMovement();
     }
 }
