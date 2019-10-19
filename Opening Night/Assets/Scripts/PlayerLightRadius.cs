@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LightRadius : MonoBehaviour {
-    public GameObject player;
-    public GameObject monster;
+public class PlayerLightRadius : MonoBehaviour {
+    public GameObject Player;
+    public GameObject Monster;
+    public Camera Cam;
+    public Camera Cam2;
 
     private float range;
     private float intensity;
@@ -22,11 +24,11 @@ public class LightRadius : MonoBehaviour {
     {
         if(Input.GetKey(KeyCode.Space))
         {
-            player.GetComponent<PlayerMovement>().SetCanMove(false);
+            Player.GetComponent<PlayerMovement>().SetCanMove(false);
             range += Time.deltaTime * 20f;
         }
         else if (Input.GetKeyUp(KeyCode.Space)) {
-            player.GetComponent<PlayerMovement>().SetCanMove(true);
+            Player.GetComponent<PlayerMovement>().SetCanMove(true);
         }
         else
         {
@@ -34,6 +36,10 @@ public class LightRadius : MonoBehaviour {
         }
         
         range = Mathf.Clamp(range, 5f, 1000f);
-        lt.range = range;
+
+        Vector2 trans = Player.transform.position;
+        Vector2 worldVec = trans;
+        transform.position = new Vector3(worldVec.x, worldVec.y, transform.position.z);
+        lt.range = range;// * (8f / Cam.orthographicSize);
     }
 }

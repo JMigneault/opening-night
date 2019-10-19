@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerMovement : MonoBehaviour
+public class MonsterMovement : MonoBehaviour
 {
 
     public float maxSpeed = 5;
@@ -20,7 +20,6 @@ public class PlayerMovement : MonoBehaviour
     private const int WALK_LEFT = 2;
     private const int WALK_BACKWARD = 3;
     private const int IDLE = 4;
-
 
     // Use this for initialization
     void Start()
@@ -52,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 input = new Vector2(0, 0);
 
-            if(Input.GetKey(KeyCode.A))
+            if(Input.GetKey(KeyCode.LeftArrow))
             {
                 input.x -= 1;
                 Vector2 scale = transform.localScale;
@@ -60,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
                 transform.localScale = scale;
             }
 
-            if(Input.GetKey(KeyCode.D))
+            if(Input.GetKey(KeyCode.RightArrow))
             {
                 input.x += 1;
                 Vector2 scale = transform.localScale;
@@ -68,12 +67,12 @@ public class PlayerMovement : MonoBehaviour
                 transform.localScale = scale;
             }
 
-            if(Input.GetKey(KeyCode.W))
+            if(Input.GetKey(KeyCode.UpArrow))
             {
                 input.y += 1;
             }
 
-            if(Input.GetKey(KeyCode.S))
+            if(Input.GetKey(KeyCode.DownArrow))
             {
                 input.y -= 1;
             }

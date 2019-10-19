@@ -6,7 +6,10 @@ public class CameraController : MonoBehaviour
 {
 
     public GameObject Player;
+    public GameObject Monster;
     public float yOffset;
+    public Camera Cam;
+    public Light PointLight;
 
     private Vector3 offset;
 
@@ -52,7 +55,7 @@ public class CameraController : MonoBehaviour
     {
         if(Player != null)
         {
-            Vector3 target = Player.transform.position + offset;
+            Vector3 target = ((Player.transform.position + Monster.transform.position) / 2f) + offset;
             if(shake >= 0)
             {
                 float angle = Random.value * (Mathf.PI * 2);
@@ -67,6 +70,8 @@ public class CameraController : MonoBehaviour
             );
 
             transform.position = Vector3.Lerp(transform.position, target, Time.unscaledDeltaTime * 8f);
+
+            Cam.orthographicSize = Vector2.Distance(Player.transform.position, Monster.transform.position) / 2f;
         }
        
     }
