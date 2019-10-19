@@ -9,13 +9,10 @@ public class ObjectGrid : MonoBehaviour
 {
 
     // for converting from world space to grid coords
-    [SerializeField] private Grid grid;
+    [SerializeField] private ToGridSpaceConverters gSpace;
 
     // track objects on the grid
     private Dictionary<Vector2Int, GameObject> gridObjects;
-
-
-    
 
     // initialize gridObjects
     private void Start()
@@ -28,7 +25,7 @@ public class ObjectGrid : MonoBehaviour
      */
     public bool CheckCell(Vector3 screenPos)
     {
-        Vector2Int key = SSToCoords(screenPos);
+        Vector2Int key = gSpace.SSToCoords(screenPos);
         return gridObjects.ContainsKey(key);
     }
 
@@ -37,7 +34,7 @@ public class ObjectGrid : MonoBehaviour
      */
     public GameObject GetCellObject(Vector3 screenPos)
     {
-        Vector2Int objKey = SSToCoords(screenPos);
+        Vector2Int objKey = gSpace.SSToCoords(screenPos);
         if (gridObjects.ContainsKey(objKey))
         {
             return gridObjects[objKey];
@@ -53,8 +50,8 @@ public class ObjectGrid : MonoBehaviour
     */
     public GameObject CreateCellObject(Vector3 screenPos, GameObject prefab)
     {
-        Vector2Int objKey = SSToCoords(screenPos);
-        Vector2 objPos = SSToGPos(screenPos);
+        Vector2Int objKey = gSpace.SSToCoords(screenPos);
+        Vector2 objPos = gSpace.SSToGPos(screenPos);
         if (!gridObjects.ContainsKey(objKey))
         {
             GameObject obj = Object.Instantiate(prefab, objPos, Quaternion.identity, this.transform);
@@ -75,29 +72,10 @@ public class ObjectGrid : MonoBehaviour
         if (CheckCell(screenPos))
         {
             GameObject go = GetCellObject(screenPos);
-            Vector2Int objKey = SSToCoords(screenPos);
+            Vector2Int objKey = gSpace.SSToCoords(screenPos);
             this.gridObjects.Remove(objKey);
             Object.Destroy(go);
         }
     }
-
-    // convert screen space to grid coords
-    private Vector2Int SSToCoords(Vector3 screenSpace)
-    {
-        return (Vector2Int) this.grid.WorldToCell(SSToWS(screenSpace));
-    }
-
-    // convert screen space to grid position (for placing objects)
-    private Vector2 SSToGPos(Vector3 screenSpace)
-    {
-        return ((Vector2) SSToCoords(screenSpace) + new Vector2(0.5f, 0.5f));
-    }
-
-    // convert screen space to world space
-    private Vector3 SSToWS(Vector3 screenPos)
-    {
-        return Camera.main.ScreenToWorldPoint(screenPos);
-    }
-
 
 }
