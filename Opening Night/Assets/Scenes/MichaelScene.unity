@@ -2920,6 +2920,12 @@ TilemapCollider2D:
   m_Offset: {x: 0, y: 0}
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0.00001
+--- !u!20 &1699432240 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 5727227137344628383, guid: 61f755296e984754097c45f2291841dd,
+    type: 3}
+  m_PrefabInstance: {fileID: 5727227136471733700}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1727497244
 GameObject:
   m_ObjectHideFlags: 0
@@ -8733,10 +8739,25 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 1062719862}
+    - target: {fileID: 5727227136843217628, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: Monster
+      value: 
+      objectReference: {fileID: 145437156}
+    - target: {fileID: 5727227136843217628, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: Cam
+      value: 
+      objectReference: {fileID: 1699432240}
     - target: {fileID: 5727227138198840103, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1062719862}
+    - target: {fileID: 5045843981377015075, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61f755296e984754097c45f2291841dd, type: 3}
