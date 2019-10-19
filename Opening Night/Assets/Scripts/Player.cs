@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     // change the speed of the player
     public void SetSpeed(float speed)
     {
+
         throw new System.NotImplementedException();
     }
 
