@@ -2,42 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlowingTrapScript : MonoBehaviour
+public class SlowingTrap : AbstractOnEnterTrap
 {
-    private Collider collider;
+    // amount the player will decrease upon entry
+    [SerializeField] private float decreasedSpeed;
 
-    //amount the player will decrease upon entry
-    public float speedDecrease;
-
-    // Start is called before the first frame update
-    void Start()
+    protected override void ActivateTrap(Player player)
     {
-        
+        player.SetSpeed(this.decreasedSpeed);
     }
 
-    // Update is called once per frame
-    void Update()
+    protected override void EndTrap(Player player)
     {
-       
+        // no effect
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected override void DuringTrap(Player player)
     {
-        Debug.Log(collision.gameObject.name);
-        if (collision.gameObject.tag == "Player")
-        {
-            //collision.gameObject.GetComponent<PlayerMovement>().ChangeSpeed();
-            Debug.Log("Slow down player movement");
-        }
+        // no effect
     }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        Debug.Log(collision.gameObject.name);
-        if (collision.gameObject.tag == "Player")
-        {
-            Debug.Log("Exit");
-        }
-    }
-
 }
