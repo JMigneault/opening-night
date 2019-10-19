@@ -13,6 +13,8 @@ public class TestPlacer : MonoBehaviour
     public GameObject[] traps;
     [SerializeField] GameObject currentTrap;
 
+
+
     //Start called once
     private void Start()
     {
@@ -26,13 +28,16 @@ public class TestPlacer : MonoBehaviour
         //Selecting type of trap
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            changeTrap(1);
-        }else if (Input.GetKeyDown(KeyCode.Alpha2)){
-
-            changeTrap(2);
-        }else if (Input.GetKeyDown(KeyCode.Alpha3))
+            changeTrap(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            changeTrap(3);
+
+            changeTrap(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            changeTrap(2);
         }
 
         //method for setting current trap
@@ -40,9 +45,9 @@ public class TestPlacer : MonoBehaviour
         {
 
 
-            for(int i = 0; i < traps.Length; i++)
+            for (int i = 0; i < traps.Length; i++)
             {
-                if(i == num)
+                if (i == num)
                 {
                     currentTrap = traps[i];
                 }
@@ -50,19 +55,34 @@ public class TestPlacer : MonoBehaviour
             }
         }
 
-        Vector2 mp = Input.mousePosition;
-        if (Input.GetMouseButtonDown(0)) {
+        Vector2 mp = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+
+        //gets input
+        if (Input.GetMouseButton(0))
+        {
+
+
+            //checking for other objects in cell
             if (!objectGrid.CheckCell(mp))
             {
                 objectGrid.CreateCellObject(mp, currentTrap);
                 Debug.Log(objectGrid.GetCellObject(mp));
             }
-        } else if (Input.GetMouseButtonDown(1)) {
-            if (objectGrid.CheckCell(mp))
+            else if (Input.GetMouseButton(1))
             {
-                Debug.Log(objectGrid.GetCellObject(mp));
-                objectGrid.DeleteCellObject(mp);
+                if (objectGrid.CheckCell(mp))
+                {
+                    Debug.Log(objectGrid.GetCellObject(mp));
+                    objectGrid.DeleteCellObject(mp);
+                }
             }
+
+
+
+
         }
+        
     }
+
+    
 }
