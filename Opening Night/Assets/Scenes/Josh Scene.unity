@@ -135,10 +135,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 616003909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c16787b6375aed4fb1fd13b721c43b0, type: 3}
+  m_Script: {fileID: 11500000, guid: 5ce57a8196975ef4b86e3aea541d7d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stoptime: 2
+  decreasedSpeed: 3
 --- !u!1 &819030561 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5349933080884937051, guid: cf268986a1b03d144bb50bb8965db76d,
@@ -301,6 +301,11 @@ PrefabInstance:
     - target: {fileID: 998824111282161115, guid: 0e4ed5e72424d474cab7f90fe4b08304,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 998824111282161117, guid: 0e4ed5e72424d474cab7f90fe4b08304,
+        type: 3}
+      propertyPath: m_UsedByComposite
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

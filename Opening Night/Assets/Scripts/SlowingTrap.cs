@@ -5,10 +5,11 @@ using UnityEngine;
 public class SlowingTrap : AbstractOnEnterTrap
 {
     // amount the player will decrease upon entry
-    [SerializeField] private float decreasedSpeed;
+    [SerializeField] private float decreasedSpeed = 3;
 
     protected override void ActivateTrap(Player player)
     {
+        //decreases player's speed permanently
         player.SetSpeed(this.decreasedSpeed);
     }
 

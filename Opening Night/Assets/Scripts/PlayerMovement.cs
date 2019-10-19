@@ -139,4 +139,9 @@ public class PlayerMovement : MonoBehaviour
     {
         canMove = move;
     }
+
+    public void SetMaxSpeed(float newSpeed)
+    {
+        this.maxSpeed = newSpeed;
+    }
 }
