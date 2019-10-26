@@ -9,7 +9,7 @@ public class CameraController : MonoBehaviour
     public GameObject Monster;
     public float yOffset;
     public Camera Cam;
-    public Light PointLight;
+    public float MinSize;
 
     private Vector3 offset;
 
@@ -55,7 +55,7 @@ public class CameraController : MonoBehaviour
     {
         if(Player != null)
         {
-            Vector3 target = ((Player.transform.position + Monster.transform.position) / 2f) + offset;
+            Vector3 target = Player.transform.position + .5f * (Monster.transform.position - Player.transform.position) + offset;
             if(shake >= 0)
             {
                 float angle = Random.value * (Mathf.PI * 2);
@@ -71,7 +71,14 @@ public class CameraController : MonoBehaviour
 
             transform.position = Vector3.Lerp(transform.position, target, Time.unscaledDeltaTime * 8f);
 
-            Cam.orthographicSize = Vector2.Distance(Player.transform.position, Monster.transform.position) / 2f;
+            float distance = Vector2.Distance(Player.transform.position, Monster.transform.position);
+
+            Vector2 bound = Player.GetComponent<SpriteRenderer>().bounds.size;
+            float xSize = (Mathf.Abs(Player.transform.position.x - Monster.transform.position.x) * Screen.height / Screen.width * .5f) + bound.x / 2f;
+            float ySize = (Mathf.Abs(Player.transform.position.y - Monster.transform.position.y) * Screen.width / Screen.height * .5f);
+            float newSize = (distance * Screen.height / Screen.width * .5f);
+            Cam.orthographicSize = Mathf.Max(MinSize, xSize, ySize) + 1f;
+            ;
         }
        
     }

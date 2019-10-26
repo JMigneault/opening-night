@@ -120,6 +120,10 @@ public class MonsterMovement : MonoBehaviour
                     //CharAnimator.SetInteger("State", IDLE);
                 }
             }
+
+            Vector3 pos = transform.position;
+            pos.z = pos.y;
+            transform.position = pos;
         }
         else
         {
