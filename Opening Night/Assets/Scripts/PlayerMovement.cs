@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 input.x -= 1;
                 Vector2 scale = PlayerObject.transform.localScale;
-                scale.x = -1f * Mathf.Abs(scale.x);
+                scale.x = Mathf.Abs(scale.x);
                 PlayerObject.transform.localScale = scale;
             }
 
@@ -65,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 input.x += 1;
                 Vector2 scale = PlayerObject.transform.localScale;
-                scale.x = Mathf.Abs(scale.x);
+                scale.x = -1f * Mathf.Abs(scale.x);
                 PlayerObject.transform.localScale = scale;
             }
 

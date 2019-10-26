@@ -6,26 +6,11 @@ using UnityEngine.SceneManagement;
 public class RestartGame : MonoBehaviour
 {
 
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        CollectKey ck = collision.gameObject.GetComponent<CollectKey>();
-        if (ck != null)
+        if(collision.gameObject.tag == "Player")
+        {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-
+        }
     }
 }
