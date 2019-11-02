@@ -17,10 +17,9 @@ public class Key : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     { 
-        CollectKey keyComp = other.gameObject.GetComponent<CollectKey>();
-        if (keyComp != null)
+        if (other.tag == "Player")
         { 
-            keyComp.SetKey(true);
+            other.gameObject.GetComponent<CollectKey>().SetKey(true);
             Destroy(this.gameObject);
         }
 

@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private PlayerMovement movement;
+
+    private void Start()
+    {
+        movement = GetComponent<PlayerMovement>();
+    }
+
     // change the speed of the player
     public void SetSpeed(float speed)
     {
-        this.GetComponent<PlayerMovement>().SetMaxSpeed(speed);
+        movement.SetMaxSpeed(speed);
     }
 
     public float GetSpeed()
     {
-        return this.GetComponent<PlayerMovement>().GetMaxSpeed();
+        return movement.GetMaxSpeed();
     }
 
     // player slides in a given direction until hitting wall/monster
@@ -26,6 +33,17 @@ public class Player : MonoBehaviour
 
 
         throw new System.NotImplementedException();
+    }
+
+    public void RestrictMovement(float time)
+    {
+        movement.SetCanMove(false);
+        Invoke("UnrestrictMovement", time);
+    }
+
+    private void UnrestrictMovement()
+    {
+        movement.SetCanMove(true);
     }
 
 }

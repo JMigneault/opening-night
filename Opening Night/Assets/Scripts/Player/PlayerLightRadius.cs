@@ -32,10 +32,10 @@ public class PlayerLightRadius : MonoBehaviour {
         }
         else
         {
-            range -= Time.deltaTime * 10f * ((range + 10f)/80f);
+            range -= Time.deltaTime * 20f * ((range + 10f)/80f);
         }
         
-        range = Mathf.Clamp(range, 5f, 1000f);
+        range = Mathf.Clamp(range, 3f, 20f);
 
         Vector2 trans = Player.transform.position;
         Vector2 worldVec = trans;
