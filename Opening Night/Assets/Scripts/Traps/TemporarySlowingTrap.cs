@@ -9,6 +9,11 @@ public class TemporarySlowingTrap : AbstractOnEnterTrap
 
     private float originalSpeed;
 
+    public override TrapType GetTrapType()
+    {
+        return TrapType.TempSlowMovement;
+    }
+
     protected override void ActivateTrap(Player player)
     {
         //decreases player's speed temporarily

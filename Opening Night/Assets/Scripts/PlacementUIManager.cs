@@ -20,12 +20,9 @@ public class PlacementUIManager : MonoBehaviour
     /**
      * Adds a sprite onto the tile at the given position
      */
-    public GameObject AddSpriteOnTile(Sprite toAdd, Vector3 screenPos, float alpha)
+    public void MoveSpriteToTile(GameObject spriteObj, Vector3 screenPos)
     {
-        GameObject spriteObj = GameObject.Instantiate(spriteHolder, gSpace.SSToGPos(screenPos), Quaternion.identity, spriteParent.transform);
-        spriteObj.GetComponent<SpriteRenderer>().sprite = toAdd;
-        spriteObj.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, alpha);
-        return spriteObj;
+        spriteObj.transform.position = gSpace.SSToGPos(screenPos);
     }
 
     /**

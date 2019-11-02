@@ -12,6 +12,11 @@ public class ForceMovementTrap : AbstractOnEnterTrap
     // 0 is right, 1 is forward, 2 is left, 3 is back
     //[SerializeField] private int direction = 1;
 
+    public override TrapType GetTrapType()
+    {
+        return TrapType.ForceMovement;
+    }
+
     protected override void ActivateTrap(Player player)
     {
         if(!rigid)

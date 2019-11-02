@@ -6,7 +6,12 @@ public class StopMovementTrap : AbstractOnEnterTrap
 {
     //how long the player will be stopped
     [SerializeField] private float stoptime = 2;
-   
+
+    public override TrapType GetTrapType()
+    {
+        return TrapType.StopMovement;
+    }
+
     protected override void ActivateTrap(Player player)
     {
         //player speed will be set to 0 for some stoptime seconds

@@ -7,12 +7,7 @@ using UnityEngine;
  */
 public class ToGridSpaceConverters : MonoBehaviour
 {
-    private Grid grid;
-
-    private void Start()
-    {
-        this.grid = this.GetComponent<Grid>();
-    }
+    [SerializeField] private Grid grid;
 
     // convert screen space to grid coords
     public Vector2Int SSToCoords(Vector3 screenSpace)

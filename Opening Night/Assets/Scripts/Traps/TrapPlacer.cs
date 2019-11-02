@@ -1,13 +1,17 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public enum TrapType
 {
-    Barrier = 0,
-    SlowMovement = 1,
-    StopMovement = 2,
-    ForceMovement = 3
+    Barricade = 0,
+    TempSlowMovement = 1,
+    PermanentSlowMovement = 2,
+    StopMovement = 3,
+    ForceMovement = 4,
+    TeleportTrap = 5,
+    TeleportReceiver = 6
 }
 
 
@@ -17,19 +21,21 @@ public class TrapPlacer : MonoBehaviour
     [SerializeField] ObjectGrid objectGrid;
     public AbstractTrap[] traps;
     private TrapType currentTrap;
+    public TrapType CurrentTrap { get; }
 
     [SerializeField] PlacementUIManager placementUI;
 
     private SpriteRenderer highlightedTrapSR;
-    private GameObject currentPlacementSprite;
+    [SerializeField] private GameObject placementSprite;
     [SerializeField] private Color highlightColor;
-    [SerializeField] private float highlightAlpha;
+    [SerializeField] private PhaseManager phaseManager;
 
-
+    private bool canPlace = true;
+    
     //Start called once
     private void Start()
     {
-        currentTrap = TrapType.Barrier;
+        currentTrap = TrapType.Barricade;
         highlightedTrapSR = null;
     }
 
@@ -50,6 +56,8 @@ public class TrapPlacer : MonoBehaviour
     public void ChangeTrap(TrapType trapType)
     {
         this.currentTrap = trapType;
+        Debug.Log(currentTrap);
+
     }
 
     public void HighlightTrap(Vector2 screenPos)
@@ -57,65 +65,93 @@ public class TrapPlacer : MonoBehaviour
         SpriteRenderer nextSR = placementUI.HighlightTrap(screenPos, highlightColor);
         if (nextSR != highlightedTrapSR)
         {
-            placementUI.UnhighlightTrap(highlightedTrapSR);
-            highlightedTrapSR = nextSR;
+            UnhighlightTrap();
+        }
+        highlightedTrapSR = nextSR;
+    }
+
+    private void UnhighlightTrap()
+    {
+        placementUI.UnhighlightTrap(highlightedTrapSR);
+    }
+
+    private void HoverTile(Vector2 screenPos)
+    {
+        placementSprite.SetActive(true);
+        Sprite sprite = GetTrap(currentTrap).GetComponent<SpriteRenderer>().sprite;
+        placementSprite.GetComponent<SpriteRenderer>().sprite = sprite;
+        placementUI.MoveSpriteToTile(placementSprite, screenPos);
+    }
+
+    private void UnhoverTile()
+    {
+        placementSprite.SetActive(false);
+    }
+
+    void CheckTrapChange()
+    {
+        KeyCode one = KeyCode.Alpha1;
+        foreach (TrapType t in Enum.GetValues(typeof(TrapType)))
+        {
+            if (Input.GetKeyDown((KeyCode) ((int) one + (int) t)))
+            {
+                ChangeTrap(t);
+            }
         }
     }
 
-    public void HoverTile(Vector2 screenPos)
+    private bool CheckPlace(Vector2 mousePosition)
     {
-        if (!objectGrid.CheckCell(screenPos))
-        {
-            // todo: improve this; shouldn't have to create a new gameobject every frame
-            currentPlacementSprite = placementUI.AddSpriteOnTile(GetTrap(currentTrap).GetComponent<Sprite>(), screenPos, highlightAlpha);
-        }
+        return Input.GetMouseButton(0) && !objectGrid.CheckCell(mousePosition) && objectGrid.IsWithinBounds(mousePosition);
+    }
+
+    private bool CheckDelete(Vector2 mousePosition)
+    {
+        return Input.GetMouseButton(1) && objectGrid.CheckCell(mousePosition) && objectGrid.IsWithinBounds(mousePosition);
+    }
+
+    private bool CheckHighlight(Vector2 mousePosition)
+    {
+        return !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && objectGrid.CheckCell(mousePosition) && objectGrid.IsWithinBounds(mousePosition);
+    }
+
+    private bool CheckHover(Vector2 mousePosition)
+    {
+        return !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !objectGrid.CheckCell(mousePosition) && objectGrid.IsWithinBounds(mousePosition);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Selecting type of trap
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            ChangeTrap(TrapType.Barrier);
+        if (phaseManager.CurrentPhase == Phase.Play) {
+            UnhighlightTrap();
+            UnhoverTile();
+            return;
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-
-            ChangeTrap(TrapType.SlowMovement);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            ChangeTrap(TrapType.StopMovement);
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            ChangeTrap(TrapType.ForceMovement);
-        }
-
+        CheckTrapChange();
         Vector2 mp = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-
-        // HoverTile(mp);
-
         // gets input
-        if (Input.GetMouseButton(0))
+        if (CheckPlace(mp))
         {
-            // checking for other objects in cell
-            if (!objectGrid.CheckCell(mp))
-            {
-                objectGrid.CreateCellObject(mp, GetTrap(currentTrap).gameObject);
-            }
+            objectGrid.CreateCellObject(mp, GetTrap(currentTrap).gameObject);
         }
-        else
+        if (CheckDelete(mp))
         {
+            objectGrid.DeleteCellObject(mp);
+        }
+        if (CheckHighlight(mp))
+        { 
             HighlightTrap(mp);
-            if (Input.GetMouseButton(1))
-            {
-                if (objectGrid.CheckCell(mp))
-                {
-                    objectGrid.DeleteCellObject(mp);
-                }
-            }
+        } else
+        {
+            UnhighlightTrap();
+        }
+        if (CheckHover(mp))
+        {
+            HoverTile(mp);
+        } else
+        {
+            UnhoverTile();
         }
     }
         

@@ -1,15 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 /**
  * Used to add and remove traps and other objects onto the grid during the setup phase.
  */
+
+[System.Serializable]
+public class CoordinateRange
+{
+    [SerializeField] private int minX;
+    [SerializeField] private int maxX;
+    [SerializeField] private int minY;
+    [SerializeField] private int maxY;
+
+    public bool InRange(Vector2Int coord)
+    {
+        return (minX <= coord[0]) && (coord[0] <= maxX) && (minY <= coord[1]) && (coord[1] <= maxY);
+    }
+}
+
 public class ObjectGrid : MonoBehaviour
 {
 
     // for converting from world space to grid coords
     [SerializeField] private ToGridSpaceConverters gSpace;
+
+    [SerializeField] CoordinateRange coordinateBounds;
+
+    [SerializeField] Tilemap wallsTM;
 
     // track objects on the grid
     private Dictionary<Vector2Int, GameObject> gridObjects;
@@ -77,5 +97,16 @@ public class ObjectGrid : MonoBehaviour
             Object.Destroy(go);
         }
     }
+
+    public bool IsWithinBounds(Vector3 screenPos)
+    {
+        return coordinateBounds.InRange(gSpace.SSToCoords(screenPos)) && wallsTM.GetTile((Vector3Int) gSpace.SSToCoords(screenPos)) == null;
+    }
+
+    /* NOTE: uncomment to determine the grid dimensions to set placement bounds
+    private void Update()
+    {
+        Debug.Log(gSpace.SSToCoords(Input.mousePosition));
+    } */
 
 }
