@@ -24,7 +24,7 @@ public class RestartGame : MonoBehaviour
     {
         CollectKey ck = collision.gameObject.GetComponent<CollectKey>();
         if (ck != null)
-            SceneManager.LoadScene("MichaelScene");
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
 
     }

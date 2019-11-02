@@ -4,10 +4,10 @@ using UnityEngine;
 
 public abstract class AbstractTrap : MonoBehaviour
 {
-    private TrapType trapType;
+    protected TrapType trapType;
 
     public TrapType GetTrapType()
     {
-        return this.trapType;
+        return TrapType.StopMovement;
     }
 }

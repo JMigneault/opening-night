@@ -21,7 +21,7 @@ public class TrapPlacer : MonoBehaviour
     [SerializeField] PlacementUIManager placementUI;
 
     private SpriteRenderer highlightedTrapSR;
-    private GameObject currentPlacementSprite;
+    [SerializeField] private GameObject placementSprite;
     [SerializeField] private Color highlightColor;
     [SerializeField] private float highlightAlpha;
 
@@ -29,7 +29,7 @@ public class TrapPlacer : MonoBehaviour
     //Start called once
     private void Start()
     {
-        currentTrap = TrapType.Barrier;
+        currentTrap = TrapType.StopMovement;
         highlightedTrapSR = null;
     }
 
@@ -66,8 +66,14 @@ public class TrapPlacer : MonoBehaviour
     {
         if (!objectGrid.CheckCell(screenPos))
         {
-            // todo: improve this; shouldn't have to create a new gameobject every frame
-            currentPlacementSprite = placementUI.AddSpriteOnTile(GetTrap(currentTrap).GetComponent<Sprite>(), screenPos, highlightAlpha);
+            placementSprite.SetActive(true);
+            Sprite sprite = GetTrap(currentTrap).GetComponent<Sprite>();
+            placementSprite.GetComponent<SpriteRenderer>().sprite = sprite;
+            placementUI.MoveSpriteToTile(placementSprite, screenPos);
+        }
+        else
+        {
+            placementSprite.SetActive(false);
         }
     }
 
