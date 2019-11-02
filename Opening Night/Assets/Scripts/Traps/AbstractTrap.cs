@@ -6,8 +6,6 @@ public abstract class AbstractTrap : MonoBehaviour
 {
     protected TrapType trapType;
 
-    public TrapType GetTrapType()
-    {
-        return TrapType.StopMovement;
-    }
+    public abstract TrapType GetTrapType();
+
 }
