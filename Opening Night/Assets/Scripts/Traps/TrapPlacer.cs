@@ -141,10 +141,10 @@ public class TrapPlacer : MonoBehaviour
         }
         if (CheckHighlight(mp))
         { 
-            HighlightTrap(mp);
+            //HighlightTrap(mp);
         } else
         {
-            UnhighlightTrap();
+            //UnhighlightTrap();
         }
         if (CheckHover(mp))
         {
