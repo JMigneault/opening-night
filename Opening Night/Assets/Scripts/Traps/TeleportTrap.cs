@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SlowingTrap : AbstractOnEnterTrap
+public class TeleportTrap : AbstractOnEnterTrap
 {
     // amount the player will decrease upon entry
-    [SerializeField] private float decreasedSpeed = 3;
+    public GameObject TeleporterReceiver;
 
     protected override void ActivateTrap(Player player)
     {
-        //decreases player's speed permanently
-        player.SetSpeed(this.decreasedSpeed);
+        //teleports player to receiver
+        player.gameObject.transform.position = TeleporterReceiver.transform.position;
     }
 
     protected override void EndTrap(Player player)

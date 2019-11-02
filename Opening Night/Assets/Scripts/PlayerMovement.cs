@@ -150,4 +150,9 @@ public class PlayerMovement : MonoBehaviour
     {
         this.maxSpeed = newSpeed;
     }
+
+    public float GetMaxSpeed()
+    {
+        return maxSpeed;
+    }
 }
