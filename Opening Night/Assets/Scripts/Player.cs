@@ -10,6 +10,11 @@ public class Player : MonoBehaviour
         this.GetComponent<PlayerMovement>().SetMaxSpeed(speed);
     }
 
+    public float GetSpeed()
+    {
+        return this.GetComponent<PlayerMovement>().GetMaxSpeed();
+    }
+
     // player slides in a given direction until hitting wall/monster
     public void Slide(float speed, int direction)
     {

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public GameObject PlayerObject;
 
     public float maxSpeed = 5;
     public float accel = 0.65f;
@@ -55,17 +56,17 @@ public class PlayerMovement : MonoBehaviour
             if(Input.GetKey(KeyCode.A))
             {
                 input.x -= 1;
-                Vector2 scale = transform.localScale;
-                scale.x = -1f * Mathf.Abs(scale.x);
-                transform.localScale = scale;
+                Vector2 scale = PlayerObject.transform.localScale;
+                scale.x = Mathf.Abs(scale.x);
+                PlayerObject.transform.localScale = scale;
             }
 
             if(Input.GetKey(KeyCode.D))
             {
                 input.x += 1;
-                Vector2 scale = transform.localScale;
-                scale.x = Mathf.Abs(scale.x);
-                transform.localScale = scale;
+                Vector2 scale = PlayerObject.transform.localScale;
+                scale.x = -1f * Mathf.Abs(scale.x);
+                PlayerObject.transform.localScale = scale;
             }
 
             if(Input.GetKey(KeyCode.W))
@@ -134,6 +135,10 @@ public class PlayerMovement : MonoBehaviour
                 //CharAnimator.SetInteger("State", IDLE);
             }
         }
+
+        Vector3 pos = transform.position;
+        pos.z = pos.y;
+        transform.position = pos;
     }
 
     public void SetCanMove(bool move)
@@ -144,5 +149,10 @@ public class PlayerMovement : MonoBehaviour
     public void SetMaxSpeed(float newSpeed)
     {
         this.maxSpeed = newSpeed;
+    }
+
+    public float GetMaxSpeed()
+    {
+        return maxSpeed;
     }
 }
