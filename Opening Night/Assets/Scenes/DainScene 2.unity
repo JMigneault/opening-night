@@ -6816,6 +6816,7 @@ MonoBehaviour:
   - {fileID: 7090766357049121751, guid: 421ed1bb97c561440b1db5a4fcd781aa, type: 3}
   - {fileID: 6914116337820568410, guid: 91b6c72dbe2b83846855a37f09315992, type: 3}
   - {fileID: 399257148182548500, guid: 0898af3faaad97743add6d0fbffdd155, type: 3}
+  trapMaxNumber: 05000000050000000500000005000000050000000500000005000000
   placementUI: {fileID: 1965686406}
   placementSprite: {fileID: 721913915}
   highlightColor: {r: 1, g: 0, b: 0, a: 1}

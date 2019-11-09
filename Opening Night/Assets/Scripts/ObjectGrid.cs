@@ -46,6 +46,19 @@ public class ObjectGrid : MonoBehaviour
     public bool CheckCell(Vector3 screenPos)
     {
         Vector2Int key = gSpace.SSToCoords(screenPos);
+        Vector2Int curKey = key;
+        for(int i = -1; i < 2; i++)
+        {
+            curKey.x = key.x + i;
+            for(int j = -1; j < 2; j++)
+            {
+                curKey.y = key.y + j;
+                if(gridObjects.ContainsKey(curKey))
+                {
+                    return true;
+                }
+            }
+        }
         return gridObjects.ContainsKey(key);
     }
 

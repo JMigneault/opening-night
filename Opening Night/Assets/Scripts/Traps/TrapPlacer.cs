@@ -16,11 +16,15 @@ public enum TrapType
 }
 
 
+
+
 // sample client code for ObjectGrid
 public class TrapPlacer : MonoBehaviour
 {
     [SerializeField] ObjectGrid objectGrid;
     public AbstractTrap[] traps;
+    public int[] trapMaxNumber;
+    private int[] trapCurrentNumber;
     private TrapType currentTrap;
     public TrapType CurrentTrap { get; }
 
@@ -37,6 +41,11 @@ public class TrapPlacer : MonoBehaviour
     private void Start()
     {
         currentTrap = TrapType.Barricade;
+        trapCurrentNumber = new int[trapMaxNumber.Length];
+        for(int i = 0; i < trapCurrentNumber.Length; i++)
+        {
+            trapCurrentNumber[i] = 0;
+        }
         highlightedTrapSR = null;
     }
 
@@ -132,13 +141,20 @@ public class TrapPlacer : MonoBehaviour
         CheckTrapChange();
         Vector2 mp = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         // gets input
-        if (CheckPlace(mp))
+        if (CheckPlace(mp) && trapCurrentNumber[(int) currentTrap] < trapMaxNumber[(int) currentTrap])
         {
-            objectGrid.CreateCellObject(mp, GetTrap(currentTrap).gameObject);
+            GameObject obj = objectGrid.CreateCellObject(mp, GetTrap(currentTrap).gameObject);
+            if(obj != null)
+            {
+                trapCurrentNumber[(int)currentTrap]++;
+            }
+            
+
         }
         if (CheckDelete(mp))
         {
             objectGrid.DeleteCellObject(mp);
+            trapCurrentNumber[(int)currentTrap]--;
         }
         if (CheckHighlight(mp))
         { 
