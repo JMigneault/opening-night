@@ -19,6 +19,24 @@ public class CoordinateRange
     {
         return (minX <= coord[0]) && (coord[0] <= maxX) && (minY <= coord[1]) && (coord[1] <= maxY);
     }
+
+    public Vector2Int RandomPosition(Tilemap wallsTM)
+    {
+        int x = Random.Range(minX, maxX);
+        int y = Random.Range(minY, maxY);
+        if(wallsTM.GetTile(new Vector3Int(x, y, 0)) != null)
+        {
+            if(y > minY)
+            {
+                y--;
+            }
+            else
+            {
+                y++;
+            }
+        }
+        return new Vector2Int(x, y);
+    }
 }
 
 public class ObjectGrid : MonoBehaviour
@@ -28,8 +46,13 @@ public class ObjectGrid : MonoBehaviour
     [SerializeField] private ToGridSpaceConverters gSpace;
 
     [SerializeField] CoordinateRange coordinateBounds;
+    [SerializeField] CoordinateRange keyBounds;
 
     [SerializeField] Tilemap wallsTM;
+
+    [SerializeField] GameObject key;
+
+    private Vector2Int keyPos;
 
     // track objects on the grid
     private Dictionary<Vector2Int, GameObject> gridObjects;
@@ -46,6 +69,11 @@ public class ObjectGrid : MonoBehaviour
     public bool CheckCell(Vector3 screenPos)
     {
         Vector2Int key = gSpace.SSToCoords(screenPos);
+        //Checks if the current tile is where the key is
+        if(key == keyPos)
+        {
+            return true;
+        }
         Vector2Int curKey = key;
         for(int i = -1; i < 2; i++)
         {
@@ -114,6 +142,12 @@ public class ObjectGrid : MonoBehaviour
     public bool IsWithinBounds(Vector3 screenPos)
     {
         return coordinateBounds.InRange(gSpace.SSToCoords(screenPos)) && wallsTM.GetTile((Vector3Int) gSpace.SSToCoords(screenPos)) == null;
+    }
+
+    public void AddKey()
+    {
+        keyPos = keyBounds.RandomPosition(wallsTM);
+        Instantiate(key, new Vector3(keyPos.x + .5f, keyPos.y + .5f), Quaternion.identity);
     }
 
     /* NOTE: uncomment to determine the grid dimensions to set placement bounds
