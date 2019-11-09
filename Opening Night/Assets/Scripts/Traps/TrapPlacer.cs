@@ -48,6 +48,8 @@ public class TrapPlacer : MonoBehaviour
             trapCurrentNumber[i] = 0;
         }
         highlightedTrapSR = null;
+
+        objectGrid.AddKey();
     }
 
     //method for setting current trap

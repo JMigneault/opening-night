@@ -19,6 +19,24 @@ public class CoordinateRange
     {
         return (minX <= coord[0]) && (coord[0] <= maxX) && (minY <= coord[1]) && (coord[1] <= maxY);
     }
+
+    public Vector2Int RandomPosition(Tilemap wallsTM)
+    {
+        int x = Random.Range(minX, maxX);
+        int y = Random.Range(minY, maxY);
+        if(wallsTM.GetTile(new Vector3Int(x, y, 0)) != null)
+        {
+            if(y > minY)
+            {
+                y--;
+            }
+            else
+            {
+                y++;
+            }
+        }
+        return new Vector2Int(x, y);
+    }
 }
 
 public class ObjectGrid : MonoBehaviour
@@ -28,19 +46,24 @@ public class ObjectGrid : MonoBehaviour
     [SerializeField] private ToGridSpaceConverters gSpace;
 
     [SerializeField] CoordinateRange coordinateBounds;
+    [SerializeField] CoordinateRange keyBounds;
 
     [SerializeField] Tilemap wallsTM;
 
+    [SerializeField] Key key;
+
+    private Vector2Int keyPos;
+
     // track objects on the grid
-    private Dictionary<Vector2Int, AbstractTrap> gridObjects;
+    private Dictionary<Vector2Int, AbstractCellObject> gridObjects;
 
     // initialize gridObjects
-    private void Start()
+    private void Awake()
     {
-        gridObjects = new Dictionary<Vector2Int, AbstractTrap>();
+        gridObjects = new Dictionary<Vector2Int, AbstractCellObject>();
     }
 
-    /** 
+    /**
      * Checks if an object exists at the given screen pos (from Input.mousePosition)
      */
     public bool CheckCell(Vector3 screenPos)
@@ -56,7 +79,7 @@ public class ObjectGrid : MonoBehaviour
     /**
      * Returns the grid object at the screen pos. Should only be called if an object exists at screenPos.
      */
-    public AbstractTrap GetCellObject(Vector3 screenPos)
+    public AbstractCellObject GetCellObject(Vector3 screenPos)
     {
         Vector2Int objKey = gSpace.SSToCoords(screenPos);
         if (gridObjects.ContainsKey(objKey))
@@ -72,18 +95,18 @@ public class ObjectGrid : MonoBehaviour
     /**
     * Makes a copy of prefab on the grid at the screen pos. Should only be called if no object exists at screenPos.
     */
-    public AbstractTrap CreateCellObject(Vector3 screenPos, AbstractTrap prefab)
+    public AbstractCellObject CreateCellObject(Vector3 screenPos, AbstractCellObject prefab)
     {
         Vector2Int objCoords = gSpace.SSToCoords(screenPos);
         return CreateCellObject(objCoords, prefab);
     }
 
-    public AbstractTrap CreateCellObject(Vector2Int objCoords, AbstractTrap prefab)
+    public AbstractCellObject CreateCellObject(Vector2Int objCoords, AbstractCellObject prefab)
     {
         Vector2 objPos = gSpace.CoordsToGPos(objCoords);
         if (!gridObjects.ContainsKey(objCoords))
         {
-            AbstractTrap obj = Object.Instantiate(prefab.gameObject, objPos, Quaternion.identity, this.transform).GetComponent<AbstractTrap>();
+            AbstractCellObject obj = Object.Instantiate(prefab.gameObject, objPos, Quaternion.identity, this.transform).GetComponent<AbstractCellObject>();
             gridObjects.Add(objCoords, obj);
             return obj;
         }
@@ -94,7 +117,6 @@ public class ObjectGrid : MonoBehaviour
         }
 
     }
-
 
     /**
     * Delete the object on the grid at screen pos.  Should only be called if an object exists at screenPos.
@@ -112,7 +134,7 @@ public class ObjectGrid : MonoBehaviour
     {
         if (this.gridObjects.ContainsKey(objKey))
         {
-            AbstractTrap go = this.gridObjects[objKey];
+            AbstractCellObject go = this.gridObjects[objKey];
             this.gridObjects.Remove(objKey);
             go.DeleteSelf(this);
         }
@@ -126,6 +148,12 @@ public class ObjectGrid : MonoBehaviour
     public Vector2Int GetCoords(Vector3 screenPos)
     {
         return gSpace.SSToCoords(screenPos);
+    }
+
+    public void AddKey()
+    {
+        keyPos = keyBounds.RandomPosition(wallsTM);
+        CreateCellObject(keyPos, key);
     }
 
     /* NOTE: uncomment to determine the grid dimensions to set placement bounds
