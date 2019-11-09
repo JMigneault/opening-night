@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Plane
   - Elevator
+  - Trap
   layers:
   - Default
   - TransparentFX

@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 9092771472553977080}
   - component: {fileID: 7805913325574440034}
   m_Layer: 0
-  m_Name: Slow Trap
-  m_TagString: Untagged
+  m_Name: Stop Movement Trap
+  m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

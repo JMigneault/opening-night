@@ -7,7 +7,11 @@ public enum TrapType
     Barrier = 0,
     SlowMovement = 1,
     StopMovement = 2,
-    ForceMovement = 3
+    ForceMovement = 3,
+    PermanentSlow = 4,
+    TeleporterReceiver = 5,
+
+
 }
 
 
@@ -15,8 +19,8 @@ public enum TrapType
 public class TrapPlacer : MonoBehaviour
 {
     [SerializeField] ObjectGrid objectGrid;
-    public AbstractTrap[] traps;
-    private TrapType currentTrap;
+    public GameObject[] traps;
+    public static TrapType currentTrap;
 
     [SerializeField] PlacementUIManager placementUI;
 
@@ -34,11 +38,11 @@ public class TrapPlacer : MonoBehaviour
     }
 
     //method for setting current trap
-    private AbstractTrap GetTrap(TrapType trapType)
+    private GameObject GetTrap(TrapType trapType)
     {
-        foreach (AbstractTrap trap in traps)
+        foreach (GameObject trap in traps)
         {
-            if (trap.GetTrapType() == trapType)
+            if (currentTrap == trapType)
             {
                 return trap;
             }
@@ -49,7 +53,7 @@ public class TrapPlacer : MonoBehaviour
 
     public void ChangeTrap(TrapType trapType)
     {
-        this.currentTrap = trapType;
+        currentTrap = trapType;
     }
 
     public void HighlightTrap(Vector2 screenPos)
