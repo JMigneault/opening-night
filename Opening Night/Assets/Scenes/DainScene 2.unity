@@ -519,7 +519,7 @@ MonoBehaviour:
   playCamera: {fileID: 1778963887719063438}
   navigator: {fileID: 1062719862}
   monster: {fileID: 145437156}
-  placeTime: 60
+  placeTime: 15
 --- !u!114 &210176265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6774,6 +6774,7 @@ GameObject:
   m_Component:
   - component: {fileID: 516200403}
   - component: {fileID: 516200404}
+  - component: {fileID: 516200405}
   m_Layer: 0
   m_Name: Placer
   m_TagString: Untagged
@@ -6816,11 +6817,46 @@ MonoBehaviour:
   - {fileID: 7090766357049121751, guid: 421ed1bb97c561440b1db5a4fcd781aa, type: 3}
   - {fileID: 6914116337820568410, guid: 91b6c72dbe2b83846855a37f09315992, type: 3}
   - {fileID: 399257148182548500, guid: 0898af3faaad97743add6d0fbffdd155, type: 3}
-  trapMaxNumber: 05000000050000000500000005000000050000000500000005000000
+  - {fileID: 284705892140697960, guid: 36c8606524835ee4eb65f27ebb69fecd, type: 3}
+  - {fileID: -4769452414244503250, guid: acc938d4330f9a4489f9bdb020f54b29, type: 3}
+  trapLimiter: {fileID: 516200405}
   placementUI: {fileID: 1965686406}
   placementSprite: {fileID: 721913915}
   highlightColor: {r: 1, g: 0, b: 0, a: 1}
   phaseManager: {fileID: 210176266}
+  validHoverColor: {r: 1, g: 1, b: 1, a: 0.19607843}
+  invalidHoverColor: {r: 1, g: 0, b: 0, a: 0.19607843}
+--- !u!114 &516200405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516200402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1acafdf087a0af458d2ec106eaf2fd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trapLimits:
+  - trapType: 0
+    maxNum: 10
+  - trapType: 1
+    maxNum: 4
+  - trapType: 2
+    maxNum: 2
+  - trapType: 3
+    maxNum: 4
+  - trapType: 4
+    maxNum: 4
+  - trapType: 5
+    maxNum: 1
+  - trapType: 6
+    maxNum: 1
+  - trapType: 7
+    maxNum: 2
+  - trapType: 8
+    maxNum: 4
 --- !u!1 &721913915
 GameObject:
   m_ObjectHideFlags: 0
@@ -6877,7 +6913,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.49803922}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6896,7 +6932,7 @@ Transform:
   m_GameObject: {fileID: 721913915}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.41962337, y: -0.6702081, z: 0}
-  m_LocalScale: {x: 7, y: 7, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11

@@ -12,18 +12,17 @@ public enum TrapType
     StopMovement = 3,
     ForceMovement = 4,
     TeleportTrap = 5,
-    TeleportReceiver = 6
+    TeleportReceiver = 6,
+    DoubleBarricadeHoriz = 7,
+    DoubleBarricadeVert = 8
 }
-
-
-
 
 // sample client code for ObjectGrid
 public class TrapPlacer : MonoBehaviour
 {
     [SerializeField] ObjectGrid objectGrid;
-    public AbstractTrap[] traps;
-    public int[] trapMaxNumber;
+    [SerializeField] private AbstractTrap[] traps;
+    [SerializeField] private TrapLimiter trapLimiter;
     private int[] trapCurrentNumber;
     private TrapType currentTrap;
     public TrapType CurrentTrap { get; }
@@ -34,6 +33,8 @@ public class TrapPlacer : MonoBehaviour
     [SerializeField] private GameObject placementSprite;
     [SerializeField] private Color highlightColor;
     [SerializeField] private PhaseManager phaseManager;
+    [SerializeField] private Color validHoverColor;
+    [SerializeField] private Color invalidHoverColor;
 
     private bool canPlace = true;
     
@@ -41,7 +42,7 @@ public class TrapPlacer : MonoBehaviour
     private void Start()
     {
         currentTrap = TrapType.Barricade;
-        trapCurrentNumber = new int[trapMaxNumber.Length];
+        trapCurrentNumber = new int[Enum.GetValues(typeof(TrapType)).Length];
         for(int i = 0; i < trapCurrentNumber.Length; i++)
         {
             trapCurrentNumber[i] = 0;
@@ -85,11 +86,21 @@ public class TrapPlacer : MonoBehaviour
         placementUI.UnhighlightTrap(highlightedTrapSR);
     }
 
-    private void HoverTile(Vector2 screenPos)
+    private void HoverTileValid(Vector2 screenPos)
     {
         placementSprite.SetActive(true);
         Sprite sprite = GetTrap(currentTrap).GetComponent<SpriteRenderer>().sprite;
         placementSprite.GetComponent<SpriteRenderer>().sprite = sprite;
+        placementSprite.GetComponent<SpriteRenderer>().color = this.validHoverColor;
+        placementUI.MoveSpriteToTile(placementSprite, screenPos);
+    }
+
+    private void HoverTileInvalid(Vector2 screenPos)
+    {
+        placementSprite.SetActive(true);
+        Sprite sprite = GetTrap(currentTrap).GetComponent<SpriteRenderer>().sprite;
+        placementSprite.GetComponent<SpriteRenderer>().sprite = sprite;
+        placementSprite.GetComponent<SpriteRenderer>().color = this.invalidHoverColor;
         placementUI.MoveSpriteToTile(placementSprite, screenPos);
     }
 
@@ -110,9 +121,14 @@ public class TrapPlacer : MonoBehaviour
         }
     }
 
+    private bool CheckTrapsRemaining(TrapType trap)
+    {
+        return !trapLimiter.IsLimited(trap, trapCurrentNumber[(int) trap]);
+    }
+
     private bool CheckPlace(Vector2 mousePosition)
     {
-        return Input.GetMouseButton(0) && !objectGrid.CheckCell(mousePosition) && objectGrid.IsWithinBounds(mousePosition);
+        return Input.GetMouseButton(0) && GetTrap(currentTrap).CanPlace(objectGrid.GetCoords(mousePosition), objectGrid) && objectGrid.IsWithinBounds(mousePosition);
     }
 
     private bool CheckDelete(Vector2 mousePosition)
@@ -127,7 +143,7 @@ public class TrapPlacer : MonoBehaviour
 
     private bool CheckHover(Vector2 mousePosition)
     {
-        return !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && !objectGrid.CheckCell(mousePosition) && objectGrid.IsWithinBounds(mousePosition);
+        return !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && GetTrap(currentTrap).CanPlace(objectGrid.GetCoords(mousePosition), objectGrid) && objectGrid.IsWithinBounds(mousePosition);
     }
 
     // Update is called once per frame
@@ -141,34 +157,29 @@ public class TrapPlacer : MonoBehaviour
         CheckTrapChange();
         Vector2 mp = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         // gets input
-        if (CheckPlace(mp) && trapCurrentNumber[(int) currentTrap] < trapMaxNumber[(int) currentTrap])
+        if (CheckPlace(mp) && CheckTrapsRemaining(currentTrap))
         {
-            GameObject obj = objectGrid.CreateCellObject(mp, GetTrap(currentTrap).gameObject);
-            if(obj != null)
-            {
-                trapCurrentNumber[(int)currentTrap]++;
-            }
-            
-
+            GetTrap(currentTrap).Place(mp, objectGrid);
+            trapCurrentNumber[(int)currentTrap]++;
         }
         if (CheckDelete(mp))
         {
             objectGrid.DeleteCellObject(mp);
-            trapCurrentNumber[(int)currentTrap]--;
+            trapCurrentNumber[(int) currentTrap]--;
         }
         if (CheckHighlight(mp))
         { 
-            //HighlightTrap(mp);
+            // HighlightTrap(mp);
         } else
         {
-            //UnhighlightTrap();
+            // UnhighlightTrap();
         }
-        if (CheckHover(mp))
+        if (CheckHover(mp) && CheckTrapsRemaining(currentTrap))
         {
-            HoverTile(mp);
+            HoverTileValid(mp);
         } else
         {
-            UnhoverTile();
+            HoverTileInvalid(mp);
         }
     }
         

@@ -21,6 +21,11 @@ public class ToGridSpaceConverters : MonoBehaviour
         return ((Vector2) SSToCoords(screenSpace) + new Vector2(0.5f, 0.5f));
     }
 
+    public Vector2 CoordsToGPos(Vector2Int coords)
+    {
+        return (Vector2) coords + new Vector2(.5f, .5f);
+    }
+
     // convert screen space to world space
     public Vector3 SSToWS(Vector3 screenPos)
     {
