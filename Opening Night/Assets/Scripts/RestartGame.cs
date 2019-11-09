@@ -6,11 +6,14 @@ using UnityEngine.SceneManagement;
 public class RestartGame : MonoBehaviour
 {
 
+    [SerializeField] PlayManager playManager;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            playManager.SwitchToPlace();
+            // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

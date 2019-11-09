@@ -150,11 +150,14 @@ public class ObjectGrid : MonoBehaviour
         return gSpace.SSToCoords(screenPos);
     }
 
-    public void AddKey()
+    public Key GenerateKey()
     {
         keyPos = keyBounds.RandomPosition(wallsTM);
-        CreateCellObject(keyPos, key);
+        Key key = (Key) CreateCellObject(keyPos, this.key);
+        key.coords = keyPos;
+        return key;
     }
+
 
     /* NOTE: uncomment to determine the grid dimensions to set placement bounds
     private void Update()

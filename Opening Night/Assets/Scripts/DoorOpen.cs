@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class DoorOpen : MonoBehaviour
 {
 
+    [SerializeField] private PlayManager playManager;
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log(collision.gameObject.tag);
@@ -15,8 +17,7 @@ public class DoorOpen : MonoBehaviour
             if(keyScript.GetKey())
             {
                 keyScript.SetKey(false);
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                //Destroy(this.gameObject);
+                playManager.SwitchToPlace();
             }
         }
     }

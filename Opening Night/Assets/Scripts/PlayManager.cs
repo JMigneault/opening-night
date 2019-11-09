@@ -24,6 +24,10 @@ public class PlayManager : MonoBehaviour
     // properties to be set
     [SerializeField] private float placeTime;
 
+    [SerializeField] private ObjectGrid objectGrid;
+    [SerializeField] CollectKey collectKey;
+    private Key key;
+
     // initially set up game to place phase
     void Start()
     {
@@ -33,6 +37,7 @@ public class PlayManager : MonoBehaviour
         this.monInitPos = monster.transform.position;
         this.navigator.SetActive(false);
         this.monster.SetActive(false);
+        AddKey();
     }
 
     void Update()
@@ -59,6 +64,7 @@ public class PlayManager : MonoBehaviour
             this.placeCamera.SetActive(false);
             this.playCamera.SetActive(true);
             this.navigator.transform.position = this.navInitPos;
+            // this.navigator.GetComponent<Player>().RestoreSpeed(); todo: fix bug where permanent movement drop carries over to next game
             this.monster.transform.position = this.monInitPos;
             this.navigator.SetActive(true);
             this.monster.SetActive(true);
@@ -76,6 +82,8 @@ public class PlayManager : MonoBehaviour
             Debug.Log("WARNING (SwitchToPlace): Already in placing phase.");
         } else
         {
+            RemoveKey();
+            AddKey();
             phaseManager.SwitchToPlace();
             this.playCamera.SetActive(false);
             this.placeCamera.SetActive(true);
@@ -91,5 +99,19 @@ public class PlayManager : MonoBehaviour
     {
         return this.phaseManager.CurrentPhase == Phase.Place && timer.PhaseTime > placeTime;
     }
+
+    public void AddKey()
+    {
+        this.key = objectGrid.GenerateKey();
+        this.key.PlayManager = this;
+        collectKey.SetKey(false);
+    }
+
+    public void RemoveKey()
+    {
+        objectGrid.DeleteCellObject(this.key.coords);
+        key.DeleteSelf(objectGrid);
+    }
+
 
 }

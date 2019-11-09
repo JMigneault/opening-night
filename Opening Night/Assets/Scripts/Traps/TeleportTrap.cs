@@ -5,7 +5,7 @@ using UnityEngine;
 public class TeleportTrap : AbstractOnEnterTrap
 {
     // amount the player will decrease upon entry
-    public GameObject TeleporterReceiver;
+    [SerializeField] private Vector2 destination;
 
     public override TrapType GetTrapType()
     {
@@ -14,8 +14,8 @@ public class TeleportTrap : AbstractOnEnterTrap
 
     protected override void ActivateTrap(Player player)
     {
-        //teleports player to receiver
-        player.gameObject.transform.position = TeleporterReceiver.transform.position;
+        // teleports player to receiver
+        player.gameObject.transform.position = destination;
     }
 
     protected override void EndTrap(Player player)
@@ -27,4 +27,5 @@ public class TeleportTrap : AbstractOnEnterTrap
     {
         // no effect
     }
+
 }

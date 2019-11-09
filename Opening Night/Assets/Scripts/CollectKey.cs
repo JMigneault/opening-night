@@ -15,18 +15,11 @@ public class CollectKey : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void SetKey(bool shouldHaveKey) {
         this.hasKey = shouldHaveKey;
     }
 
     public bool GetKey() {
-
         return this.hasKey;
     }
 

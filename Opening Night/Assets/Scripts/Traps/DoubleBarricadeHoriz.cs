@@ -9,7 +9,7 @@ public class DoubleBarricadeHoriz : DoubleBarricade
 
     public override TrapType GetTrapType()
     {
-        return TrapType.DoubleBarricadeHoriz;
+        return TrapType.Barricade; // return TrapType.DoubleBarricadeHoriz; Note: if added back remake correct enum
     }
 
     protected override Vector2Int GetPairOffset()

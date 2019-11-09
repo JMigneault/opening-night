@@ -120,4 +120,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5127346f64051e549912992dac38267f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TeleporterReceiver: {fileID: 0}
+  destination: {x: 0, y: -9}

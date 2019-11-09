@@ -12,9 +12,7 @@ public enum TrapType
     StopMovement = 3,
     ForceMovement = 4,
     TeleportTrap = 5,
-    TeleportReceiver = 6,
-    DoubleBarricadeHoriz = 7,
-    DoubleBarricadeVert = 8
+    DoubleBarricadeVert = 6
 }
 
 // sample client code for ObjectGrid
@@ -49,7 +47,6 @@ public class TrapPlacer : MonoBehaviour
         }
         highlightedTrapSR = null;
 
-        objectGrid.AddKey();
     }
 
     //method for setting current trap
