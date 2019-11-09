@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class AbstractTrap : MonoBehaviour
+public abstract class AbstractTrap : AbstractCellObject
 {
     protected TrapType trapType;
 
-    public TrapType GetTrapType()
-    {
-        return TrapType.StopMovement;
-    }
+    public abstract TrapType GetTrapType();
+
 }

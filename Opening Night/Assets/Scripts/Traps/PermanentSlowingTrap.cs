@@ -7,6 +7,11 @@ public class PermanentSlowingTrap : AbstractOnEnterTrap
     // amount the player will decrease upon entry
     [SerializeField] private float decreasedSpeed = 3;
 
+    public override TrapType GetTrapType()
+    {
+        return TrapType.PermanentSlowMovement;
+    }
+
     protected override void ActivateTrap(Player player)
     {
         //decreases player's speed permanently

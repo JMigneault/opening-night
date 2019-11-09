@@ -3,28 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class Key : MonoBehaviour
+public class Key : AbstractCellObject
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     void OnTriggerEnter2D(Collider2D other)
     { 
-        CollectKey keyComp = other.gameObject.GetComponent<CollectKey>();
-        if (keyComp != null)
+        if (other.tag == "Player")
         { 
-            keyComp.SetKey(true);
-            Destroy(this.gameObject);
+            other.gameObject.GetComponent<CollectKey>().SetKey(true);
+            Object.Destroy(this.gameObject); // Note: does not remove itself from the hashmap
         }
 
 
     }
-
 }

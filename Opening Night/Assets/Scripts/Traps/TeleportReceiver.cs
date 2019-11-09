@@ -7,6 +7,11 @@ public class TeleportReceiver : AbstractOnEnterTrap
     // amount the player will decrease upon entry
     public GameObject TeleporterReceiver;
 
+    public override TrapType GetTrapType()
+    {
+        return TrapType.TeleportReceiver;
+    }
+
     protected override void ActivateTrap(Player player)
     {
         //no effect
