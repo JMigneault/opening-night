@@ -21,6 +21,7 @@ public class TrapPlacer : MonoBehaviour
     [SerializeField] ObjectGrid objectGrid;
     [SerializeField] private AbstractTrap[] traps;
     [SerializeField] private TrapLimiter trapLimiter;
+    public TrapLimiter TrapLimiter { get { return trapLimiter; } }
     private int[] trapCurrentNumber;
     private TrapType currentTrap;
     public TrapType CurrentTrap { get; }
@@ -46,7 +47,6 @@ public class TrapPlacer : MonoBehaviour
             trapCurrentNumber[i] = 0;
         }
         highlightedTrapSR = null;
-
     }
 
     private AbstractTrap GetTrap(TrapType trapType)
@@ -66,6 +66,16 @@ public class TrapPlacer : MonoBehaviour
     {
         this.currentTrap = trapType;
         Debug.Log(currentTrap);
+    }
+
+    private void IncrementTrap()
+    {
+        Debug.Log(trapCurrentNumber[(int)currentTrap]);
+        while ((int) currentTrap != Enum.GetValues(typeof(TrapType)).Length - 1 
+            && trapLimiter.IsLimited(currentTrap, trapCurrentNumber[(int)currentTrap]))
+        {
+            currentTrap = (TrapType)((int) currentTrap + 1);
+        }
     }
 
     public void HighlightTrap(Vector2 screenPos)
@@ -162,14 +172,14 @@ public class TrapPlacer : MonoBehaviour
         if (CheckDelete(mp))
         {
             objectGrid.DeleteCellObject(mp);
-            trapCurrentNumber[(int) currentTrap]--;
+            trapCurrentNumber[(int)currentTrap]--;
         }
         if (CheckHighlight(mp))
         {
-            // HighlightTrap(mp);
+            HighlightTrap(mp);
         } else
         {
-            // UnhighlightTrap();
+            UnhighlightTrap();
         }
         if (CheckHover(mp) && CheckTrapsRemaining(currentTrap))
         {
@@ -178,6 +188,7 @@ public class TrapPlacer : MonoBehaviour
         {
             HoverTileInvalid(mp);
         }
+        IncrementTrap(); // moves to next trap if you have run out
     }
 
 }

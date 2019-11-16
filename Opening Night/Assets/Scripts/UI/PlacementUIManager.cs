@@ -9,10 +9,6 @@ using UnityEngine.UIElements;
 public class PlacementUIManager : MonoBehaviour
 {
     //// a prefab that will be instantiated as an object to 
-    //[SerializeField] private GameObject spriteHolder;
-    //// parent object for grid sprites
-    //[SerializeField] private GameObject spriteParent;
-    // converts from screen to grid space
     [SerializeField] private ToGridSpaceConverters gSpace;
     // tracks objects on the grid
     [SerializeField] private ObjectGrid oGrid;

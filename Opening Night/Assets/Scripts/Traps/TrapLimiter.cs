@@ -8,12 +8,14 @@ public class TrapLimiter : MonoBehaviour
     [System.Serializable]
     private class TrapLimit
     {
-        [SerializeField] private TrapType trapType;
+        [SerializeField] private TrapType trap;
+        public TrapType Trap { get { return trap; } }
         [SerializeField] private int maxNum;
+        public int MaxNum { get { return maxNum; } }
 
-        public bool IsLimited(TrapType trapType, int numTraps)
+        public bool IsLimited(TrapType trap, int numTraps)
         {
-            return trapType == this.trapType && numTraps >= this.maxNum;
+            return trap == this.trap && numTraps >= this.maxNum;
         }
 
     }
@@ -32,4 +34,13 @@ public class TrapLimiter : MonoBehaviour
         return false;
     }
 
+    public int GetMaxTraps(TrapType trapType)
+    {
+        foreach (TrapLimit tl in this.trapLimits)
+        {
+            if (tl.Trap == trapType) { return tl.MaxNum; }
+        }
+        Debug.LogError("GetMaxTraps: Did not find trap type: " + trapType);
+        return -1;
+    }
 }
