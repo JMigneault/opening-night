@@ -21,7 +21,7 @@ public class MonsterLightRadius : MonoBehaviour {
 
     void Update()
     {
-        transform.position = new Vector3(Monster.transform.position.x, Monster.transform.position.y, transform.position.z);
+        transform.position = new Vector3(Monster.transform.position.x, Monster.transform.position.y + 1f, transform.position.z);
         lt.range = range * (8f / Cam.orthographicSize);
     }
 }

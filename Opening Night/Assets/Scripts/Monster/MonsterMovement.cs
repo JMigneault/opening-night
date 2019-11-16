@@ -25,7 +25,7 @@ public class MonsterMovement : MonoBehaviour
     void Start()
     {
         Rigid = GetComponent<Rigidbody2D>();
-        //CharAnimator = GetComponent<Animator>();
+        CharAnimator = GetComponent<Animator>();
     }
 
     private float Approach(float target, float starting, float delta)
@@ -54,17 +54,17 @@ public class MonsterMovement : MonoBehaviour
             if(Input.GetKey(KeyCode.LeftArrow))
             {
                 input.x -= 1;
-                Vector2 scale = transform.localScale;
+                /*Vector2 scale = transform.localScale;
                 scale.x = -1f * Mathf.Abs(scale.x);
-                transform.localScale = scale;
+                transform.localScale = scale;*/
             }
 
             if(Input.GetKey(KeyCode.RightArrow))
             {
                 input.x += 1;
-                Vector2 scale = transform.localScale;
+                /*Vector2 scale = transform.localScale;
                 scale.x = Mathf.Abs(scale.x);
-                transform.localScale = scale;
+                transform.localScale = scale;*/
             }
 
             if(Input.GetKey(KeyCode.UpArrow))
@@ -88,7 +88,7 @@ public class MonsterMovement : MonoBehaviour
                     Approach(input.y * maxSpeed, Rigid.velocity.y, Mathf.Abs(dif.y) * accel)
                 );
 
-                /*if(input.x > 0)
+                if(input.x > 0)
                 {
                     CharAnimator.SetInteger("State", WALK_RIGHT);
                 }
@@ -106,7 +106,7 @@ public class MonsterMovement : MonoBehaviour
                     {
                         CharAnimator.SetInteger("State", WALK_FORWARD);
                     }
-                }*/
+                }
             }
             else
             {
@@ -117,7 +117,7 @@ public class MonsterMovement : MonoBehaviour
                 );
                 if(Rigid.velocity.x == 0 && Rigid.velocity.y == 0)
                 {
-                    //CharAnimator.SetInteger("State", IDLE);
+                    CharAnimator.SetInteger("State", IDLE);
                 }
             }
 
@@ -134,7 +134,7 @@ public class MonsterMovement : MonoBehaviour
             );
             if(Rigid.velocity.x == 0 && Rigid.velocity.y == 0)
             {
-                //CharAnimator.SetInteger("State", IDLE);
+                CharAnimator.SetInteger("State", IDLE);
             }
         }
     }

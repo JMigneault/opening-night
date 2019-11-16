@@ -39,7 +39,7 @@ public class PlayerLightRadius : MonoBehaviour {
 
         Vector2 trans = Player.transform.position;
         Vector2 worldVec = trans;
-        transform.position = new Vector3(worldVec.x, worldVec.y, transform.position.z);
+        transform.position = new Vector3(worldVec.x, worldVec.y + .6f, transform.position.z);
         lt.range = range;// * (8f / Cam.orthographicSize);
     }
 }

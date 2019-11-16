@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /**
  * Manages the state of play by switching between phases and enabling/disabling gameobjects and UI.
@@ -28,6 +29,8 @@ public class PlayManager : MonoBehaviour
     [SerializeField] CollectKey collectKey;
     private Key key;
 
+    [SerializeField] private Canvas placementUI;
+
     // initially set up game to place phase
     void Start()
     {
@@ -46,6 +49,11 @@ public class PlayManager : MonoBehaviour
         if (this.IsPlacementDone())
         {
             Debug.Log("placing done");
+            this.SwitchToPlay();
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("placing ended by player");
             this.SwitchToPlay();
         }
     }
@@ -68,6 +76,7 @@ public class PlayManager : MonoBehaviour
             this.monster.transform.position = this.monInitPos;
             this.navigator.SetActive(true);
             this.monster.SetActive(true);
+            this.placementUI.enabled = false;
         }
 
     }
@@ -89,6 +98,7 @@ public class PlayManager : MonoBehaviour
             this.placeCamera.SetActive(true);
             this.navigator.SetActive(false);
             this.monster.SetActive(false);
+            this.placementUI.enabled = true;
         }
     }
 

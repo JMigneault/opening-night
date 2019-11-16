@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ForceMovementTrap : AbstractOnEnterTrap
 {
-    [SerializeField] private float slideSpeed = 5;
+    [SerializeField] private float slideSpeed = 100;
     [SerializeField] private Vector2 direction;
 
     private Rigidbody2D rigid;

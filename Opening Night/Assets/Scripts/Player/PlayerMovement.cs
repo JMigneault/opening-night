@@ -27,7 +27,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         Rigid = GetComponent<Rigidbody2D>();
-        //CharAnimator = GetComponent<Animator>();
+        CharAnimator = GetComponent<Animator>();
     }
 
     private float Approach(float target, float starting, float delta)
@@ -56,17 +56,17 @@ public class PlayerMovement : MonoBehaviour
             if(Input.GetKey(KeyCode.A))
             {
                 input.x -= 1;
-                Vector2 scale = PlayerObject.transform.localScale;
+                /*Vector2 scale = PlayerObject.transform.localScale;
                 scale.x = Mathf.Abs(scale.x);
-                PlayerObject.transform.localScale = scale;
+                PlayerObject.transform.localScale = scale;*/
             }
 
             if(Input.GetKey(KeyCode.D))
             {
                 input.x += 1;
-                Vector2 scale = PlayerObject.transform.localScale;
+                /*Vector2 scale = PlayerObject.transform.localScale;
                 scale.x = -1f * Mathf.Abs(scale.x);
-                PlayerObject.transform.localScale = scale;
+                PlayerObject.transform.localScale = scale;*/
             }
 
             if(Input.GetKey(KeyCode.W))
@@ -90,7 +90,7 @@ public class PlayerMovement : MonoBehaviour
                     Approach(input.y * maxSpeed, Rigid.velocity.y, Mathf.Abs(dif.y) * accel)
                 );
 
-                /*if(input.x > 0)
+                if(input.x > 0)
                 {
                     CharAnimator.SetInteger("State", WALK_RIGHT);
                 }
@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
                     {
                         CharAnimator.SetInteger("State", WALK_FORWARD);
                     }
-                }*/
+                }
             }
             else
             {
@@ -119,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
                 );
                 if(Rigid.velocity.x == 0 && Rigid.velocity.y == 0)
                 {
-                    //CharAnimator.SetInteger("State", IDLE);
+                    CharAnimator.SetInteger("State", IDLE);
                 }
             }
         }
@@ -132,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
             );
             if(Rigid.velocity.x == 0 && Rigid.velocity.y == 0)
             {
-                //CharAnimator.SetInteger("State", IDLE);
+                CharAnimator.SetInteger("State", IDLE);
             }
         }
 
