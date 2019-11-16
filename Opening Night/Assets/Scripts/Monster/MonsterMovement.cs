@@ -6,14 +6,18 @@ using UnityEngine.SceneManagement;
 public class MonsterMovement : MonoBehaviour
 {
 
-    public float maxSpeed = 5;
+    public float maxSpeed = 10;
+    public float startingSpeed = 2;
     public float accel = 0.65f;
     public float decel = 1.2f;
+    public float timeFactor = 0.1f; 
     public BoxCollider2D Collider;
 
     private bool canMove = true;
     private Rigidbody2D Rigid;
     private Animator CharAnimator;
+    private float speed;
+    
 
     private const int WALK_RIGHT = 0;
     private const int WALK_FORWARD = 1;
@@ -26,6 +30,12 @@ public class MonsterMovement : MonoBehaviour
     {
         Rigid = GetComponent<Rigidbody2D>();
         CharAnimator = GetComponent<Animator>();
+        this.resetSpeed();
+    }
+
+    public void resetSpeed()
+    {
+        this.speed = this.startingSpeed;
     }
 
     private float Approach(float target, float starting, float delta)
@@ -47,6 +57,9 @@ public class MonsterMovement : MonoBehaviour
 
     void Update()
     {
+
+        this.speed += Time.deltaTime * this.timeFactor;
+        this.speed = this.maxSpeed < this.speed ? this.maxSpeed : this.speed;
         if(canMove)
         {
             Vector2 input = new Vector2(0, 0);
@@ -80,12 +93,12 @@ public class MonsterMovement : MonoBehaviour
             if(input.magnitude > 0)
             {
                 input.Normalize();
-                Vector2 dif = (input * maxSpeed) - Rigid.velocity;
+                Vector2 dif = (input * this.speed) - Rigid.velocity;
                 dif.Normalize();
 
                 Rigid.velocity = new Vector2(
-                    Approach(input.x * maxSpeed, Rigid.velocity.x, Mathf.Abs(dif.x) * accel),
-                    Approach(input.y * maxSpeed, Rigid.velocity.y, Mathf.Abs(dif.y) * accel)
+                    Approach(input.x * this.speed, Rigid.velocity.x, Mathf.Abs(dif.x) * accel),
+                    Approach(input.y * this.speed, Rigid.velocity.y, Mathf.Abs(dif.y) * accel)
                 );
 
                 if(input.x > 0)
