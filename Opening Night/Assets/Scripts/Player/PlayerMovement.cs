@@ -7,7 +7,8 @@ public class PlayerMovement : MonoBehaviour
 {
     public GameObject PlayerObject;
 
-    public float maxSpeed = 5;
+    private float maxSpeed;
+    public float startingSpeed = 5;
     public float accel = 0.65f;
     public float decel = 1.2f;
     public BoxCollider2D Collider;
@@ -28,6 +29,12 @@ public class PlayerMovement : MonoBehaviour
     {
         Rigid = GetComponent<Rigidbody2D>();
         CharAnimator = GetComponent<Animator>();
+        this.resetSpeed();
+    }
+
+    public void resetSpeed()
+    {
+        this.maxSpeed = this.startingSpeed; 
     }
 
     private float Approach(float target, float starting, float delta)
