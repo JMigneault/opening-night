@@ -35,7 +35,7 @@ public class TrapPlacer : MonoBehaviour
     [SerializeField] private Color invalidHoverColor;
 
     private bool canPlace = true;
-    
+
     //Start called once
     private void Start()
     {
@@ -49,7 +49,6 @@ public class TrapPlacer : MonoBehaviour
 
     }
 
-    //method for setting current trap
     private AbstractTrap GetTrap(TrapType trapType)
     {
         foreach (AbstractTrap trap in traps)
@@ -67,7 +66,6 @@ public class TrapPlacer : MonoBehaviour
     {
         this.currentTrap = trapType;
         Debug.Log(currentTrap);
-
     }
 
     public void HighlightTrap(Vector2 screenPos)
@@ -167,7 +165,7 @@ public class TrapPlacer : MonoBehaviour
             trapCurrentNumber[(int) currentTrap]--;
         }
         if (CheckHighlight(mp))
-        { 
+        {
             // HighlightTrap(mp);
         } else
         {
@@ -181,5 +179,5 @@ public class TrapPlacer : MonoBehaviour
             HoverTileInvalid(mp);
         }
     }
-        
+
 }

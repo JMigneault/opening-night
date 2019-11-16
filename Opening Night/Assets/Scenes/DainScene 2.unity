@@ -6816,7 +6816,7 @@ MonoBehaviour:
   traps:
   - {fileID: -4845854966627145129, guid: e7434db7cd16fef4482fd295e5cd315d, type: 3}
   - {fileID: -7640435567452924415, guid: a6a898e0d43f43d42ba5ceb37039db49, type: 3}
-  - {fileID: 7805913325574440034, guid: cbb6eea8d435c474eab6d8dbb10aeb9a, type: 3}
+  - {fileID: 1926059768226024156, guid: 6cb99ed8dd385724d9f7ec99e81a291a, type: 3}
   - {fileID: -2355884608174946318, guid: e9434018e1a1d8143a978257522924a5, type: 3}
   - {fileID: -4769452414244503250, guid: acc938d4330f9a4489f9bdb020f54b29, type: 3}
   - {fileID: 6914116337820568410, guid: 91b6c72dbe2b83846855a37f09315992, type: 3}
@@ -9776,8 +9776,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06dca77fe19d45c419a663cc603a4a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteHolder: {fileID: 0}
-  spriteParent: {fileID: 0}
   gSpace: {fileID: 1258662503}
   oGrid: {fileID: 1573629683}
 --- !u!4 &1965686407

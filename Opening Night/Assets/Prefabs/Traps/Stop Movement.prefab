@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4256800415551283533}
   - component: {fileID: 7989921020126089670}
   - component: {fileID: 9092771472553977080}
-  - component: {fileID: 7805913325574440034}
+  - component: {fileID: 1926059768226024156}
   m_Layer: 0
-  m_Name: Stop Movement Trap
-  m_TagString: Untagged
+  m_Name: Stop Movement
+  m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 1, g: 0.9622972, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.09460688, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -106,9 +106,9 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.142, y: 0.142}
   m_EdgeRadius: 0
---- !u!114 &7805913325574440034
+--- !u!114 &1926059768226024156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -120,4 +120,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c16787b6375aed4fb1fd13b721c43b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stoptime: 2
+  stoptime: 1
