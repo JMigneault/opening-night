@@ -6,14 +6,17 @@ using UnityEngine.SceneManagement;
 public class MonsterMovement : MonoBehaviour
 {
 
-    public float maxSpeed = 5;
+    public float maxSpeed = 10;
+    public float startingSpeed = 5;
     public float accel = 0.65f;
     public float decel = 1.2f;
+    public float timeFactor = 0.0001f; 
     public BoxCollider2D Collider;
 
     private bool canMove = true;
     private Rigidbody2D Rigid;
     private Animator CharAnimator;
+    
 
     private const int WALK_RIGHT = 0;
     private const int WALK_FORWARD = 1;
@@ -47,6 +50,9 @@ public class MonsterMovement : MonoBehaviour
 
     void Update()
     {
+
+        this.startingSpeed += Time.deltaTime * this.timeFactor;
+        this.startingSpeed = this.maxSpeed < this.startingSpeed ? this.maxSpeed : this.startingSpeed;
         if(canMove)
         {
             Vector2 input = new Vector2(0, 0);
@@ -80,12 +86,12 @@ public class MonsterMovement : MonoBehaviour
             if(input.magnitude > 0)
             {
                 input.Normalize();
-                Vector2 dif = (input * maxSpeed) - Rigid.velocity;
+                Vector2 dif = (input * this.startingSpeed) - Rigid.velocity;
                 dif.Normalize();
 
                 Rigid.velocity = new Vector2(
-                    Approach(input.x * maxSpeed, Rigid.velocity.x, Mathf.Abs(dif.x) * accel),
-                    Approach(input.y * maxSpeed, Rigid.velocity.y, Mathf.Abs(dif.y) * accel)
+                    Approach(input.x * this.startingSpeed, Rigid.velocity.x, Mathf.Abs(dif.x) * accel),
+                    Approach(input.y * this.startingSpeed, Rigid.velocity.y, Mathf.Abs(dif.y) * accel)
                 );
 
                 if(input.x > 0)
