@@ -21,7 +21,15 @@ public class MonsterLightRadius : MonoBehaviour {
 
     void Update()
     {
-        transform.position = new Vector3(Monster.transform.position.x, Monster.transform.position.y + 1f, transform.position.z);
-        lt.range = range * (8f / Cam.orthographicSize);
+        if(Monster == null)
+        {
+            Monster = GameObject.FindGameObjectWithTag("Monster");
+        }
+        else
+        {
+            transform.position = new Vector3(Monster.transform.position.x, Monster.transform.position.y + 1f, transform.position.z);
+            lt.range = range * (8f / Cam.orthographicSize);
+        }
+        
     }
 }

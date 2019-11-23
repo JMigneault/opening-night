@@ -36,5 +36,7 @@ MonoBehaviour:
   - RPC_IsNavigator
   - RPC_Test
   - RPC_UpdateInput
+  - RPC_MonsterInit
+  - RPC_NavigatorInit
   DisableAutoOpenWizard: 1
   ShowSettings: 0

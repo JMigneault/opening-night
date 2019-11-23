@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: -7346973300841362297}
   m_Layer: 0
   m_Name: Monster
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,7 +163,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01ef4277a3943f4b83f43d3935f4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playManager: {fileID: 0}
 --- !u!95 &702414250454181258
 Animator:
   serializedVersion: 3
@@ -200,7 +199,8 @@ MonoBehaviour:
   prefixField: -1
   Synchronization: 0
   OwnershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 0}
   viewIdField: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

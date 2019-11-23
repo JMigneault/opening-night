@@ -17,8 +17,8 @@ public class PlayManager : MonoBehaviour
     [SerializeField] private GameObject playCamera;
 
     // player characters
-    [SerializeField] private GameObject navigator;
-    [SerializeField] private GameObject monster;
+    private GameObject navigator;
+    private GameObject monster;
     private Vector2 navInitPos;
     private Vector2 monInitPos;
 
@@ -36,10 +36,6 @@ public class PlayManager : MonoBehaviour
     {
         this.placeCamera.SetActive(true);
         this.playCamera.SetActive(false);
-        this.navInitPos = navigator.transform.position;
-        this.monInitPos = monster.transform.position;
-        this.navigator.SetActive(false);
-        this.monster.SetActive(false);
         AddKey();
     }
 
@@ -56,6 +52,18 @@ public class PlayManager : MonoBehaviour
             Debug.Log("placing ended by player");
             this.SwitchToPlay();
         }
+    }
+
+    public void SetMonster(GameObject mon)
+    {
+        monster = mon;
+        monInitPos = mon.transform.position;
+}
+
+    public void SetNavigator(GameObject nav)
+    {
+        navigator = nav;
+        navInitPos = navigator.transform.position;
     }
 
     /**

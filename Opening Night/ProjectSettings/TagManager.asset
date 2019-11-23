@@ -10,6 +10,8 @@ TagManager:
   - Start
   - Player2Text
   - PhotonPlayer
+  - Monster
+  - GameManager
   layers:
   - Default
   - TransparentFX
