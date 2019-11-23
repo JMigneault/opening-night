@@ -7,6 +7,9 @@ TagManager:
   - Plane
   - Elevator
   - Trap
+  - Start
+  - Player2Text
+  - PhotonPlayer
   layers:
   - Default
   - TransparentFX
