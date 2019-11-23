@@ -6,16 +6,18 @@ using System.IO;
 
 public class GameSetupController : MonoBehaviourPunCallbacks
 {
+    private PhotonView PV;
+
+    [SerializeField]
+    private int gameplaySceneIndex;
     [SerializeField]
     private GameObject StartButton;
     [SerializeField]
     private GameObject Player2Text;
 
-    [SerializeField]
-    private int gameplaySceneIndex;
-
     void Start()
     {
+        PV = GetComponent<PhotonView>();
         CreatePlayer();
     }
 
@@ -36,6 +38,31 @@ public class GameSetupController : MonoBehaviourPunCallbacks
 
     public void StartGame()
     {
-        PhotonNetwork.LoadLevel(gameplaySceneIndex);
+        int isNavigator = Random.Range(0, 1);
+        PlayerInfo.PI.IsNavigator = isNavigator;
+        PlayerPrefs.SetInt("IsNavigator", isNavigator);
+        Debug.Log("NAVIGATOR: " + PlayerPrefs.GetInt("IsNavigator"));
+        PV.RPC("RPC_IsNavigator", RpcTarget.Others, isNavigator);
+
+        PV.RPC("RPC_StartGame", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void RPC_StartGame()
+    {
+        Debug.Log("start");
+        if(PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.LoadLevel(gameplaySceneIndex);
+        }
+    }
+
+    [PunRPC]
+    void RPC_IsNavigator(int navigator)
+    {
+        int isNavigator = 1 - navigator;
+        PlayerInfo.PI.IsNavigator = isNavigator;
+        PlayerPrefs.SetInt("IsNavigator", isNavigator);
+        Debug.Log("NAVIGATOR: " + PlayerPrefs.GetInt("IsNavigator"));
     }
 }

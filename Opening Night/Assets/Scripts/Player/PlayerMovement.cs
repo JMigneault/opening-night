@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private PhotonView PV;
+
     public GameObject PlayerObject;
 
     private float maxSpeed;
@@ -23,13 +26,22 @@ public class PlayerMovement : MonoBehaviour
     private const int WALK_BACKWARD = 3;
     private const int IDLE = 4;
 
+    private Dictionary<KeyCode, bool> KeyDict;
 
     // Use this for initialization
     void Start()
     {
+        PV = GetComponent<PhotonView>();
+
         Rigid = GetComponent<Rigidbody2D>();
         CharAnimator = GetComponent<Animator>();
         this.resetSpeed();
+
+        KeyDict = new Dictionary<KeyCode, bool>();
+        KeyDict[KeyCode.W] = false;
+        KeyDict[KeyCode.S] = false;
+        KeyDict[KeyCode.A] = false;
+        KeyDict[KeyCode.D] = false;
     }
 
     public void resetSpeed()
@@ -56,32 +68,86 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(PlayerPrefs.GetInt("IsNavigator") == 1)
+        {
+            UpdateControls();
+        }
+    }
+
+    private void UpdateControls()
+    {
+        bool changed = false;
+
+        if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyUp(KeyCode.W))
+        {
+            KeyDict[KeyCode.W] = Input.GetKey(KeyCode.W);
+            changed = true;
+        }
+        if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyUp(KeyCode.S))
+        {
+            KeyDict[KeyCode.S] = Input.GetKey(KeyCode.S);
+            changed = true;
+        }
+        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyUp(KeyCode.A))
+        {
+            KeyDict[KeyCode.A] = Input.GetKey(KeyCode.A);
+            changed = true;
+        }
+        if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyUp(KeyCode.D))
+        {
+            KeyDict[KeyCode.D] = Input.GetKey(KeyCode.D);
+            changed = true;
+        }
+
+        if(changed)
+        {
+            PV.RPC("RPC_UpdateInput", RpcTarget.Others, KeyDict[KeyCode.W], KeyDict[KeyCode.S], KeyDict[KeyCode.A], KeyDict[KeyCode.D], transform.position);
+        }
+    }
+
+    [PunRPC]
+    void RPC_UpdateInput(bool W, bool S, bool A, bool D, Vector3 pos)
+    {
+        KeyDict[KeyCode.W] = W;
+        KeyDict[KeyCode.S] = S;
+        KeyDict[KeyCode.A] = A;
+        KeyDict[KeyCode.D] = D;
+        transform.position = Vector3.MoveTowards(transform.position, pos, maxSpeed);
+    }
+
+    private void FixedUpdate()
+    {
+        Movement();
+    }
+
+    private void Movement()
+    {
         if(canMove)
         {
             Vector2 input = new Vector2(0, 0);
 
-            if(Input.GetKey(KeyCode.A))
+            if(KeyDict[KeyCode.A])
             {
                 input.x -= 1;
-                /*Vector2 scale = PlayerObject.transform.localScale;
-                scale.x = Mathf.Abs(scale.x);
-                PlayerObject.transform.localScale = scale;*/
+                /*Vector2 scale = transform.localScale;
+                scale.x = -1f * Mathf.Abs(scale.x);
+                transform.localScale = scale;*/
             }
 
-            if(Input.GetKey(KeyCode.D))
+            if(KeyDict[KeyCode.D])
             {
                 input.x += 1;
-                /*Vector2 scale = PlayerObject.transform.localScale;
-                scale.x = -1f * Mathf.Abs(scale.x);
-                PlayerObject.transform.localScale = scale;*/
+                /*Vector2 scale = transform.localScale;
+                scale.x = Mathf.Abs(scale.x);
+                transform.localScale = scale;*/
             }
 
-            if(Input.GetKey(KeyCode.W))
+            if(KeyDict[KeyCode.W])
             {
                 input.y += 1;
             }
 
-            if(Input.GetKey(KeyCode.S))
+            if(KeyDict[KeyCode.S])
             {
                 input.y -= 1;
             }

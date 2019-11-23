@@ -1,18 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class GameSetup : MonoBehaviour
+public class GameSetup : MonoBehaviourPunCallbacks
 {
-    public static GameSetup GS;
+    
 
-    public Transform[] spawnPoints;
+    private PhotonView PV;
 
-    private void OnEnable()
+    private void Start()
     {
-        if(GameSetup.GS == null)
-        {
-            GameSetup.GS = this;
-        }
+        PV = GetComponent<PhotonView>();
     }
 }

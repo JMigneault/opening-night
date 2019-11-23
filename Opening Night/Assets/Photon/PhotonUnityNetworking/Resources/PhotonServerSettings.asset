@@ -32,5 +32,9 @@ MonoBehaviour:
   - ClickRpc
   - DestroyRpc
   - RPC_PlayerJoined
+  - RPC_StartGame
+  - RPC_IsNavigator
+  - RPC_Test
+  - RPC_UpdateInput
   DisableAutoOpenWizard: 1
   ShowSettings: 0

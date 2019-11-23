@@ -7,14 +7,14 @@ using Photon.Pun;
 public class PhotonPlayer : MonoBehaviour
 {
     private PhotonView PV;
-    public GameObject myAvatar;
+    public GameObject myGameInfo;
 
     private void Start()
     {
         PV = GetComponent<PhotonView>();
         if(PV.IsMine)
         {
-            //myAvatar = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PlayerAvatar"), spawn.position, spawn.rotation, 0);
+            myGameInfo = PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonGameInfo"), transform.position, transform.rotation, 0);
         }
     }
 }
