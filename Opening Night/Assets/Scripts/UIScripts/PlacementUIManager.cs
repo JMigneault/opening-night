@@ -24,13 +24,13 @@ public class PlacementUIManager : MonoBehaviour
     /**
      * Colors the trap at the given position if one exists. Returns that trap's SpriteRenderer whcih should be passed into UnhighlightTrap.
      */
-    public SpriteRenderer HighlightTrap(Vector3 screenPos, Color color) 
+    public AbstractTrap HighlightTrap(Vector3 screenPos, Color color) 
     {
         if (oGrid.CheckCell(screenPos))
         {
-            SpriteRenderer spriteRenderer = oGrid.GetCellObject(screenPos).GetComponent<SpriteRenderer>();
-            spriteRenderer.color = color;
-            return spriteRenderer;
+            AbstractTrap trap = (AbstractTrap) oGrid.GetCellObject(screenPos);
+            trap.SetColor(color);
+            return trap;
         }
         return null;
     }
@@ -38,11 +38,11 @@ public class PlacementUIManager : MonoBehaviour
     /**
      * Sets a traps spriteRenderer back to its original white color.
      */
-    public void UnhighlightTrap(SpriteRenderer spriteRenderer)
+    public void UnhighlightTrap(AbstractTrap trap)
     {
-        if (spriteRenderer != null)
+        if (trap != null)
         {
-            spriteRenderer.color = Color.white;
+            trap.SetColor(Color.white);
         }
     }
 

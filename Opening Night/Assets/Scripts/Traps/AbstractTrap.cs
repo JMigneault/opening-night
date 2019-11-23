@@ -8,4 +8,9 @@ public abstract class AbstractTrap : AbstractCellObject
 
     public abstract TrapType GetTrapType();
 
+    public virtual void SetColor(Color color)
+    {
+        GetComponent<SpriteRenderer>().color = color;
+    }
+
 }

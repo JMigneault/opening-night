@@ -28,7 +28,7 @@ public class TrapPlacer : MonoBehaviour
 
     [SerializeField] PlacementUIManager placementUI;
 
-    private SpriteRenderer highlightedTrapSR;
+    private AbstractTrap highlightedTrap;
     [SerializeField] private GameObject placementSprite;
     [SerializeField] private Color highlightColor;
     [SerializeField] private PhaseManager phaseManager;
@@ -46,7 +46,7 @@ public class TrapPlacer : MonoBehaviour
         {
             trapCurrentNumber[i] = 0;
         }
-        highlightedTrapSR = null;
+        highlightedTrap = null;
     }
 
     private AbstractTrap GetTrap(TrapType trapType)
@@ -84,17 +84,17 @@ public class TrapPlacer : MonoBehaviour
 
     public void HighlightTrap(Vector2 screenPos)
     {
-        SpriteRenderer nextSR = placementUI.HighlightTrap(screenPos, highlightColor);
-        if (nextSR != highlightedTrapSR)
+        AbstractTrap nextTrap = placementUI.HighlightTrap(screenPos, highlightColor);
+        if (nextTrap != highlightedTrap)
         {
             UnhighlightTrap();
         }
-        highlightedTrapSR = nextSR;
+        highlightedTrap = nextTrap;
     }
 
     private void UnhighlightTrap()
     {
-        placementUI.UnhighlightTrap(highlightedTrapSR);
+        placementUI.UnhighlightTrap(highlightedTrap);
     }
 
     private void HoverTileValid(Vector2 screenPos)

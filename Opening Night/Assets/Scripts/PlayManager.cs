@@ -26,10 +26,13 @@ public class PlayManager : MonoBehaviour
     [SerializeField] private float placeTime;
 
     [SerializeField] private ObjectGrid objectGrid;
-    [SerializeField] CollectKey collectKey;
-    private Key key;
+    private bool foundKey = false;
 
     [SerializeField] private Canvas placementUI;
+
+    [SerializeField] private Chest[] chests;
+    private bool doorsOpen = false;
+    public bool DoorsOpen { get { return doorsOpen; } }
 
     // initially set up game to place phase
     void Start()
@@ -81,6 +84,11 @@ public class PlayManager : MonoBehaviour
 
     }
 
+    public void OpenDoors()
+    {
+        doorsOpen = true;
+    }
+
     /**
      * Switch game to place mode (disabling players, enabling place camera, etc.)
      */
@@ -114,15 +122,13 @@ public class PlayManager : MonoBehaviour
 
     public void AddKey()
     {
-        this.key = objectGrid.GenerateKey();
-        this.key.PlayManager = this;
-        collectKey.SetKey(false);
+        chests[Random.Range(0, chests.Length)].SetToHaveKey();
     }
 
     public void RemoveKey()
     {
-        objectGrid.DeleteCellObject(this.key.coords);
-        key.DeleteSelf(objectGrid);
+        //objectGrid.DeleteCellObject(this.key.coords);
+        // key.DeleteSelf(objectGrid);
     }
 
 
