@@ -70,11 +70,15 @@ public class TrapPlacer : MonoBehaviour
 
     private void IncrementTrap()
     {
-        Debug.Log(trapCurrentNumber[(int)currentTrap]);
-        while ((int) currentTrap != Enum.GetValues(typeof(TrapType)).Length - 1 
-            && trapLimiter.IsLimited(currentTrap, trapCurrentNumber[(int)currentTrap]))
+        if (trapLimiter.IsLimited(currentTrap, trapCurrentNumber[(int)currentTrap]))
         {
-            currentTrap = (TrapType)((int) currentTrap + 1);
+            for (int i = 0; i < Enum.GetValues(typeof(TrapType)).Length; i++)
+            {
+                if (!trapLimiter.IsLimited((TrapType) i, trapCurrentNumber[i])) {
+                    currentTrap = (TrapType)i;
+                    return;
+                }
+            }
         }
     }
 
@@ -130,7 +134,12 @@ public class TrapPlacer : MonoBehaviour
 
     private bool CheckTrapsRemaining(TrapType trap)
     {
-        return !trapLimiter.IsLimited(trap, trapCurrentNumber[(int) trap]);
+        return !trapLimiter.IsLimited(trap, trapCurrentNumber[(int)trap]);
+    }
+
+    public int GetNumRemaining(TrapType trap)
+    {
+        return trapCurrentNumber[(int)trap];
     }
 
     private bool CheckPlace(Vector2 mousePosition)
@@ -148,9 +157,14 @@ public class TrapPlacer : MonoBehaviour
         return !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && objectGrid.CheckCell(mousePosition) && objectGrid.IsWithinBounds(mousePosition);
     }
 
-    private bool CheckHover(Vector2 mousePosition)
+    private bool CheckHoverValid(Vector2 mousePosition)
     {
-        return !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && GetTrap(currentTrap).CanPlace(objectGrid.GetCoords(mousePosition), objectGrid) && objectGrid.IsWithinBounds(mousePosition);
+        return !Input.GetMouseButton(0) && !Input.GetMouseButton(1) && GetTrap(currentTrap).CanPlace(objectGrid.GetCoords(mousePosition), objectGrid) && CheckHoverBounds(mousePosition);
+    }
+
+    private bool CheckHoverBounds(Vector2 mousePosition)
+    {
+        return objectGrid.IsWithinBounds(mousePosition);
     }
 
     // Update is called once per frame
@@ -171,8 +185,8 @@ public class TrapPlacer : MonoBehaviour
         }
         if (CheckDelete(mp))
         {
+            trapCurrentNumber[(int)((AbstractTrap)objectGrid.GetCellObject(mp)).GetTrapType()]--;
             objectGrid.DeleteCellObject(mp);
-            trapCurrentNumber[(int)currentTrap]--;
         }
         if (CheckHighlight(mp))
         {
@@ -181,12 +195,16 @@ public class TrapPlacer : MonoBehaviour
         {
             UnhighlightTrap();
         }
-        if (CheckHover(mp) && CheckTrapsRemaining(currentTrap))
+        if (CheckHoverValid(mp) && CheckTrapsRemaining(currentTrap))
         {
             HoverTileValid(mp);
         } else
         {
             HoverTileInvalid(mp);
+        }
+        if (!CheckHoverBounds(mp))
+        {
+            UnhoverTile();
         }
         IncrementTrap(); // moves to next trap if you have run out
     }
