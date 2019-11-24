@@ -24,6 +24,23 @@ public class TrapTypeUIManager : MonoBehaviour
     private void Update()
     {
         text.text = maxNum - trapPlacer.GetNumRemaining(trapType) + " / " + maxNum;
+        if (trapPlacer.CurrentTrap == trapType)
+        {
+            Highlight();
+        } else
+        {
+            Unhighlight();
+        }
+    }
+
+    private void Highlight()
+    {
+        GetComponent<Image>().color = Color.cyan;
+    }
+
+    private void Unhighlight()
+    {
+        GetComponent<Image>().color = Color.white;
     }
 
 

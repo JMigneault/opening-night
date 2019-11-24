@@ -46,13 +46,8 @@ public class ObjectGrid : MonoBehaviour
     [SerializeField] private ToGridSpaceConverters gSpace;
 
     [SerializeField] CoordinateRange coordinateBounds;
-    [SerializeField] CoordinateRange keyBounds;
 
     [SerializeField] Tilemap wallsTM;
-
-    [SerializeField] Key key;
-
-    private Vector2Int keyPos;
 
     // track objects on the grid
     private Dictionary<Vector2Int, AbstractCellObject> gridObjects;
@@ -149,15 +144,6 @@ public class ObjectGrid : MonoBehaviour
     {
         return gSpace.SSToCoords(screenPos);
     }
-
-    public Key GenerateKey()
-    {
-        keyPos = keyBounds.RandomPosition(wallsTM);
-        Key key = (Key) CreateCellObject(keyPos, this.key);
-        key.coords = keyPos;
-        return key;
-    }
-
 
     /* NOTE: uncomment to determine the grid dimensions to set placement bounds
     private void Update()

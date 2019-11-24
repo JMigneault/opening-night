@@ -13,4 +13,9 @@ public abstract class AbstractTrap : AbstractCellObject
         GetComponent<SpriteRenderer>().color = color;
     }
 
+    virtual public void Rotate()
+    {
+        // no effect
+    }
+
 }

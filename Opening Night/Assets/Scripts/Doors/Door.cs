@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class DoorOpen : MonoBehaviour
+public class Door : MonoBehaviour
 {
 
     [SerializeField] private PlayManager playManager;
