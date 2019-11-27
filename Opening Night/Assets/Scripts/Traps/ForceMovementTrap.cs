@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ForceMovementTrap : AbstractOnEnterTrap
 {
-    [SerializeField] private float slideSpeed = 100;
+    [SerializeField] private float slideSpeed = 100.0f;
     private Vector2[] directions = { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
-    public int directionIndex = 1;
+    private int directionIndex = 1;
 
     private Rigidbody2D rigid;
 

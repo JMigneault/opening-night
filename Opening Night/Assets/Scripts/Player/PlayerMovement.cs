@@ -16,9 +16,15 @@ public class PlayerMovement : MonoBehaviour
     public float decel = 1.2f;
     public BoxCollider2D Collider;
 
+    [SerializeField] private float dashDuration;
+    [SerializeField] private float dashDecay;
+    [SerializeField] private float dashSpeed; 
+
     private bool canMove = true;
+    private bool isDashing = false;
     private Rigidbody2D Rigid;
     private Animator CharAnimator;
+    private Vector2 input;
 
     private const int WALK_RIGHT = 0;
     private const int WALK_FORWARD = 1;
@@ -122,26 +128,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
-        if(canMove)
+        input = new Vector2(0, 0);
+        if (KeyDict[KeyCode.A])
         {
-            Vector2 input = new Vector2(0, 0);
-
-            if(KeyDict[KeyCode.A])
-            {
                 input.x -= 1;
-                /*Vector2 scale = transform.localScale;
-                scale.x = -1f * Mathf.Abs(scale.x);
-                transform.localScale = scale;*/
-            }
-
-            if(KeyDict[KeyCode.D])
-            {
-                input.x += 1;
-                /*Vector2 scale = transform.localScale;
-                scale.x = Mathf.Abs(scale.x);
-                transform.localScale = scale;*/
-            }
-
+        }
+        if(KeyDict[KeyCode.D])
+        {
+            input.x += 1;
+        }
             if(KeyDict[KeyCode.W])
             {
                 input.y += 1;
@@ -151,8 +146,9 @@ public class PlayerMovement : MonoBehaviour
             {
                 input.y -= 1;
             }
-
-            if(input.magnitude > 0)
+        if (canMove || isDashing)
+        {
+            if (input.magnitude > 0)
             {
                 input.Normalize();
                 Vector2 dif = (input * maxSpeed) - Rigid.velocity;
@@ -212,6 +208,38 @@ public class PlayerMovement : MonoBehaviour
         Vector3 pos = transform.position;
         pos.z = pos.y;
         transform.position = pos;
+    }
+
+    public void Dash(PlayerLightRadius playerLight, float rangeTarget)
+    {
+        if (!isDashing)
+        {
+            CharAnimator.SetInteger("State", IDLE);
+            StartCoroutine(DashCoroutine(input, playerLight, rangeTarget));
+        }
+    }
+
+    private IEnumerator DashCoroutine(Vector2 direction, PlayerLightRadius playerLight, float rangeTarget)
+    {
+        isDashing = true;
+        playerLight.ShouldDecay = false;
+        float lightDecayRate = (playerLight.GetRange() - rangeTarget) / dashDuration;
+        Rigid.velocity = Vector2.zero;
+        float speed = dashSpeed;
+        Vector2 normDirection = direction.normalized;
+        float dashTime = 0.0f;
+        while (dashTime < dashDuration)
+        {
+            CharAnimator.SetInteger("State", IDLE);
+            Rigid.velocity = speed * direction;
+            speed = Mathf.Abs(dashSpeed - (dashDecay * dashTime * dashTime)); // quadratic decay
+            dashTime += Time.deltaTime;
+            playerLight.AdjustRange(-1 * Time.deltaTime * lightDecayRate);
+            yield return new WaitForFixedUpdate();
+        }
+        Rigid.velocity = Vector2.zero;
+        playerLight.ShouldDecay = true;
+        isDashing = false;
     }
 
     public void SetCanMove(bool move)

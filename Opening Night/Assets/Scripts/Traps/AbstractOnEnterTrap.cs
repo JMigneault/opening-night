@@ -6,19 +6,23 @@ using UnityEngine;
 public abstract class AbstractOnEnterTrap : AbstractTrap
 {
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    [SerializeField] private float triggerTime;
+    private SpriteRenderer spriteRenderer;
+    private bool activated = false;
+
+    private float collisionTime = 0.0f;
+
+    private void Start()
     {
-        if (collision.CompareTag("Player"))
-        {
-            ActivateTrap(collision.GetComponent<Player>());
-        }
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.enabled = false;
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (activated && collision.CompareTag("Player"))
         {
-            EndTrap(collision.GetComponent<Player>());
+            ActivateTrap(collision.GetComponent<Player>());
         }
     }
 
@@ -26,7 +30,35 @@ public abstract class AbstractOnEnterTrap : AbstractTrap
     {
         if (collision.CompareTag("Player"))
         {
-            DuringTrap(collision.GetComponent<Player>());
+            if (activated)
+            {
+                DuringTrap(collision.GetComponent<Player>());
+            }
+            else
+            {
+                spriteRenderer.enabled = true;
+                collisionTime += Time.deltaTime;
+                if (collisionTime > triggerTime)
+                {
+                    activated = true;
+                    ActivateTrap(collision.GetComponent<Player>());
+                }
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            if (activated)
+            {
+                EndTrap(collision.GetComponent<Player>());
+            } else
+            {
+                collisionTime = 0.0f;
+                spriteRenderer.enabled = false;
+            }
         }
     }
 

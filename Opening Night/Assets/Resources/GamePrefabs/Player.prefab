@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 6971771742966937895}
   - component: {fileID: 6971771742966937893}
   - component: {fileID: 6971771742966937891}
-  - component: {fileID: 6971771742966937888}
   - component: {fileID: 1271865418134802751}
   m_Layer: 10
   m_Name: Player
@@ -99,6 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e798af270335a634faf6190bd7692a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashCost: 2
 --- !u!114 &6971771742966937892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,10 +112,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerObject: {fileID: 6971771742966937896}
-  startingSpeed: 5
+  startingSpeed: 3
   accel: 0.65
   decel: 1.2
   Collider: {fileID: 6971771742966937895}
+  dashDuration: 0.2
+  dashDecay: 500
+  dashSpeed: 20
 --- !u!61 &6971771742966937895
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -182,18 +185,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6971771742966937888
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6971771742966937896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 433f3a87bf02546858b03e740abf92b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1271865418134802751
 MonoBehaviour:
   m_ObjectHideFlags: 0

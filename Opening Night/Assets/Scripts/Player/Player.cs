@@ -5,10 +5,34 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private PlayerMovement movement;
+    private PlayerLightRadius playerLight;
+    public PlayerLightRadius PlayerLight { set { this.playerLight = value; } }
+
+    [SerializeField] private float dashCost;
 
     private void Start()
     {
         movement = GetComponent<PlayerMovement>();
+    }
+
+    private void Update()
+    {
+        if (playerLight != null)
+        {
+            if (playerLight.GetRange() > dashCost)
+            {
+                playerLight.SetColor(Color.white);
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+                    movement.Dash(playerLight, playerLight.GetRange() - dashCost);
+                    playerLight.AdjustRange(-1 * dashCost);
+                }
+            }
+            else
+            {
+                playerLight.SetColor(Color.red);
+            }
+        }
     }
 
     // change the speed of the player
@@ -22,19 +46,6 @@ public class Player : MonoBehaviour
         return movement.GetMaxSpeed();
     }
 
-    // player slides in a given direction until hitting wall/monster
-    public void Slide(float speed, int direction)
-    {
-        //this.SetSpeed(speed);
-        //will prevent player input until hits a wall
-        //this.GetComponent<PlayerMovement>().SetCanMove(false);
-
-
-
-
-        throw new System.NotImplementedException();
-    }
-
     public void RestrictMovement(float time)
     {
         movement.SetCanMove(false);
@@ -45,5 +56,7 @@ public class Player : MonoBehaviour
     {
         movement.SetCanMove(true);
     }
+
+
 
 }
