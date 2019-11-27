@@ -49,12 +49,6 @@ public class GameplaySpawner : MonoBehaviourPunCallbacks
     {
         Debug.Log("navigator please");
         navigatorObj = GameObject.FindGameObjectWithTag("Player");
-        GameManager.GetComponent<PlayManager>().SetMonster(navigatorObj);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        GameManager.GetComponent<PlayManager>().SetNavigator(navigatorObj);
     }
 }

@@ -228,4 +228,12 @@ public class PlayerMovement : MonoBehaviour
     {
         return maxSpeed;
     }
+
+    public void ResetInputs()
+    {
+        KeyDict[KeyCode.W] = false;
+        KeyDict[KeyCode.S] = false;
+        KeyDict[KeyCode.A] = false;
+        KeyDict[KeyCode.D] = false;
+    }
 }

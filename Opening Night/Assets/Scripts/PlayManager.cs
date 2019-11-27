@@ -59,12 +59,14 @@ public class PlayManager : MonoBehaviour
 
     public void SetMonster(GameObject mon)
     {
+        Debug.Log("Monster set");
         monster = mon;
         monInitPos = mon.transform.position;
 }
 
     public void SetNavigator(GameObject nav)
     {
+        Debug.Log("Navigator set");
         navigator = nav;
         navInitPos = navigator.transform.position;
     }
@@ -130,7 +132,7 @@ public class PlayManager : MonoBehaviour
 
     public void AddKey()
     {
-        chests[Random.Range(0, chests.Length)].SetToHaveKey();
+        //chests[Random.Range(0, chests.Length)].SetToHaveKey();
     }
 
     public void RemoveKey()

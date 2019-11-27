@@ -221,4 +221,12 @@ public class MonsterMovement : MonoBehaviour
     {
         canMove = move;
     }
+
+    public void ResetInputs()
+    {
+        KeyDict[KeyCode.W] = false;
+        KeyDict[KeyCode.S] = false;
+        KeyDict[KeyCode.A] = false;
+        KeyDict[KeyCode.D] = false;
+    }
 }

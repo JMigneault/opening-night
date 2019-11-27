@@ -38,5 +38,6 @@ MonoBehaviour:
   - RPC_UpdateInput
   - RPC_MonsterInit
   - RPC_NavigatorInit
+  - RPC_GameOver
   DisableAutoOpenWizard: 1
   ShowSettings: 0
