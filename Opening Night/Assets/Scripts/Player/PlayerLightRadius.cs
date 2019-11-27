@@ -2,54 +2,78 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Light))]
 public class PlayerLightRadius : MonoBehaviour {
-    public GameObject Player;
-    public GameObject Monster;
-    public Camera Cam;
-    public Camera Cam2;
 
-    private float range;
-    private float intensity;
+    public Player player;
     private Light lt;
-    
 
-    void Start()
+    [SerializeField] private float maxRange; // 20
+    [SerializeField] private float minRange; // 3
+    [SerializeField] private float lightDecayRate; // .25
+    [SerializeField] private float lightDecayConstant; // 10/4
+    [SerializeField] private float lightGrowthRate; // 20
+    [SerializeField] private float lightGrowthDelay;
+
+    private float chargeTime = 0.0f;
+
+    private bool shouldDecay = true;
+    public bool ShouldDecay { set { shouldDecay = value; } }
+
+    private void Start()
     {
-        lt = GetComponent<Light>();
-        range = lt.range;
-        intensity = lt.intensity;
+        this.lt = GetComponent<Light>();
+    }
+
+    public float GetRange()
+    {
+        return this.lt.range - minRange;
+    }
+
+    public void AdjustRange(float amount)
+    {
+        this.lt.range = Mathf.Clamp(this.lt.range + amount, minRange, maxRange);
+    }
+
+    public void SetColor(Color color)
+    {
+        lt.color = color;
+    }
+
+    private void UpdatePosition()
+    {
+        Vector2 playerPos = player.transform.position;
+        transform.position = new Vector3(playerPos.x, playerPos.y + .6f, transform.position.z);
     }
 
     void Update()
     {
-        if(Player == null)
+        if(player == null)
         {
-            Player = GameObject.FindGameObjectWithTag("Player");
+            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+            player.PlayerLight = this;
         }
         else
         {
             if(Input.GetKey(KeyCode.Space))
             {
-                Player.GetComponent<PlayerMovement>().SetCanMove(false);
-                range += Time.deltaTime * 20f;
+                player.GetComponent<PlayerMovement>().SetCanMove(false);
+                if (chargeTime > lightGrowthDelay)
+                {
+                    AdjustRange(Time.deltaTime * lightGrowthRate);
+                }
+                chargeTime += Time.deltaTime;
             }
             else if(Input.GetKeyUp(KeyCode.Space))
             {
-                Player.GetComponent<PlayerMovement>().SetCanMove(true);
+                chargeTime = 0.0f;
+                player.GetComponent<PlayerMovement>().SetCanMove(true);
             }
-            else
+            else if (shouldDecay)
             {
-                range -= Time.deltaTime * 20f * ((range + 10f) / 80f);
+                AdjustRange(-1 * Time.deltaTime * (this.lt.range * lightDecayRate + lightDecayConstant));
             }
-
-            range = Mathf.Clamp(range, 3f, 20f);
-
-            Vector2 trans = Player.transform.position;
-            Vector2 worldVec = trans;
-            transform.position = new Vector3(worldVec.x, worldVec.y + .6f, transform.position.z);
-            lt.range = range;// * (8f / Cam.orthographicSize);
+            UpdatePosition();
         }
-
-        
     }
 }

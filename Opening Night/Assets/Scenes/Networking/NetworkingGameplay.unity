@@ -361,8 +361,8 @@ MonoBehaviour:
   playCamera: {fileID: 1778963887719063438}
   placeTime: 60
   objectGrid: {fileID: 1573629683}
-  collectKey: {fileID: 0}
   placementUI: {fileID: 1505705223}
+  chests: []
 --- !u!114 &210176265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6682,14 +6682,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectGrid: {fileID: 1573629683}
-  traps:
+  trapPrefabs:
   - {fileID: -4845854966627145129, guid: e7434db7cd16fef4482fd295e5cd315d, type: 3}
+  - {fileID: -346897064799515198, guid: 0898af3faaad97743add6d0fbffdd155, type: 3}
   - {fileID: -7640435567452924415, guid: a6a898e0d43f43d42ba5ceb37039db49, type: 3}
-  - {fileID: 1926059768226024156, guid: 6cb99ed8dd385724d9f7ec99e81a291a, type: 3}
   - {fileID: -2355884608174946318, guid: e9434018e1a1d8143a978257522924a5, type: 3}
-  - {fileID: -4769452414244503250, guid: acc938d4330f9a4489f9bdb020f54b29, type: 3}
   - {fileID: 6914116337820568410, guid: 91b6c72dbe2b83846855a37f09315992, type: 3}
-  - {fileID: 399257148182548500, guid: 0898af3faaad97743add6d0fbffdd155, type: 3}
+  - {fileID: 1926059768226024156, guid: 6cb99ed8dd385724d9f7ec99e81a291a, type: 3}
+  - {fileID: -4769452414244503250, guid: acc938d4330f9a4489f9bdb020f54b29, type: 3}
   trapLimiter: {fileID: 516200405}
   placementUI: {fileID: 1965686406}
   placementSprite: {fileID: 721913915}
@@ -10144,11 +10144,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
-    - target: {fileID: 1778963888014520473, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1778963888014520472, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10203,56 +10198,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: Monster
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889523986490, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889523986490, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: Monster
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889654859734, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963888591170778, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889523986485, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: m_Range
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889523986485, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: m_Intensity
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889619898027, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: m_Range
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889619898027, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: m_Intensity
-      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61f755296e984754097c45f2291841dd, type: 3}

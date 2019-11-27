@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class Chest : MonoBehaviour
 {
     [SerializeField] private bool containsKey;
@@ -35,12 +37,16 @@ public class Chest : MonoBehaviour
         if (containsKey)
         {
             playManager.OpenDoors();
+            GetComponent<SpriteRenderer>().color = Color.green;
+        } else
+        {
+            GetComponent<SpriteRenderer>().color = Color.red;
         }
     }
 
     private void Update()
     {
-        if (isSearching)
+        if (isSearching && !opened)
         {
             timeSearched += Time.deltaTime;
             if (timeSearched > searchTime)
@@ -50,17 +56,17 @@ public class Chest : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.tag == "Player")
         {
             StartSearch();
         }
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.tag == "Player")
         {
             EndSearch();
         }

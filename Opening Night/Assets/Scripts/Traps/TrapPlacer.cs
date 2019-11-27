@@ -19,12 +19,13 @@ public enum TrapType
 public class TrapPlacer : MonoBehaviour
 {
     [SerializeField] ObjectGrid objectGrid;
-    [SerializeField] private AbstractTrap[] traps;
+    [SerializeField] private AbstractTrap[] trapPrefabs;
     [SerializeField] private TrapLimiter trapLimiter;
     public TrapLimiter TrapLimiter { get { return trapLimiter; } }
     private int[] trapCurrentNumber;
     private TrapType currentTrap;
-    public TrapType CurrentTrap { get; }
+    public TrapType CurrentTrap { get { return currentTrap; } }
+    private AbstractTrap[] traps;
 
     [SerializeField] PlacementUIManager placementUI;
 
@@ -40,6 +41,11 @@ public class TrapPlacer : MonoBehaviour
     //Start called once
     private void Start()
     {
+        traps = new AbstractTrap[trapPrefabs.Length];
+        for (int i = 0; i < trapPrefabs.Length; i++)
+        {
+            traps[i] = Instantiate<AbstractTrap>(trapPrefabs[i], new Vector2(-100, 0), Quaternion.identity);
+        }
         currentTrap = TrapType.Barricade;
         trapCurrentNumber = new int[Enum.GetValues(typeof(TrapType)).Length];
         for(int i = 0; i < trapCurrentNumber.Length; i++)
@@ -65,7 +71,6 @@ public class TrapPlacer : MonoBehaviour
     public void ChangeTrap(TrapType trapType)
     {
         this.currentTrap = trapType;
-        Debug.Log(currentTrap);
     }
 
     private void IncrementTrap()
@@ -132,6 +137,13 @@ public class TrapPlacer : MonoBehaviour
         }
     }
 
+    void CheckForRotate()
+    {
+        if (Input.GetKeyDown(KeyCode.R)) {
+            GetTrap(currentTrap).Rotate();
+        }
+    }
+
     private bool CheckTrapsRemaining(TrapType trap)
     {
         return !trapLimiter.IsLimited(trap, trapCurrentNumber[(int)trap]);
@@ -176,6 +188,7 @@ public class TrapPlacer : MonoBehaviour
             return;
         }
         CheckTrapChange();
+        CheckForRotate();
         Vector2 mp = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         // gets input
         if (CheckPlace(mp) && CheckTrapsRemaining(currentTrap))

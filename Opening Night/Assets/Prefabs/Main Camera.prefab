@@ -25,7 +25,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1778963888014520473}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.52, z: -14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -235,8 +235,8 @@ Light:
   serializedVersion: 9
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 40
-  m_Range: 84.24
+  m_Intensity: 200
+  m_Range: 4
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -328,10 +328,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed3df37893bd5144895362f11057b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 0}
-  Monster: {fileID: 0}
-  Cam: {fileID: 1778963888591170774}
-  Cam2: {fileID: 1778963888014520474}
+  player: {fileID: 0}
+  maxRange: 10
+  minRange: 2
+  lightDecayRate: 0.05
+  lightDecayConstant: 0.1
+  lightGrowthRate: 3
+  lightGrowthDelay: 0.5
 --- !u!108 &1778963889619898027
 Light:
   m_ObjectHideFlags: 0
@@ -343,8 +346,8 @@ Light:
   serializedVersion: 9
   m_Type: 2
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 40
-  m_Range: 84.24
+  m_Intensity: 500
+  m_Range: 5
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10

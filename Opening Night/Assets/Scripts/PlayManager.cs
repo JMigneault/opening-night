@@ -26,7 +26,6 @@ public class PlayManager : MonoBehaviour
     [SerializeField] private float placeTime;
 
     [SerializeField] private ObjectGrid objectGrid;
-    private bool foundKey = false;
 
     [SerializeField] private Canvas placementUI;
 
@@ -96,7 +95,7 @@ public class PlayManager : MonoBehaviour
 
     public void OpenDoors()
     {
-        doorsOpen = true;
+        this.doorsOpen = true;
     }
 
     /**
