@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashSpeed; 
 
     private bool canMove = true;
+    public bool CanMove { get { return canMove; } }
     private bool isDashing = false;
     private Rigidbody2D Rigid;
     private Animator CharAnimator;
@@ -255,5 +256,15 @@ public class PlayerMovement : MonoBehaviour
     public float GetMaxSpeed()
     {
         return maxSpeed;
+    }
+
+    public void SetDashSpeed(float newSpeed)
+    {
+        dashSpeed = newSpeed;
+    }
+
+    public float GetDashSpeed()
+    {
+        return dashSpeed;
     }
 }

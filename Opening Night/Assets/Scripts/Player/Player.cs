@@ -22,10 +22,9 @@ public class Player : MonoBehaviour
             if (playerLight.GetRange() > dashCost)
             {
                 playerLight.SetColor(Color.white);
-                if (Input.GetKeyDown(KeyCode.LeftShift))
+                if (Input.GetKeyDown(KeyCode.LeftShift) && movement.CanMove)
                 {
                     movement.Dash(playerLight, playerLight.GetRange() - dashCost);
-                    playerLight.AdjustRange(-1 * dashCost);
                 }
             }
             else
@@ -44,6 +43,16 @@ public class Player : MonoBehaviour
     public float GetSpeed()
     {
         return movement.GetMaxSpeed();
+    }
+
+    public void SetDashSpeed(float speed)
+    {
+        movement.SetDashSpeed(speed);
+    }
+
+    public float GetDashSpeed()
+    {
+        return movement.GetDashSpeed();
     }
 
     public void RestrictMovement(float time)

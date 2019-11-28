@@ -120,4 +120,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ce57a8196975ef4b86e3aea541d7d37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decreasedSpeed: 3
+  triggerTime: 0.4
+  decreasedSpeed: 2
+  decreasedDashSpeed: 15
