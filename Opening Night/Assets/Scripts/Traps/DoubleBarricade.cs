@@ -24,16 +24,16 @@ public abstract class DoubleBarricade : AbstractTrap
         return base.CanPlace(coords, objectGrid) && base.CanPlace(coords + GetPairOffset(), objectGrid);
     }
 
-    public override void Place(Vector3 screenPos, ObjectGrid objectGrid)
+    public override void Place(Vector2Int mainCoords, ObjectGrid objectGrid)
     {
-        Vector2Int mainCoords = objectGrid.GetCoords(screenPos);
         Vector2Int pairCoords = mainCoords + GetPairOffset();
-        DoubleBarricade main = (DoubleBarricade) objectGrid.CreateCellObject(mainCoords, this);
-        DoubleBarricade pair = (DoubleBarricade) objectGrid.CreateCellObject(pairCoords, pairPrefab);
+        DoubleBarricade main = (DoubleBarricade)objectGrid.CreateCellObject(mainCoords, this);
+        DoubleBarricade pair = (DoubleBarricade)objectGrid.CreateCellObject(pairCoords, pairPrefab);
         main.Pair = pair;
         main.Coords = mainCoords;
         pair.Pair = main;
         pair.Coords = pairCoords;
+
     }
 
     public override void DeleteSelf(ObjectGrid objectGrid)

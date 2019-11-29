@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Monster : MonoBehaviour
 {
+
+    private PhotonView pv;
 
     [SerializeField] private MonsterWeapon attackObject;
     [SerializeField] private float attackDelay;
@@ -15,10 +18,12 @@ public class Monster : MonoBehaviour
     
     private void Start()
     {
+        pv = GetComponent<PhotonView>();
         movement = GetComponent<MonsterMovement>();
         attackObject.gameObject.SetActive(false);
     }
 
+    [PunRPC]
     private void FreezeAttack()
     {
         Vector2 input = movement.GetInput();
@@ -40,9 +45,10 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && PlayerPrefs.GetInt("IsNavigator") == 0)
         {
             FreezeAttack();
+            pv.RPC("FreezeAttack", RpcTarget.Others);
         }
     }
 

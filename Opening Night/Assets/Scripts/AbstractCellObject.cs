@@ -23,9 +23,14 @@ public abstract class AbstractCellObject : MonoBehaviour
         Object.Destroy(this.gameObject);
     }
 
-    public virtual void Place(Vector3 screenPos, ObjectGrid objectGrid)
+    public void Place(Vector3 screenPos, ObjectGrid objectGrid)
     {
-        objectGrid.CreateCellObject(screenPos, this);
+        Place(objectGrid.GetCoords(screenPos), objectGrid);
+    }
+
+    public virtual void Place(Vector2Int coords, ObjectGrid objectGrid)
+    {
+        objectGrid.CreateCellObject(coords, this);
     }
 
 }

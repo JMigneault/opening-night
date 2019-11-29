@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
         Rigid = GetComponent<Rigidbody2D>();
         CharAnimator = GetComponent<Animator>();
-        this.resetSpeed();
+        this.ResetSpeed();
 
         KeyDict = new Dictionary<KeyCode, bool>();
         KeyDict[KeyCode.W] = false;
@@ -51,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         KeyDict[KeyCode.D] = false;
     }
 
-    public void resetSpeed()
+    public void ResetSpeed()
     {
         this.maxSpeed = this.startingSpeed; 
     }

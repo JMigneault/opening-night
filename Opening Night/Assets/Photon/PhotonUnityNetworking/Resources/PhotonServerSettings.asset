@@ -38,5 +38,12 @@ MonoBehaviour:
   - RPC_UpdateInput
   - RPC_MonsterInit
   - RPC_NavigatorInit
+  - FreezeAttack
+  - Dash
+  - BoostLight
+  - StopBoosting
+  - ChangeTrap
+  - DeleteTrap
+  - PlaceTrap
   DisableAutoOpenWizard: 1
   ShowSettings: 0

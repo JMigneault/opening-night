@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 [RequireComponent(typeof(Light))]
 public class PlayerLightRadius : MonoBehaviour {
@@ -20,8 +21,11 @@ public class PlayerLightRadius : MonoBehaviour {
     private bool shouldDecay = true;
     public bool ShouldDecay { set { shouldDecay = value; } }
 
+    private PhotonView pv;
+
     private void Start()
     {
+        pv = GetComponent<PhotonView>();
         this.lt = GetComponent<Light>();
     }
 
@@ -55,19 +59,15 @@ public class PlayerLightRadius : MonoBehaviour {
         }
         else
         {
-            if(Input.GetKey(KeyCode.Space))
+            if(Input.GetKey(KeyCode.Space) && PlayerPrefs.GetInt("IsNavigator") == 1)
             {
-                player.GetComponent<PlayerMovement>().SetCanMove(false);
-                if (chargeTime > lightGrowthDelay)
-                {
-                    AdjustRange(Time.deltaTime * lightGrowthRate);
-                }
-                chargeTime += Time.deltaTime;
+                BoostLight();
+                pv.RPC("BoostLight", RpcTarget.Others);
             }
-            else if(Input.GetKeyUp(KeyCode.Space))
+            else if(Input.GetKeyUp(KeyCode.Space) && PlayerPrefs.GetInt("IsNavigator") == 1)
             {
-                chargeTime = 0.0f;
-                player.GetComponent<PlayerMovement>().SetCanMove(true);
+                StopBoosting();
+                pv.RPC("StopBoosting", RpcTarget.Others);
             }
             else if (shouldDecay)
             {
@@ -75,5 +75,23 @@ public class PlayerLightRadius : MonoBehaviour {
             }
             UpdatePosition();
         }
+    }
+
+    [PunRPC]
+    private void BoostLight()
+    {
+        player.GetComponent<PlayerMovement>().SetCanMove(false);
+        if (chargeTime > lightGrowthDelay)
+        {
+            AdjustRange(Time.deltaTime * lightGrowthRate);
+        }
+        chargeTime += Time.deltaTime;
+    }
+
+    [PunRPC]
+    private void StopBoosting()
+    {
+        chargeTime = 0.0f;
+        player.GetComponent<PlayerMovement>().SetCanMove(true);
     }
 }
