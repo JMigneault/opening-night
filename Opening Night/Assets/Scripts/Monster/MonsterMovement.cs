@@ -72,6 +72,10 @@ public class MonsterMovement : MonoBehaviour
         {
             UpdateControls();
         }
+        else if(PV == null)
+        {
+            UpdateControlsLocal();
+        }
     }
 
     public Vector2 GetInput()
@@ -103,6 +107,14 @@ public class MonsterMovement : MonoBehaviour
             input.y -= 1;
         }
         return input.normalized;
+    }
+
+    private void UpdateControlsLocal()
+    {
+        keyDict[KeyCode.UpArrow] = Input.GetKey(KeyCode.UpArrow);
+        keyDict[KeyCode.DownArrow] = Input.GetKey(KeyCode.DownArrow);
+        keyDict[KeyCode.LeftArrow] = Input.GetKey(KeyCode.LeftArrow);
+        keyDict[KeyCode.RightArrow] = Input.GetKey(KeyCode.RightArrow);
     }
 
     private void UpdateControls()
@@ -222,5 +234,13 @@ public class MonsterMovement : MonoBehaviour
     public void SetCanMove(bool move)
     {
         canMove = move;
+    }
+
+    public void ResetInputs()
+    {
+        keyDict[KeyCode.W] = false;
+        keyDict[KeyCode.S] = false;
+        keyDict[KeyCode.A] = false;
+        keyDict[KeyCode.D] = false;
     }
 }

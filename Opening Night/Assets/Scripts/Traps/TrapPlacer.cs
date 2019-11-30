@@ -39,12 +39,11 @@ public class TrapPlacer : MonoBehaviour
 
     private bool canPlace = true;
 
-    private PhotonView pv;
-
+    private PhotonView PV;
     //Start called once
     private void Start()
     {
-        pv = GetComponent<PhotonView>();
+        PV = GetComponent<PhotonView>();
         traps = new AbstractTrap[trapPrefabs.Length];
         for (int i = 0; i < trapPrefabs.Length; i++)
         {
@@ -78,7 +77,7 @@ public class TrapPlacer : MonoBehaviour
         this.currentTrap = trapType;
         if (PlayerPrefs.GetInt("IsNavigator") == 0)
         {
-            pv.RPC("ChangeTrap", RpcTarget.Others, trapType);
+            PV.RPC("ChangeTrap", RpcTarget.Others, trapType);
         }
     }
 
@@ -159,7 +158,7 @@ public class TrapPlacer : MonoBehaviour
         GetTrap(currentTrap).Rotate();
         if (PlayerPrefs.GetInt("IsNavigator") == 0)
         {
-            pv.RPC("RotateCurrentTrap", RpcTarget.Others);
+            PV.RPC("RotateCurrentTrap", RpcTarget.Others);
         }
     }
 
@@ -204,7 +203,7 @@ public class TrapPlacer : MonoBehaviour
         GetTrap(currentTrap).Place(new Vector2Int((int)coords.x, (int)coords.y), objectGrid);
         if (PlayerPrefs.GetInt("IsNavigator") == 0)
         {
-            pv.RPC("PlaceTrap", RpcTarget.Others, coords);
+            PV.RPC("PlaceTrap", RpcTarget.Others, coords);
         }
     }
 
@@ -215,7 +214,7 @@ public class TrapPlacer : MonoBehaviour
         objectGrid.DeleteCellObject(new Vector2Int((int)coords.x, (int)coords.y));
         if (PlayerPrefs.GetInt("IsNavigator") == 0)
         {
-            pv.RPC("DeleteTrap", RpcTarget.Others, coords);
+            PV.RPC("DeleteTrap", RpcTarget.Others, coords);
         }
     }
 
@@ -233,6 +232,14 @@ public class TrapPlacer : MonoBehaviour
         Vector2 mp = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         if (CheckPlace(mp) && CheckTrapsRemaining(currentTrap))
         {
+            Debug.Log("trap placed " + mp);
+            Vector2Int gridPos = objectGrid.GetCoords(mp);
+            if(PV)
+            {
+                PV.RPC("RPC_PlaceTrap", RpcTarget.Others, (byte)currentTrap, gridPos.x, gridPos.y);
+
+            }
+            GetTrap(currentTrap).Place(gridPos, objectGrid);
             trapCurrentNumber[(int)currentTrap]++;
             PlaceTrap(objectGrid.GetCoords(mp));
         }
@@ -260,6 +267,13 @@ public class TrapPlacer : MonoBehaviour
             UnhoverTile();
         }
         IncrementTrap(); // moves to next trap if you have run out
+    }
+
+    [PunRPC]
+    void RPC_PlaceTrap(Byte currentTrap, int gridPosX, int gridPosY)
+    {
+        Debug.Log("received trap");
+        GetTrap((TrapType)currentTrap).Place(new Vector2Int(gridPosX, gridPosY), objectGrid);
     }
 
 }

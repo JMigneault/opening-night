@@ -75,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(PlayerPrefs.GetInt("IsNavigator") == 1)
+        if(PV == null || PlayerPrefs.GetInt("IsNavigator") == 1)
         {
             UpdateControls();
         }
@@ -106,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
             changed = true;
         }
 
-        if(changed)
+        if(PV && changed)
         {
             PV.RPC("RPC_UpdateInput", RpcTarget.Others, KeyDict[KeyCode.W], KeyDict[KeyCode.S], KeyDict[KeyCode.A], KeyDict[KeyCode.D], transform.position);
         }
@@ -256,6 +256,14 @@ public class PlayerMovement : MonoBehaviour
     public float GetMaxSpeed()
     {
         return maxSpeed;
+    }
+
+    public void ResetInputs()
+    {
+        KeyDict[KeyCode.W] = false;
+        KeyDict[KeyCode.S] = false;
+        KeyDict[KeyCode.A] = false;
+        KeyDict[KeyCode.D] = false;
     }
 
     public void SetDashSpeed(float newSpeed)

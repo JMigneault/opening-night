@@ -12,8 +12,7 @@ public class GameplaySpawner : MonoBehaviourPunCallbacks
     public Transform playerSpawn;
     public Transform monsterSpawn;
 
-    [SerializeField]
-    private GameObject GameManager;
+    [SerializeField] private GameObject GameManager;
 
     private GameObject monsterObj;
     private GameObject navigatorObj;
@@ -50,11 +49,5 @@ public class GameplaySpawner : MonoBehaviourPunCallbacks
         Debug.Log("navigator please");
         navigatorObj = GameObject.FindGameObjectWithTag("Player");
         GameManager.GetComponent<PlayManager>().SetNavigator(navigatorObj);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

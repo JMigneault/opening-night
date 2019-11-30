@@ -67,14 +67,23 @@ public class PlayManager : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    void RPC_SpacePressed()
+    {
+        Debug.Log("placing ended by player");
+        this.SwitchToPlay();
+    }
+
     public void SetMonster(GameObject mon)
     {
+        Debug.Log("Monster set");
         monster = mon;
         monInitPos = mon.transform.position;
 }
 
     public void SetNavigator(GameObject nav)
     {
+        Debug.Log("Navigator set");
         navigator = nav;
         navInitPos = navigator.transform.position;
     }

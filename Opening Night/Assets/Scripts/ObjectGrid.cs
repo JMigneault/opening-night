@@ -49,6 +49,7 @@ public class ObjectGrid : MonoBehaviour
 
     [SerializeField] Tilemap wallsTM;
 
+
     // track objects on the grid
     private Dictionary<Vector2Int, AbstractCellObject> gridObjects;
 
