@@ -163,6 +163,7 @@ public class PlayManager : MonoBehaviour
     public void AddKey()
     {
         int index = Random.Range(0, chests.Length);
+        Debug.Log(index);
         AddKey(index);
         pv.RPC("AddKey", RpcTarget.Others, index);
     }

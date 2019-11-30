@@ -60,6 +60,7 @@ public class Chest : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            Debug.Log("trigger");
             StartSearch();
         }
     }
