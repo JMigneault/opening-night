@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashSpeed; 
 
     private bool canMove = true;
+    public bool CanMove { get { return canMove; } }
     private bool isDashing = false;
     private Rigidbody2D Rigid;
     private Animator CharAnimator;
@@ -41,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
         Rigid = GetComponent<Rigidbody2D>();
         CharAnimator = GetComponent<Animator>();
-        this.resetSpeed();
+        this.ResetSpeed();
 
         KeyDict = new Dictionary<KeyCode, bool>();
         KeyDict[KeyCode.W] = false;
@@ -50,7 +51,7 @@ public class PlayerMovement : MonoBehaviour
         KeyDict[KeyCode.D] = false;
     }
 
-    public void resetSpeed()
+    public void ResetSpeed()
     {
         this.maxSpeed = this.startingSpeed; 
     }
@@ -74,7 +75,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if(PlayerPrefs.GetInt("IsNavigator") == 1)
+        if(PV == null || PlayerPrefs.GetInt("IsNavigator") == 1)
         {
             UpdateControls();
         }
@@ -105,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
             changed = true;
         }
 
-        if(changed)
+        if(PV && changed)
         {
             PV.RPC("RPC_UpdateInput", RpcTarget.Others, KeyDict[KeyCode.W], KeyDict[KeyCode.S], KeyDict[KeyCode.A], KeyDict[KeyCode.D], transform.position);
         }
@@ -263,5 +264,15 @@ public class PlayerMovement : MonoBehaviour
         KeyDict[KeyCode.S] = false;
         KeyDict[KeyCode.A] = false;
         KeyDict[KeyCode.D] = false;
+    }
+
+    public void SetDashSpeed(float newSpeed)
+    {
+        dashSpeed = newSpeed;
+    }
+
+    public float GetDashSpeed()
+    {
+        return dashSpeed;
     }
 }

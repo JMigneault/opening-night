@@ -30,17 +30,22 @@ MonoBehaviour:
   StartInOfflineMode: 0
   RpcList:
   - ClickRpc
+  - CreateCellObject
   - DestroyRpc
-  - RPC_PlayerJoined
-  - RPC_StartGame
+  - RPC_GameOver
   - RPC_IsNavigator
-  - RPC_Test
-  - RPC_UpdateInput
   - RPC_MonsterInit
   - RPC_NavigatorInit
-  - RPC_GameOver
-  - RPC_SpacePressed
-  - CreateCellObject
   - RPC_PlaceTrap
+  - RPC_SpacePressed
+  - RPC_StartGame
+  - RPC_UpdateInput
+  - BoostLight
+  - ChangeTrap
+  - Dash
+  - DeleteTrap
+  - FreezeAttack
+  - PlaceTrap
+  - StopBoosting
   DisableAutoOpenWizard: 1
   ShowSettings: 0

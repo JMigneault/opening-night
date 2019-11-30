@@ -20,14 +20,13 @@ public class MonsterMovement : MonoBehaviour
     private Animator CharAnimator;
     private float speed;
     
-
     private const int WALK_RIGHT = 0;
     private const int WALK_FORWARD = 1;
     private const int WALK_LEFT = 2;
     private const int WALK_BACKWARD = 3;
     private const int IDLE = 4;
 
-    private Dictionary<KeyCode, bool> KeyDict;
+    private Dictionary<KeyCode, bool> keyDict;
 
     // Use this for initialization
     void Start()
@@ -36,16 +35,16 @@ public class MonsterMovement : MonoBehaviour
 
         Rigid = GetComponent<Rigidbody2D>();
         CharAnimator = GetComponent<Animator>();
-        this.resetSpeed();
+        this.ResetSpeed();
 
-        KeyDict = new Dictionary<KeyCode, bool>();
-        KeyDict[KeyCode.W] = false;
-        KeyDict[KeyCode.S] = false;
-        KeyDict[KeyCode.A] = false;
-        KeyDict[KeyCode.D] = false;
+        keyDict = new Dictionary<KeyCode, bool>();
+        keyDict[KeyCode.W] = false;
+        keyDict[KeyCode.S] = false;
+        keyDict[KeyCode.A] = false;
+        keyDict[KeyCode.D] = false;
     }
 
-    public void resetSpeed()
+    public void ResetSpeed()
     {
         this.speed = this.startingSpeed;
     }
@@ -73,6 +72,49 @@ public class MonsterMovement : MonoBehaviour
         {
             UpdateControls();
         }
+        else if(PV == null)
+        {
+            UpdateControlsLocal();
+        }
+    }
+
+    public Vector2 GetInput()
+    {
+        Vector2 input = Vector2.zero;
+        if (keyDict[KeyCode.A])
+        {
+            input.x -= 1;
+            /*Vector2 scale = transform.localScale;
+            scale.x = -1f * Mathf.Abs(scale.x);
+            transform.localScale = scale;*/
+        }
+
+        if (keyDict[KeyCode.D])
+        {
+            input.x += 1;
+            /*Vector2 scale = transform.localScale;
+            scale.x = Mathf.Abs(scale.x);
+            transform.localScale = scale;*/
+        }
+
+        if (keyDict[KeyCode.W])
+        {
+            input.y += 1;
+        }
+
+        if (keyDict[KeyCode.S])
+        {
+            input.y -= 1;
+        }
+        return input.normalized;
+    }
+
+    private void UpdateControlsLocal()
+    {
+        keyDict[KeyCode.UpArrow] = Input.GetKey(KeyCode.UpArrow);
+        keyDict[KeyCode.DownArrow] = Input.GetKey(KeyCode.DownArrow);
+        keyDict[KeyCode.LeftArrow] = Input.GetKey(KeyCode.LeftArrow);
+        keyDict[KeyCode.RightArrow] = Input.GetKey(KeyCode.RightArrow);
     }
 
     private void UpdateControls()
@@ -81,38 +123,38 @@ public class MonsterMovement : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.W) || Input.GetKeyUp(KeyCode.W))
         {
-            KeyDict[KeyCode.W] = Input.GetKey(KeyCode.W);
+            keyDict[KeyCode.W] = Input.GetKey(KeyCode.W);
             changed = true;
         }
         if(Input.GetKeyDown(KeyCode.S) || Input.GetKeyUp(KeyCode.S))
         {
-            KeyDict[KeyCode.S] = Input.GetKey(KeyCode.S);
+            keyDict[KeyCode.S] = Input.GetKey(KeyCode.S);
             changed = true;
         }
         if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyUp(KeyCode.A))
         {
-            KeyDict[KeyCode.A] = Input.GetKey(KeyCode.A);
+            keyDict[KeyCode.A] = Input.GetKey(KeyCode.A);
             changed = true;
         }
         if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyUp(KeyCode.D))
         {
-            KeyDict[KeyCode.D] = Input.GetKey(KeyCode.D);
+            keyDict[KeyCode.D] = Input.GetKey(KeyCode.D);
             changed = true;
         }
 
         if(changed)
         {
-            PV.RPC("RPC_UpdateInput", RpcTarget.Others, KeyDict[KeyCode.W], KeyDict[KeyCode.S], KeyDict[KeyCode.A], KeyDict[KeyCode.D], transform.position);
+            PV.RPC("RPC_UpdateInput", RpcTarget.Others, keyDict[KeyCode.W], keyDict[KeyCode.S], keyDict[KeyCode.A], keyDict[KeyCode.D], transform.position);
         }
     }
 
     [PunRPC]
     void RPC_UpdateInput(bool W, bool S, bool A, bool D, Vector3 pos)
     {
-        KeyDict[KeyCode.W] = W;
-        KeyDict[KeyCode.S] = S;
-        KeyDict[KeyCode.A] = A;
-        KeyDict[KeyCode.D] = D;
+        keyDict[KeyCode.W] = W;
+        keyDict[KeyCode.S] = S;
+        keyDict[KeyCode.A] = A;
+        keyDict[KeyCode.D] = D;
         transform.position = Vector3.MoveTowards(transform.position, pos, maxSpeed);
     }
 
@@ -127,37 +169,9 @@ public class MonsterMovement : MonoBehaviour
         this.speed = this.maxSpeed < this.speed ? this.maxSpeed : this.speed;
         if(canMove)
         {
-            Vector2 input = new Vector2(0, 0);
-
-            if(KeyDict[KeyCode.A])
-            {
-                input.x -= 1;
-                /*Vector2 scale = transform.localScale;
-                scale.x = -1f * Mathf.Abs(scale.x);
-                transform.localScale = scale;*/
-            }
-
-            if(KeyDict[KeyCode.D])
-            {
-                input.x += 1;
-                /*Vector2 scale = transform.localScale;
-                scale.x = Mathf.Abs(scale.x);
-                transform.localScale = scale;*/
-            }
-
-            if(KeyDict[KeyCode.W])
-            {
-                input.y += 1;
-            }
-
-            if(KeyDict[KeyCode.S])
-            {
-                input.y -= 1;
-            }
-
+            Vector2 input = GetInput();
             if(input.magnitude > 0)
             {
-                input.Normalize();
                 Vector2 dif = (input * this.speed) - Rigid.velocity;
                 dif.Normalize();
 
@@ -224,9 +238,9 @@ public class MonsterMovement : MonoBehaviour
 
     public void ResetInputs()
     {
-        KeyDict[KeyCode.W] = false;
-        KeyDict[KeyCode.S] = false;
-        KeyDict[KeyCode.A] = false;
-        KeyDict[KeyCode.D] = false;
+        keyDict[KeyCode.W] = false;
+        keyDict[KeyCode.S] = false;
+        keyDict[KeyCode.A] = false;
+        keyDict[KeyCode.D] = false;
     }
 }

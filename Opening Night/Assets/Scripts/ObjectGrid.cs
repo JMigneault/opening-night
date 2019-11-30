@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Photon.Pun;
 
 /**
  * Used to add and remove traps and other objects onto the grid during the setup phase.
@@ -50,7 +49,6 @@ public class ObjectGrid : MonoBehaviour
 
     [SerializeField] Tilemap wallsTM;
 
-    private PhotonView PV;
 
     // track objects on the grid
     private Dictionary<Vector2Int, AbstractCellObject> gridObjects;
@@ -59,11 +57,6 @@ public class ObjectGrid : MonoBehaviour
     private void Awake()
     {
         gridObjects = new Dictionary<Vector2Int, AbstractCellObject>();
-    }
-
-    private void Start()
-    {
-        PV = GetComponent<PhotonView>();
     }
 
     /**
@@ -101,11 +94,9 @@ public class ObjectGrid : MonoBehaviour
     public AbstractCellObject CreateCellObject(Vector3 screenPos, AbstractCellObject prefab)
     {
         Vector2Int objCoords = gSpace.SSToCoords(screenPos);
-        //PV.RPC("CreateCellObject", RpcTarget.Others, objCoords, prefab);
         return CreateCellObject(objCoords, prefab);
     }
 
-    [PunRPC]
     public AbstractCellObject CreateCellObject(Vector2Int objCoords, AbstractCellObject prefab)
     {
         Vector2 objPos = gSpace.CoordsToGPos(objCoords);

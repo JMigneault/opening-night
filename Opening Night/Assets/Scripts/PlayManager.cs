@@ -131,9 +131,9 @@ public class PlayManager : MonoBehaviour
             phaseManager.SwitchToPlace();
             this.playCamera.SetActive(false);
             this.placeCamera.SetActive(true);
-            this.navigator.GetComponent<PlayerMovement>().resetSpeed();
+            this.navigator.GetComponent<PlayerMovement>().ResetSpeed();
             this.navigator.SetActive(false);
-            this.monster.GetComponent<MonsterMovement>().resetSpeed();
+            this.monster.GetComponent<MonsterMovement>().ResetSpeed();
             this.monster.SetActive(false);
             this.placementUI.enabled = true;
         }
