@@ -15,7 +15,10 @@ public abstract class AbstractOnEnterTrap : AbstractTrap
     private void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        spriteRenderer.enabled = false;
+        if (PlayerPrefs.GetInt("IsNavigator") == 1)
+        {
+            spriteRenderer.enabled = false;
+        } // todo: give monster way to see if traps have popped
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -42,6 +45,10 @@ public abstract class AbstractOnEnterTrap : AbstractTrap
                 {
                     activated = true;
                     ActivateTrap(collision.GetComponent<Player>());
+                    if (PlayerPrefs.GetInt("IsNavigator") == 0)
+                    {
+                        spriteRenderer.color = new Color(255, 255, 255, .2f);
+                    }
                 }
             }
         }
@@ -57,7 +64,10 @@ public abstract class AbstractOnEnterTrap : AbstractTrap
             } else
             {
                 collisionTime = 0.0f;
-                spriteRenderer.enabled = false;
+                if (PlayerPrefs.GetInt("IsNavigator") == 1)
+                {
+                    spriteRenderer.enabled = false;
+                }
             }
         }
     }

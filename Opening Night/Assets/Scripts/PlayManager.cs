@@ -90,7 +90,6 @@ public class PlayManager : MonoBehaviour
 
     private IEnumerator SwitchToPlayCoroutine()
     {
-        Debug.Log("switch coroutine");
         countdownOverlay.gameObject.SetActive(true);
         phaseManager.SwitchToPlay();
         countdownOverlay.SetText("Game starts in 3...");

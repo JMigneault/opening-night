@@ -200,6 +200,8 @@ public class TrapPlacer : MonoBehaviour
     [PunRPC]
     private void PlaceTrap(Vector2 coords)
     {
+        Debug.Log("placing");
+        Debug.Log(coords);
         GetTrap(currentTrap).Place(new Vector2Int((int)coords.x, (int)coords.y), objectGrid);
         if (PlayerPrefs.GetInt("IsNavigator") == 0)
         {
@@ -232,14 +234,6 @@ public class TrapPlacer : MonoBehaviour
         Vector2 mp = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         if (CheckPlace(mp) && CheckTrapsRemaining(currentTrap))
         {
-            Debug.Log("trap placed " + mp);
-            Vector2Int gridPos = objectGrid.GetCoords(mp);
-            if(PV)
-            {
-                PV.RPC("RPC_PlaceTrap", RpcTarget.Others, (byte)currentTrap, gridPos.x, gridPos.y);
-
-            }
-            GetTrap(currentTrap).Place(gridPos, objectGrid);
             trapCurrentNumber[(int)currentTrap]++;
             PlaceTrap(objectGrid.GetCoords(mp));
         }
@@ -267,13 +261,6 @@ public class TrapPlacer : MonoBehaviour
             UnhoverTile();
         }
         IncrementTrap(); // moves to next trap if you have run out
-    }
-
-    [PunRPC]
-    void RPC_PlaceTrap(Byte currentTrap, int gridPosX, int gridPosY)
-    {
-        Debug.Log("received trap");
-        GetTrap((TrapType)currentTrap).Place(new Vector2Int(gridPosX, gridPosY), objectGrid);
     }
 
 }

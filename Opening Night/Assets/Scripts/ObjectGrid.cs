@@ -100,6 +100,7 @@ public class ObjectGrid : MonoBehaviour
     public AbstractCellObject CreateCellObject(Vector2Int objCoords, AbstractCellObject prefab)
     {
         Vector2 objPos = gSpace.CoordsToGPos(objCoords);
+        Debug.Log(objCoords);
         if (!gridObjects.ContainsKey(objCoords))
         {
             AbstractCellObject obj = Object.Instantiate(prefab.gameObject, objPos, Quaternion.identity, this.transform).GetComponent<AbstractCellObject>();

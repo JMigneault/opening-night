@@ -18,7 +18,6 @@ public class ForceMovementTrap : AbstractOnEnterTrap
 
     protected override void ActivateTrap(Player player)
     {
-        Debug.Log(directionIndex);
         if(!rigid)
         {
             rigid = player.gameObject.GetComponent<Rigidbody2D>();
