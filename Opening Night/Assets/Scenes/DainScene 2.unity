@@ -12271,10 +12271,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7266474023919621317, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: viewIdField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1778963888591170778, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 1062719862}
+    - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: Monster
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889619898027, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_Range
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889619898027, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 1778963889654859734, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
@@ -12297,26 +12322,6 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1778963889523986485, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: m_Intensity
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: Player
-      value: 
-      objectReference: {fileID: 1062719862}
-    - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: Monster
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889619898027, guid: 61f755296e984754097c45f2291841dd,
-        type: 3}
-      propertyPath: m_Range
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1778963889619898027, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
       propertyPath: m_Intensity
       value: 200

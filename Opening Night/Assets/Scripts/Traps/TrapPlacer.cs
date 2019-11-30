@@ -153,6 +153,7 @@ public class TrapPlacer : MonoBehaviour
         }
     }
 
+    [PunRPC]
     private void RotateCurrentTrap()
     {
         GetTrap(currentTrap).Rotate();

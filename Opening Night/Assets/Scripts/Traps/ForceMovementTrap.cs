@@ -7,6 +7,7 @@ public class ForceMovementTrap : AbstractOnEnterTrap
     [SerializeField] private float slideSpeed = 100.0f;
     private Vector2[] directions = { Vector2.up, Vector2.right, Vector2.down, Vector2.left };
     private int directionIndex = 1;
+    public int DirectionIndex { set { directionIndex = value; } }
 
     private Rigidbody2D rigid;
 
@@ -17,6 +18,7 @@ public class ForceMovementTrap : AbstractOnEnterTrap
 
     protected override void ActivateTrap(Player player)
     {
+        Debug.Log(directionIndex);
         if(!rigid)
         {
             rigid = player.gameObject.GetComponent<Rigidbody2D>();
@@ -38,7 +40,6 @@ public class ForceMovementTrap : AbstractOnEnterTrap
 
     public override void Rotate()
     {
-        Debug.Log("rotate");
         if (directionIndex == 3)
         {
             directionIndex = 0;
@@ -47,4 +48,11 @@ public class ForceMovementTrap : AbstractOnEnterTrap
             directionIndex++;
         }
     }
+
+    public override void Place(Vector2Int coords, ObjectGrid objectGrid)
+    {
+        ForceMovementTrap newTrap = (ForceMovementTrap) objectGrid.CreateCellObject(coords, this);
+        newTrap.DirectionIndex = this.directionIndex;
+    }
+
 }
