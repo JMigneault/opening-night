@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Photon.Pun;
 
 [Serializable]
 public enum TrapType
@@ -38,9 +39,12 @@ public class TrapPlacer : MonoBehaviour
 
     private bool canPlace = true;
 
+    private PhotonView PV;
+
     //Start called once
     private void Start()
     {
+        PV = GetComponent<PhotonView>();
         traps = new AbstractTrap[trapPrefabs.Length];
         for (int i = 0; i < trapPrefabs.Length; i++)
         {
@@ -193,7 +197,14 @@ public class TrapPlacer : MonoBehaviour
         // gets input
         if (CheckPlace(mp) && CheckTrapsRemaining(currentTrap))
         {
-            GetTrap(currentTrap).Place(mp, objectGrid);
+            Debug.Log("trap placed " + mp);
+            Vector2Int gridPos = objectGrid.GetCoords(mp);
+            if(PV)
+            {
+                PV.RPC("RPC_PlaceTrap", RpcTarget.Others, (byte)currentTrap, gridPos.x, gridPos.y);
+
+            }
+            GetTrap(currentTrap).Place(gridPos, objectGrid);
             trapCurrentNumber[(int)currentTrap]++;
         }
         if (CheckDelete(mp))
@@ -220,6 +231,12 @@ public class TrapPlacer : MonoBehaviour
             UnhoverTile();
         }
         IncrementTrap(); // moves to next trap if you have run out
+    }
+
+    [PunRPC]
+    void RPC_PlaceTrap(Byte currentTrap, int gridPosX, int gridPosY)
+    {
+        GetTrap((TrapType)currentTrap).Place(new Vector2Int(gridPosX, gridPosY), objectGrid);
     }
 
 }

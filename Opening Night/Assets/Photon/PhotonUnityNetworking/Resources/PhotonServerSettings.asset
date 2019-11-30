@@ -39,5 +39,8 @@ MonoBehaviour:
   - RPC_MonsterInit
   - RPC_NavigatorInit
   - RPC_GameOver
+  - RPC_SpacePressed
+  - CreateCellObject
+  - RPC_PlaceTrap
   DisableAutoOpenWizard: 1
   ShowSettings: 0

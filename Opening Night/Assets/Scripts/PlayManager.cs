@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 /**
  * Manages the state of play by switching between phases and enabling/disabling gameobjects and UI.
@@ -33,12 +34,15 @@ public class PlayManager : MonoBehaviour
     private bool doorsOpen = false;
     public bool DoorsOpen { get { return doorsOpen; } }
 
+    private PhotonView PV;
+
     // initially set up game to place phase
     void Start()
     {
         this.placeCamera.SetActive(true);
         this.playCamera.SetActive(false);
         AddKey();
+        PV = GetComponent<PhotonView>();
     }
 
     void Update()
@@ -52,8 +56,22 @@ public class PlayManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log("placing ended by player");
-            this.SwitchToPlay();
+            if(PV)
+            {
+                PV.RPC("RPC_SpacePressed", RpcTarget.All);
+            }
+            else
+            {
+                this.SwitchToPlay();
+            }
         }
+    }
+
+    [PunRPC]
+    void RPC_SpacePressed()
+    {
+        Debug.Log("placing ended by player");
+        this.SwitchToPlay();
     }
 
     public void SetMonster(GameObject mon)

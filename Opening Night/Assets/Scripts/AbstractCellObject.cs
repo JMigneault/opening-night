@@ -28,4 +28,9 @@ public abstract class AbstractCellObject : MonoBehaviour
         objectGrid.CreateCellObject(screenPos, this);
     }
 
+    public virtual void Place(Vector2Int gridPos, ObjectGrid objectGrid)
+    {
+        objectGrid.CreateCellObject(gridPos, this);
+    }
+
 }
