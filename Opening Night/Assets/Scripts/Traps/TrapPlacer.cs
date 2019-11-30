@@ -37,12 +37,20 @@ public class TrapPlacer : MonoBehaviour
     [SerializeField] private Color validHoverColor;
     [SerializeField] private Color invalidHoverColor;
 
+    private Chest[] chests;
+
     private bool canPlace = true;
 
     private PhotonView PV;
     //Start called once
     private void Start()
     {
+        GameObject[] chestGameObjects = GameObject.FindGameObjectsWithTag("Chest");
+        chests = new Chest[chestGameObjects.Length];
+        for (int i = 0; i < chests.Length; i++)
+        {
+            chests[i] = chestGameObjects[i].GetComponent<Chest>();
+        }
         PV = GetComponent<PhotonView>();
         traps = new AbstractTrap[trapPrefabs.Length];
         for (int i = 0; i < trapPrefabs.Length; i++)
@@ -167,6 +175,17 @@ public class TrapPlacer : MonoBehaviour
         return !trapLimiter.IsLimited(trap, trapCurrentNumber[(int)trap]);
     }
 
+    private bool ChestAtPosition(Vector3 mp)
+    {
+        foreach (Chest chest in chests)
+        {
+            if (objectGrid.GetCoords(chest.transform.position) == objectGrid.GetCoords(mp)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int GetNumRemaining(TrapType trap)
     {
         return trapCurrentNumber[(int)trap];
@@ -174,12 +193,14 @@ public class TrapPlacer : MonoBehaviour
 
     private bool CheckPlace(Vector2 mousePosition)
     {
-        return Input.GetMouseButton(0) && GetTrap(currentTrap).CanPlace(objectGrid.GetCoords(mousePosition), objectGrid) && objectGrid.IsWithinBounds(mousePosition);
+        return Input.GetMouseButton(0) && GetTrap(currentTrap).CanPlace(objectGrid.GetCoords(mousePosition), objectGrid) 
+            && objectGrid.IsWithinBounds(mousePosition) && !ChestAtPosition(mousePosition);
     }
 
     private bool CheckDelete(Vector2 mousePosition)
     {
-        return Input.GetMouseButton(1) && objectGrid.CheckCell(mousePosition) && objectGrid.IsWithinBounds(mousePosition);
+        return Input.GetMouseButton(1) && objectGrid.CheckCell(mousePosition) && objectGrid.IsWithinBounds(mousePosition) 
+            && !ChestAtPosition(mousePosition);
     }
 
     private bool CheckHighlight(Vector2 mousePosition)
@@ -200,7 +221,6 @@ public class TrapPlacer : MonoBehaviour
     [PunRPC]
     private void PlaceTrap(Vector2 coords)
     {
-        Debug.Log("placing");
         Debug.Log(coords);
         GetTrap(currentTrap).Place(new Vector2Int((int)coords.x, (int)coords.y), objectGrid);
         if (PlayerPrefs.GetInt("IsNavigator") == 0)
@@ -208,7 +228,6 @@ public class TrapPlacer : MonoBehaviour
             PV.RPC("PlaceTrap", RpcTarget.Others, coords);
         }
     }
-
 
     [PunRPC]
     private void DeleteTrap(Vector2 coords)

@@ -12,6 +12,7 @@ TagManager:
   - PhotonPlayer
   - Monster
   - GameManager
+  - Chest
   layers:
   - Default
   - TransparentFX

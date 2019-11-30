@@ -31,9 +31,7 @@ public class RestartGame : MonoBehaviour
     [PunRPC]
     void RPC_GameOver()
     {
-        Debug.Log("restart game");
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayManager>().SwitchToPlace();
-        // SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
         gameObject.GetComponent<MonsterMovement>().ResetInputs();
         player.GetComponent<PlayerMovement>().ResetInputs();
