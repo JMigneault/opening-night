@@ -46,5 +46,7 @@ MonoBehaviour:
   - DeleteTrap
   - PlaceTrap
   - RotateCurrentTrap
+  - AddKey
+  - SwitchToPlay
   DisableAutoOpenWizard: 1
   ShowSettings: 0

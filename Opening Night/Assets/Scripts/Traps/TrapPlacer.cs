@@ -222,9 +222,10 @@ public class TrapPlacer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (phaseManager.CurrentPhase == Phase.Play) {
+        if (phaseManager.CurrentPhase == Phase.Play || PlayerPrefs.GetInt("IsNavigator") == 1) {
             UnhighlightTrap();
             UnhoverTile();
+            IncrementTrap();
             return;
         }
         CheckTrapChange();

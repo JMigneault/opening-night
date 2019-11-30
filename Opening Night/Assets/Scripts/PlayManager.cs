@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 /**
  * Manages the state of play by switching between phases and enabling/disabling gameobjects and UI.
@@ -28,31 +29,41 @@ public class PlayManager : MonoBehaviour
     [SerializeField] private ObjectGrid objectGrid;
 
     [SerializeField] private Canvas placementUI;
+    [SerializeField] private CountdownOverlay countdownOverlay;
 
     [SerializeField] private Chest[] chests;
     private bool doorsOpen = false;
     public bool DoorsOpen { get { return doorsOpen; } }
 
+    private PhotonView pv;
+
     // initially set up game to place phase
     void Start()
     {
+        pv = GetComponent<PhotonView>();
         this.placeCamera.SetActive(true);
+        if (PlayerPrefs.GetInt("IsNavigator") == 1)
+        {
+            countdownOverlay.gameObject.SetActive(true);
+            countdownOverlay.SetText("Waiting for placement");
+        } else
+        {
+            countdownOverlay.gameObject.SetActive(false);
+        }
         this.playCamera.SetActive(false);
-        AddKey();
+        if (PlayerPrefs.GetInt("IsNavigator") == 0)
+        {
+            AddKey();
+        }
     }
 
     void Update()
     {
         // if place timer has run out
-        if (this.IsPlacementDone())
+        if (PlayerPrefs.GetInt("IsNavigator") == 0 && (this.IsPlacementDone() || Input.GetKeyDown(KeyCode.Space)))
         {
-            Debug.Log("placing done");
             this.SwitchToPlay();
-        }
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("placing ended by player");
-            this.SwitchToPlay();
+            pv.RPC("SwitchToPlay", RpcTarget.Others);
         }
     }
 
@@ -68,9 +79,32 @@ public class PlayManager : MonoBehaviour
         navInitPos = navigator.transform.position;
     }
 
+    private IEnumerator SwitchToPlayCoroutine()
+    {
+        Debug.Log("switch coroutine");
+        countdownOverlay.gameObject.SetActive(true);
+        phaseManager.SwitchToPlay();
+        countdownOverlay.SetText("Game starts in 3...");
+        yield return new WaitForSeconds(1.0f);
+        countdownOverlay.SetText("Game starts in 2...");
+        yield return new WaitForSeconds(1.0f);
+        countdownOverlay.SetText("Game starts in 1...");
+        yield return new WaitForSeconds(1.0f);
+        this.placeCamera.SetActive(false);
+        this.playCamera.SetActive(true);
+        this.navigator.transform.position = this.navInitPos;
+        // this.navigator.GetComponent<Player>().ResetSpeed() // todo: fix bug where permanent movement drop carries over to next game
+        this.monster.transform.position = this.monInitPos;
+        this.navigator.SetActive(true);
+        this.monster.SetActive(true);
+        this.placementUI.enabled = false;
+        countdownOverlay.gameObject.SetActive(false);
+    }
+
     /**
      * Switch game to play mode (resetting player positions, enabling play camera, etc.)
      */
+    [PunRPC]
     void SwitchToPlay()
     {
         if (phaseManager.CurrentPhase == Phase.Play)
@@ -78,17 +112,8 @@ public class PlayManager : MonoBehaviour
             Debug.Log("WARNING (SwitchToPlay): Already in playing phase.");
         } else
         {
-            phaseManager.SwitchToPlay();
-            this.placeCamera.SetActive(false);
-            this.playCamera.SetActive(true);
-            this.navigator.transform.position = this.navInitPos;
-            // this.navigator.GetComponent<Player>().RestoreSpeed(); todo: fix bug where permanent movement drop carries over to next game
-            this.monster.transform.position = this.monInitPos;
-            this.navigator.SetActive(true);
-            this.monster.SetActive(true);
-            this.placementUI.enabled = false;
+            StartCoroutine(SwitchToPlayCoroutine());
         }
-
     }
 
     public void OpenDoors()
@@ -129,7 +154,15 @@ public class PlayManager : MonoBehaviour
 
     public void AddKey()
     {
-        chests[Random.Range(0, chests.Length)].SetToHaveKey();
+        int index = Random.Range(0, chests.Length);
+        AddKey(index);
+        pv.RPC("AddKey", RpcTarget.Others, index);
+    }
+
+    [PunRPC]
+    public void AddKey(int index)
+    {
+        chests[index].SetToHaveKey();
     }
 
     public void RemoveKey()
