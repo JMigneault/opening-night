@@ -19,6 +19,14 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
+        if (PlayerPrefs.GetInt("IsNavigator") == 0)
+        {
+            this.enabled = false;
+            this.GetComponent<Camera>().orthographicSize = 12.5f;
+        } else
+        {
+            this.GetComponent<Camera>().orthographicSize = 5.0f;
+        }
         offset = transform.position - Target.transform.position;
         shake = 0;
         shakeOffset = new Vector3(0, 0);
@@ -51,7 +59,7 @@ public class CameraController : MonoBehaviour
 
     public void SetMonsterTarget()
     {
-        //PlayerLight.SetActive(true);
+        PlayerLight.SetActive(true);
         MonsterLight.SetActive(true);
     }
 
