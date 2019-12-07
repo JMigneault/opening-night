@@ -162,10 +162,10 @@ public class PlayManager : MonoBehaviour
 
     public void AddKey()
     {
+        Random.InitState((int)System.DateTime.Now.Ticks);
         int index = Random.Range(0, chests.Length);
         Debug.Log(index);
-        AddKey(index);
-        pv.RPC("AddKey", RpcTarget.Others, index);
+        pv.RPC("AddKey", RpcTarget.All, index);
     }
 
     [PunRPC]
