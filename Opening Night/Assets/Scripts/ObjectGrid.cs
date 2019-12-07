@@ -78,10 +78,16 @@ public class ObjectGrid : MonoBehaviour
     public AbstractCellObject GetCellObject(Vector3 screenPos)
     {
         Vector2Int objKey = gSpace.SSToCoords(screenPos);
+        return GetCellObject(objKey);
+    }
+
+    public AbstractCellObject GetCellObject(Vector2Int objKey)
+    {
         if (gridObjects.ContainsKey(objKey))
         {
             return gridObjects[objKey];
-        } else
+        }
+        else
         {
             Debug.Log("WARNING (GetCellObject): No object found at grid coordinates: " + objKey);
             return null;
