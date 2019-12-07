@@ -24,13 +24,17 @@ public class RestartGame : MonoBehaviour
             {
                 player = collision.gameObject;
             }
-            PV.RPC("RPC_GameOver", RpcTarget.All);
+            if(PlayerPrefs.GetInt("IsNavigator") == 0)
+            {
+                PV.RPC("RPC_GameOver", RpcTarget.All);
+            }
         }
     }
 
     [PunRPC]
     void RPC_GameOver()
     {
+        Debug.Log("Game Over");
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayManager>().SwitchToPlace();
 
         gameObject.GetComponent<MonsterMovement>().ResetInputs();

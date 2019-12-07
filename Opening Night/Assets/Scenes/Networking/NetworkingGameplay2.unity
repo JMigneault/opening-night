@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 210176268}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: GameManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7407,7 +7407,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1867478664}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8712358, y: 0.7158656, z: -100.771}
+  m_LocalPosition: {x: 1.8712358, y: 0.7158656, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4677613551201238485}
@@ -8064,6 +8064,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Intensity
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889619898027, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889619898027, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889619898027, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1778963888591170774, guid: 61f755296e984754097c45f2291841dd,
         type: 3}

@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                playerLight.SetColor(Color.red);
+                playerLight.SetColor(new Color32(0xFB, 0xA5, 0xA5, 0xFF));
             }
         }
     }
