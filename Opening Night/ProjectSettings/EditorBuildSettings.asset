@@ -11,10 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Networking/NetworkingWait.unity
     guid: 1be2ec3152621ea44b1997b9e0597997
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Networking/NetworkingGameplay2.unity
     guid: 5e2fdefef52a3e6448df061734900dc8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Networking/NetworkingGameplay.unity
     guid: ca6ec056144d3334d952f8839b7f06bc
   m_configObjects: {}

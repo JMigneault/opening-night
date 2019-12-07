@@ -5,11 +5,12 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 
-    public GameObject Player;
-    public GameObject Monster;
-    public float yOffset;
-    public Camera Cam;
-    public float MinSize;
+    [SerializeField]
+    private GameObject PlayerLight;
+    [SerializeField]
+    private GameObject Plane;
+
+    private GameObject Target;
 
     private Vector3 offset;
 
@@ -18,8 +19,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        offset = transform.position - Player.transform.position;
-        offset.y += yOffset;
+        offset = transform.position - Target.transform.position;
         shake = 0;
         shakeOffset = new Vector3(0, 0);
     }
@@ -32,6 +32,22 @@ public class CameraController : MonoBehaviour
     public void Shake(float amount)
     {
         shake = amount;
+    }
+
+    public void SetTarget(GameObject newTarget)
+    {
+        Target = newTarget;
+        Vector3 pos = Target.transform.position;
+        pos.z = transform.position.z;
+        transform.position = pos;
+        offset = transform.position - newTarget.transform.position;
+        
+    }
+
+    public void SetPlayerTarget()
+    {
+        PlayerLight.SetActive(true);
+        Plane.SetActive(true);
     }
 
     private float Approach(float target, float starting, float delta)
@@ -53,9 +69,9 @@ public class CameraController : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(Player != null)
+        if(Target != null)
         {
-            Vector3 target = Player.transform.position + .5f * (Monster.transform.position - Player.transform.position) + offset;
+            Vector3 target = Target.transform.position;
             if(shake >= 0)
             {
                 float angle = Random.value * (Mathf.PI * 2);
@@ -70,15 +86,6 @@ public class CameraController : MonoBehaviour
             );
 
             transform.position = Vector3.Lerp(transform.position, target, Time.unscaledDeltaTime * 8f);
-
-            float distance = Vector2.Distance(Player.transform.position, Monster.transform.position);
-
-            Vector2 bound = Player.GetComponent<SpriteRenderer>().bounds.size;
-            float xSize = (Mathf.Abs(Player.transform.position.x - Monster.transform.position.x) * Screen.height / Screen.width * .5f) + bound.x / 2f;
-            float ySize = (Mathf.Abs(Player.transform.position.y - Monster.transform.position.y) * Screen.width / Screen.height * .5f);
-            float newSize = (distance * Screen.height / Screen.width * .5f);
-            Cam.orthographicSize = Mathf.Max(MinSize, xSize, ySize) + 1f;
-            ;
         }
        
     }

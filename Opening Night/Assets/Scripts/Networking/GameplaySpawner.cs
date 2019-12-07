@@ -12,7 +12,11 @@ public class GameplaySpawner : MonoBehaviourPunCallbacks
     public Transform playerSpawn;
     public Transform monsterSpawn;
 
-    [SerializeField] private GameObject GameManager;
+    [SerializeField]
+    private CameraController MainCamera;
+
+    [SerializeField] 
+    private PlayManager Manager;
 
     private GameObject monsterObj;
     private GameObject navigatorObj;
@@ -24,14 +28,17 @@ public class GameplaySpawner : MonoBehaviourPunCallbacks
         if(PlayerPrefs.GetInt("IsNavigator") == 0)
         {
             monsterObj = PhotonNetwork.Instantiate(Path.Combine("GamePrefabs", "Monster"), monsterSpawn.position, monsterSpawn.rotation, 0);
-            GameManager.GetComponent<PlayManager>().SetMonster(monsterObj);
+            Manager.SetMonster(monsterObj);
             PV.RPC("RPC_MonsterInit", RpcTarget.Others);
+            MainCamera.SetTarget(monsterObj);
         }
         else
         {
             navigatorObj = PhotonNetwork.Instantiate(Path.Combine("GamePrefabs", "Player"), playerSpawn.position, playerSpawn.rotation, 0);
-            GameManager.GetComponent<PlayManager>().SetNavigator(navigatorObj);
+            Manager.SetNavigator(navigatorObj);
             PV.RPC("RPC_NavigatorInit", RpcTarget.Others);
+            MainCamera.SetTarget(navigatorObj);
+            MainCamera.SetPlayerTarget();
         }
     }
 
@@ -40,7 +47,7 @@ public class GameplaySpawner : MonoBehaviourPunCallbacks
     {
         Debug.Log("monster please");
         monsterObj = GameObject.FindGameObjectWithTag("Monster");
-        GameManager.GetComponent<PlayManager>().SetMonster(monsterObj);
+        Manager.SetMonster(monsterObj);
     }
 
     [PunRPC]
@@ -48,6 +55,6 @@ public class GameplaySpawner : MonoBehaviourPunCallbacks
     {
         Debug.Log("navigator please");
         navigatorObj = GameObject.FindGameObjectWithTag("Player");
-        GameManager.GetComponent<PlayManager>().SetNavigator(navigatorObj);
+        Manager.SetNavigator(navigatorObj);
     }
 }
