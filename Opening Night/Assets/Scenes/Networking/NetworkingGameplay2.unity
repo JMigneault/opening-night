@@ -7998,12 +7998,27 @@ PrefabInstance:
     - target: {fileID: 1778963889523986485, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
       propertyPath: m_Range
-      value: 4
+      value: 670
       objectReference: {fileID: 0}
     - target: {fileID: 1778963889523986485, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
       propertyPath: m_Intensity
-      value: 200
+      value: 24.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889523986485, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.1882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889523986485, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.1882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889523986485, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.1882353
       objectReference: {fileID: 0}
     - target: {fileID: 1778963888014520474, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
@@ -8028,7 +8043,7 @@ PrefabInstance:
     - target: {fileID: 1778963889654859734, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
@@ -8065,6 +8080,11 @@ PrefabInstance:
       propertyPath: m_BackGroundColor.b
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1778963889523986491, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61f755296e984754097c45f2291841dd, type: 3}
 --- !u!1 &1778963887719063438 stripped
@@ -8086,7 +8106,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerLight: {fileID: 1778963887719063440}
-  Plane: {fileID: 1778963887719063441}
+  MonsterLight: {fileID: 1778963887719063441}
 --- !u!1 &1778963887719063440 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1778963889619898024, guid: 61f755296e984754097c45f2291841dd,
@@ -8095,7 +8115,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1778963887719063441 stripped
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1778963889654859734, guid: 61f755296e984754097c45f2291841dd,
+  m_CorrespondingSourceObject: {fileID: 1778963889523986488, guid: 61f755296e984754097c45f2291841dd,
     type: 3}
   m_PrefabInstance: {fileID: 1778963887719063437}
   m_PrefabAsset: {fileID: 0}

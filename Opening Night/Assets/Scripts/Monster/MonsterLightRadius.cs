@@ -15,8 +15,8 @@ public class MonsterLightRadius : MonoBehaviour {
     void Start()
     {
         lt = GetComponent<Light>();
-        range = lt.range;
-        intensity = lt.intensity;
+        //range = lt.range;
+        //intensity = lt.intensity;
     }
 
     void Update()
@@ -28,7 +28,7 @@ public class MonsterLightRadius : MonoBehaviour {
         else
         {
             transform.position = new Vector3(Monster.transform.position.x, Monster.transform.position.y + 1f, transform.position.z);
-            lt.range = range * (8f / Cam.orthographicSize);
+            //lt.range = range * (8f / Cam.orthographicSize);
         }
         
     }

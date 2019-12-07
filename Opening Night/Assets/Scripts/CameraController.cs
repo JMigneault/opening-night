@@ -8,7 +8,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private GameObject PlayerLight;
     [SerializeField]
-    private GameObject Plane;
+    private GameObject MonsterLight;    
 
     private GameObject Target;
 
@@ -47,7 +47,12 @@ public class CameraController : MonoBehaviour
     public void SetPlayerTarget()
     {
         PlayerLight.SetActive(true);
-        Plane.SetActive(true);
+    }
+
+    public void SetMonsterTarget()
+    {
+        PlayerLight.SetActive(true);
+        MonsterLight.SetActive(true);
     }
 
     private float Approach(float target, float starting, float delta)

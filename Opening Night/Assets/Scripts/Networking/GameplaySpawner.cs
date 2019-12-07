@@ -31,6 +31,7 @@ public class GameplaySpawner : MonoBehaviourPunCallbacks
             Manager.SetMonster(monsterObj);
             PV.RPC("RPC_MonsterInit", RpcTarget.Others);
             MainCamera.SetTarget(monsterObj);
+            MainCamera.SetMonsterTarget();
         }
         else
         {
