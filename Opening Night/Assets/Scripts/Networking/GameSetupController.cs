@@ -14,6 +14,8 @@ public class GameSetupController : MonoBehaviourPunCallbacks
     private GameObject StartButton;
     [SerializeField]
     private GameObject Player2Text;
+    [SerializeField]
+    private GameObject Player2Image;
 
     void Start()
     {
@@ -33,6 +35,7 @@ public class GameSetupController : MonoBehaviourPunCallbacks
         {
             StartButton.SetActive(true);
             Player2Text.SetActive(true);
+            Player2Image.SetActive(true);
         }
     }
 
