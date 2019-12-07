@@ -14,7 +14,7 @@ public abstract class AbstractOnEnterTrap : AbstractTrap
 
     private void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         if (PlayerPrefs.GetInt("IsNavigator") == 1)
         {
             spriteRenderer.enabled = false;

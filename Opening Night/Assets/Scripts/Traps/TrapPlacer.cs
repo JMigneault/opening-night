@@ -121,7 +121,7 @@ public class TrapPlacer : MonoBehaviour
     private void HoverTileValid(Vector2 screenPos)
     {
         placementSprite.SetActive(true);
-        Sprite sprite = GetTrap(currentTrap).GetComponent<SpriteRenderer>().sprite;
+        Sprite sprite = GetTrap(currentTrap).GetComponentInChildren<SpriteRenderer>().sprite;
         placementSprite.GetComponent<SpriteRenderer>().sprite = sprite;
         placementSprite.GetComponent<SpriteRenderer>().color = this.validHoverColor;
         placementUI.MoveSpriteToTile(placementSprite, screenPos);
@@ -130,7 +130,7 @@ public class TrapPlacer : MonoBehaviour
     private void HoverTileInvalid(Vector2 screenPos)
     {
         placementSprite.SetActive(true);
-        Sprite sprite = GetTrap(currentTrap).GetComponent<SpriteRenderer>().sprite;
+        Sprite sprite = GetTrap(currentTrap).GetComponentInChildren<SpriteRenderer>().sprite;
         placementSprite.GetComponent<SpriteRenderer>().sprite = sprite;
         placementSprite.GetComponent<SpriteRenderer>().color = this.invalidHoverColor;
         placementUI.MoveSpriteToTile(placementSprite, screenPos);

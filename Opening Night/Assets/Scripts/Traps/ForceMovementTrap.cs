@@ -46,6 +46,7 @@ public class ForceMovementTrap : AbstractOnEnterTrap
         {
             directionIndex++;
         }
+        GetComponentInChildren<Transform>().Rotate(0, 90, 0);
     }
 
     public override void Place(Vector2Int coords, ObjectGrid objectGrid)

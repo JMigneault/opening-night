@@ -56,6 +56,7 @@ public class GameSetupController : MonoBehaviourPunCallbacks
         Debug.Log("start");
         if(PhotonNetwork.IsMasterClient)
         {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.LoadLevel(gameplaySceneIndex);
         }
     }

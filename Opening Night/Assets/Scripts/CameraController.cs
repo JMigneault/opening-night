@@ -51,7 +51,7 @@ public class CameraController : MonoBehaviour
 
     public void SetMonsterTarget()
     {
-        PlayerLight.SetActive(true);
+        //PlayerLight.SetActive(true);
         MonsterLight.SetActive(true);
     }
 

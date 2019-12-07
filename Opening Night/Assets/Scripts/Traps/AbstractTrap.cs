@@ -10,7 +10,7 @@ public abstract class AbstractTrap : AbstractCellObject
 
     public virtual void SetColor(Color color)
     {
-        GetComponent<SpriteRenderer>().color = color;
+        GetComponentInChildren<SpriteRenderer>().color = color;
     }
 
     virtual public void Rotate()
