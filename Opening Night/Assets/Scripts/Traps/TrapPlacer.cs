@@ -89,6 +89,7 @@ public class TrapPlacer : MonoBehaviour
         }
     }
 
+    [PunRPC]
     private void IncrementTrap()
     {
         if (trapLimiter.IsLimited(currentTrap, trapCurrentNumber[(int)currentTrap]))
@@ -221,18 +222,21 @@ public class TrapPlacer : MonoBehaviour
     [PunRPC]
     private void PlaceTrap(Vector2 coords)
     {
-        Debug.Log(coords);
+        trapCurrentNumber[(int)currentTrap]++;
         GetTrap(currentTrap).Place(new Vector2Int((int)coords.x, (int)coords.y), objectGrid);
         if (PlayerPrefs.GetInt("IsNavigator") == 0)
         {
             PV.RPC("PlaceTrap", RpcTarget.Others, coords);
+            PV.RPC("IncrementTrap", RpcTarget.Others);
         }
     }
 
     [PunRPC]
     private void DeleteTrap(Vector2 coords)
     {
-        objectGrid.DeleteCellObject(new Vector2Int((int)coords.x, (int)coords.y));
+        Vector2Int iCoords = new Vector2Int((int)coords.x, (int)coords.y);
+        trapCurrentNumber[(int)((AbstractTrap)objectGrid.GetCellObject(iCoords)).GetTrapType()]--;
+        objectGrid.DeleteCellObject(iCoords);
         if (PlayerPrefs.GetInt("IsNavigator") == 0)
         {
             PV.RPC("DeleteTrap", RpcTarget.Others, coords);
@@ -253,12 +257,10 @@ public class TrapPlacer : MonoBehaviour
         Vector2 mp = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         if (CheckPlace(mp) && CheckTrapsRemaining(currentTrap))
         {
-            trapCurrentNumber[(int)currentTrap]++;
             PlaceTrap(objectGrid.GetCoords(mp));
         }
         if (CheckDelete(mp))
         {
-            trapCurrentNumber[(int)((AbstractTrap)objectGrid.GetCellObject(mp)).GetTrapType()]--;
             DeleteTrap(objectGrid.GetCoords(mp));
         }
         if (CheckHighlight(mp))
