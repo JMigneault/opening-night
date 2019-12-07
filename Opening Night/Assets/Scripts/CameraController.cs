@@ -37,10 +37,10 @@ public class CameraController : MonoBehaviour
     public void SetTarget(GameObject newTarget)
     {
         Target = newTarget;
-        Vector3 pos = Target.transform.position;
-        pos.z = transform.position.z;
-        transform.position = pos;
-        offset = transform.position - newTarget.transform.position;
+        //Vector3 pos = Target.transform.position;
+        //pos.z = transform.position.z;
+        //transform.position = pos;
+        //offset = transform.position - newTarget.transform.position;
         
     }
 
@@ -71,7 +71,7 @@ public class CameraController : MonoBehaviour
     {
         if(Target != null)
         {
-            Vector3 target = Target.transform.position;
+            Vector3 target = new Vector3(Target.transform.position.x, Target.transform.position.y, transform.position.z);
             if(shake >= 0)
             {
                 float angle = Random.value * (Mathf.PI * 2);

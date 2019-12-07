@@ -47,7 +47,7 @@ public class PlayerLightRadius : MonoBehaviour {
     private void UpdatePosition()
     {
         Vector2 playerPos = player.transform.position;
-        transform.position = new Vector3(playerPos.x, playerPos.y + .6f, transform.position.z);
+        transform.position = new Vector3(playerPos.x, playerPos.y, transform.position.z);
     }
 
     void Update()

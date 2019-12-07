@@ -7639,6 +7639,21 @@ PrefabInstance:
       propertyPath: m_Intensity
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 1778963888591170774, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963888591170774, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963888591170774, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61f755296e984754097c45f2291841dd, type: 3}
 --- !u!1 &1778963887719063438 stripped
@@ -7685,6 +7700,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chest
       objectReference: {fileID: 0}
+    - target: {fileID: 4677613549763939312, guid: 2068ed6b8e0ba504f913b4035c95098b,
+        type: 3}
+      propertyPath: playManager
+      value: 
+      objectReference: {fileID: 210176264}
     - target: {fileID: 4677613549763939313, guid: 2068ed6b8e0ba504f913b4035c95098b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7740,10 +7760,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4677613549763939312, guid: 2068ed6b8e0ba504f913b4035c95098b,
-        type: 3}
-      propertyPath: playManager
-      value: 
-      objectReference: {fileID: 210176264}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2068ed6b8e0ba504f913b4035c95098b, type: 3}
