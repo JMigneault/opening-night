@@ -32,6 +32,9 @@ public class PlayManager : MonoBehaviour
     [SerializeField] private CountdownOverlay countdownOverlay;
 
     [SerializeField] private Chest[] chests;
+
+    [SerializeField] private GameObject lineRenderer;
+    
     private bool doorsOpen = false;
     public bool DoorsOpen { get { return doorsOpen; } }
 
@@ -107,6 +110,7 @@ public class PlayManager : MonoBehaviour
         this.monster.SetActive(true);
         this.placementUI.enabled = false;
         countdownOverlay.gameObject.SetActive(false);
+        lineRenderer.SetActive(false);
     }
 
     /**
@@ -149,6 +153,11 @@ public class PlayManager : MonoBehaviour
             this.monster.GetComponent<MonsterMovement>().ResetSpeed();
             this.monster.SetActive(false);
             this.placementUI.enabled = true;
+            lineRenderer.SetActive(true);
+            foreach(GameObject go in GameObject.FindGameObjectsWithTag("Line"))
+            {
+                Destroy(go);
+            }
         }
     }
 

@@ -13,6 +13,7 @@ TagManager:
   - Monster
   - GameManager
   - Chest
+  - Line
   layers:
   - Default
   - TransparentFX
@@ -55,4 +56,7 @@ TagManager:
     locked: 0
   - name: Foreground
     uniqueID: 4015141971
+    locked: 0
+  - name: Drawing
+    uniqueID: 2268294513
     locked: 0

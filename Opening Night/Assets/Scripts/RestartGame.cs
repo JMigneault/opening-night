@@ -24,7 +24,7 @@ public class RestartGame : MonoBehaviour
             {
                 player = collision.gameObject;
             }
-            if(PlayerPrefs.GetInt("IsNavigator") == 0)
+            if(PlayerPrefs.GetInt("IsNavigator") == 1)
             {
                 PV.RPC("RPC_GameOver", RpcTarget.All);
             }
