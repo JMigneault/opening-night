@@ -51,5 +51,6 @@ MonoBehaviour:
   - SwitchToPlay
   - StopBoosting
   - IncrementTrap
+  - PlayerHit
   DisableAutoOpenWizard: 1
   ShowSettings: 0

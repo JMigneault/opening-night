@@ -365,7 +365,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01ef4277a3943f4b83f43d3935f4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playManager: {fileID: 210176264}
 --- !u!95 &145437163
 Animator:
   serializedVersion: 3
@@ -639,12 +638,13 @@ MonoBehaviour:
   phaseManager: {fileID: 210176266}
   placeCamera: {fileID: 121225165}
   playCamera: {fileID: 1778963887719063438}
-  navigator: {fileID: 1062719862}
-  monster: {fileID: 145437156}
   placeTime: 60
   objectGrid: {fileID: 1573629683}
-  collectKey: {fileID: 1062719870}
   placementUI: {fileID: 1505705223}
+  countdownOverlay: {fileID: 0}
+  chests: []
+  lineRenderer: {fileID: 0}
+  timerText: {fileID: 0}
 --- !u!114 &210176265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6934,14 +6934,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectGrid: {fileID: 1573629683}
-  traps:
-  - {fileID: -4845854966627145129, guid: e7434db7cd16fef4482fd295e5cd315d, type: 3}
-  - {fileID: -7640435567452924415, guid: a6a898e0d43f43d42ba5ceb37039db49, type: 3}
-  - {fileID: 1926059768226024156, guid: 6cb99ed8dd385724d9f7ec99e81a291a, type: 3}
-  - {fileID: -2355884608174946318, guid: e9434018e1a1d8143a978257522924a5, type: 3}
-  - {fileID: -4769452414244503250, guid: acc938d4330f9a4489f9bdb020f54b29, type: 3}
-  - {fileID: 6914116337820568410, guid: 91b6c72dbe2b83846855a37f09315992, type: 3}
-  - {fileID: 399257148182548500, guid: 0898af3faaad97743add6d0fbffdd155, type: 3}
+  trapPrefabs: []
   trapLimiter: {fileID: 516200405}
   placementUI: {fileID: 1965686406}
   placementSprite: {fileID: 721913915}
@@ -6962,19 +6955,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trapLimits:
-  - trapType: 0
+  - trap: 0
     maxNum: 10
-  - trapType: 1
+  - trap: 0
     maxNum: 4
-  - trapType: 2
+  - trap: 0
     maxNum: 2
-  - trapType: 3
+  - trap: 0
     maxNum: 4
-  - trapType: 4
+  - trap: 0
     maxNum: 4
-  - trapType: 5
+  - trap: 0
     maxNum: 1
-  - trapType: 6
+  - trap: 0
     maxNum: 1
 --- !u!1 &721913915
 GameObject:
@@ -7272,10 +7265,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerObject: {fileID: 1062719862}
-  maxSpeed: 4.5
+  startingSpeed: 5
   accel: 0.65
   decel: 1.2
   Collider: {fileID: 1062719865}
+  dashDuration: 0
+  dashDecay: 0
+  dashSpeed: 0
 --- !u!50 &1062719867
 Rigidbody2D:
   serializedVersion: 4
@@ -7309,6 +7305,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e798af270335a634faf6190bd7692a67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashCost: 0
 --- !u!95 &1062719869
 Animator:
   serializedVersion: 3
@@ -9866,7 +9863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de01ef4277a3943f4b83f43d3935f4cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playManager: {fileID: 210176264}
 --- !u!61 &1590505913
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -10314,6 +10310,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Intensity
       value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 7266474023919621317, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: viewIdField
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61f755296e984754097c45f2291841dd, type: 3}
