@@ -18,6 +18,8 @@ public class Chest : MonoBehaviour
     public void SetToHaveKey(bool key)
     {
         containsKey = key;
+        opened = false;
+        GetComponent<SpriteRenderer>().color = Color.yellow;
     }
 
     private void StartSearch()
