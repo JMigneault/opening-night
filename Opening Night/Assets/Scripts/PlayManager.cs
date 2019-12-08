@@ -171,6 +171,7 @@ public class PlayManager : MonoBehaviour
             this.placementUI.enabled = true;
             timeLeft = (int)placeTime;
             timerText.text = timeLeft + " seconds";
+            doorsOpen = false;
             Invoke("TimerTick", 1f);
             if(PlayerPrefs.GetInt("IsNavigator") == 1)
             {
