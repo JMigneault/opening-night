@@ -49,10 +49,4 @@ public abstract class DoubleBarricade : AbstractTrap
             base.DeleteSelf(objectGrid);
         }
     }
-
-    public override void SetColor(Color color)
-    {
-        this.GetComponent<SpriteRenderer>().color = color;
-        this.pair.GetComponent<SpriteRenderer>().color = color;
-    }
 }

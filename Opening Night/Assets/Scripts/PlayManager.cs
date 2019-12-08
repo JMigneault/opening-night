@@ -34,6 +34,9 @@ public class PlayManager : MonoBehaviour
     [SerializeField] private Chest[] chests;
 
     [SerializeField] private GameObject lineRenderer;
+
+    [SerializeField] private Text timerText;
+    private int timeLeft;
     
     private bool doorsOpen = false;
     public bool DoorsOpen { get { return doorsOpen; } }
@@ -52,8 +55,13 @@ public class PlayManager : MonoBehaviour
         } else
         {
             countdownOverlay.gameObject.SetActive(false);
+            timeLeft = (int)placeTime;
+            timerText.text = timeLeft + " seconds";
+            Invoke("TimerTick", 1f);
         }
         this.playCamera.SetActive(false);
+        
+        
         if (PlayerPrefs.GetInt("IsNavigator") == 0)
         {
             AddKey();
@@ -82,13 +90,17 @@ public class PlayManager : MonoBehaviour
         Debug.Log("Monster set");
         monster = mon;
         monInitPos = mon.transform.position;
-}
+        this.monster.GetComponent<MonsterMovement>().ResetSpeed();
+        this.monster.SetActive(false);
+    }
 
     public void SetNavigator(GameObject nav)
     {
         Debug.Log("Navigator set");
         navigator = nav;
         navInitPos = navigator.transform.position;
+        this.navigator.GetComponent<PlayerMovement>().ResetSpeed();
+        this.navigator.SetActive(false);
     }
 
     private IEnumerator SwitchToPlayCoroutine()
@@ -111,6 +123,7 @@ public class PlayManager : MonoBehaviour
         this.placementUI.enabled = false;
         countdownOverlay.gameObject.SetActive(false);
         lineRenderer.SetActive(false);
+        timeLeft = -1;
     }
 
     /**
@@ -143,6 +156,7 @@ public class PlayManager : MonoBehaviour
             Debug.Log("WARNING (SwitchToPlace): Already in placing phase.");
         } else
         {
+            //PlayerPrefs.SetInt("IsNavigator", 1 - PlayerPrefs.GetInt("IsNavigator"));
             RemoveKey();
             AddKey();
             phaseManager.SwitchToPlace();
@@ -153,11 +167,29 @@ public class PlayManager : MonoBehaviour
             this.monster.GetComponent<MonsterMovement>().ResetSpeed();
             this.monster.SetActive(false);
             this.placementUI.enabled = true;
+            timeLeft = (int)placeTime;
+            timerText.text = timeLeft + " seconds";
+            Invoke("TimerTick", 1f);
+            if(PlayerPrefs.GetInt("IsNavigator") == 1)
+            {
+                countdownOverlay.gameObject.SetActive(true);
+                countdownOverlay.SetText("Waiting for placement phase.");
+            }
             lineRenderer.SetActive(true);
             foreach(GameObject go in GameObject.FindGameObjectsWithTag("Line"))
             {
                 Destroy(go);
             }
+        }
+    }
+
+    private void TimerTick()
+    {
+        timeLeft--;
+        timerText.text = timeLeft + " seconds";
+        if(timeLeft > 0)
+        {
+            Invoke("TimerTick", 1f);
         }
     }
 

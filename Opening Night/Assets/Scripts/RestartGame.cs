@@ -37,6 +37,11 @@ public class RestartGame : MonoBehaviour
         Debug.Log("Game Over");
         GameObject.FindGameObjectWithTag("GameManager").GetComponent<PlayManager>().SwitchToPlace();
 
+        if(player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+        }
+
         gameObject.GetComponent<MonsterMovement>().ResetInputs();
         player.GetComponent<PlayerMovement>().ResetInputs();
     }

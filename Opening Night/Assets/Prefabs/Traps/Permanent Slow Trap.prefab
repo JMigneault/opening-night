@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggerTime: 0.4
-  decreasedSpeed: 3
+  decreasedSpeed: 2
   decreasedDashSpeed: 15
 --- !u!1 &4001953209188118434
 GameObject:
