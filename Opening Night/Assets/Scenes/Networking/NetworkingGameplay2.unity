@@ -9537,6 +9537,16 @@ PrefabInstance:
       propertyPath: lightGrowthDelay
       value: 0.7
       objectReference: {fileID: 0}
+    - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: lightDecayRate
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: lightDecayConstant
+      value: 0.06
+      objectReference: {fileID: 0}
     - target: {fileID: 1778963889619898027, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
       propertyPath: m_Range
