@@ -9522,6 +9522,21 @@ PrefabInstance:
       propertyPath: Monster
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: maxRange
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: lightGrowthRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1778963889619898026, guid: 61f755296e984754097c45f2291841dd,
+        type: 3}
+      propertyPath: lightGrowthDelay
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 1778963889619898027, guid: 61f755296e984754097c45f2291841dd,
         type: 3}
       propertyPath: m_Range

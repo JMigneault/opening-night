@@ -22,10 +22,10 @@ public class CameraController : MonoBehaviour
         if (PlayerPrefs.GetInt("IsNavigator") == 0)
         {
             this.enabled = false;
-            this.GetComponent<Camera>().orthographicSize = 12.5f;
+            this.GetComponentInChildren<Camera>().orthographicSize = 12.5f;
         } else
         {
-            this.GetComponent<Camera>().orthographicSize = 5.0f;
+            this.GetComponentInChildren<Camera>().orthographicSize = 5.0f;
         }
         offset = transform.position - Target.transform.position;
         shake = 0;

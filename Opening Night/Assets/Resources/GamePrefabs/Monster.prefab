@@ -219,8 +219,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackObject: {fileID: 7896621418474071584}
-  attackDelay: 1
-  attackDuration: 0.6
+  attackDelay: 0.5
+  attackDuration: 0.5
 --- !u!1 &2616765925131864303
 GameObject:
   m_ObjectHideFlags: 0
