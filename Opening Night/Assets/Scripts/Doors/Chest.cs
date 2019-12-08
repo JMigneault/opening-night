@@ -15,9 +15,9 @@ public class Chest : MonoBehaviour
     private bool isSearching = false;
 
 
-    public void SetToHaveKey()
+    public void SetToHaveKey(bool key)
     {
-        containsKey = true;
+        containsKey = key;
     }
 
     private void StartSearch()

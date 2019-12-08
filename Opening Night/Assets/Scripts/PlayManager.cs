@@ -37,6 +37,8 @@ public class PlayManager : MonoBehaviour
 
     [SerializeField] private Text timerText;
     private int timeLeft;
+
+    private int index;
     
     private bool doorsOpen = false;
     public bool DoorsOpen { get { return doorsOpen; } }
@@ -204,7 +206,7 @@ public class PlayManager : MonoBehaviour
     public void AddKey()
     {
         Random.InitState((int)System.DateTime.Now.Ticks);
-        int index = Random.Range(0, chests.Length);
+        index = Random.Range(0, chests.Length);
         Debug.Log(index);
         pv.RPC("AddKey", RpcTarget.All, index);
     }
@@ -212,13 +214,15 @@ public class PlayManager : MonoBehaviour
     [PunRPC]
     public void AddKey(int index)
     {
-        chests[index].SetToHaveKey();
+        this.index = index;
+        chests[index].SetToHaveKey(true);
     }
 
     public void RemoveKey()
     {
         //objectGrid.DeleteCellObject(this.key.coords);
         // key.DeleteSelf(objectGrid);
+        chests[index].SetToHaveKey(false);
     }
 
 }
