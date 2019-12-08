@@ -160,7 +160,7 @@ public class PlayManager : MonoBehaviour
         {
             //PlayerPrefs.SetInt("IsNavigator", 1 - PlayerPrefs.GetInt("IsNavigator"));
             RemoveKey();
-            AddKey();
+            
             phaseManager.SwitchToPlace();
             this.playCamera.SetActive(false);
             this.placeCamera.SetActive(true);
@@ -177,6 +177,7 @@ public class PlayManager : MonoBehaviour
             {
                 countdownOverlay.gameObject.SetActive(true);
                 countdownOverlay.SetText("Waiting for placement phase.");
+                AddKey();
             }
             lineRenderer.SetActive(true);
             foreach(GameObject go in GameObject.FindGameObjectsWithTag("Line"))
@@ -223,7 +224,11 @@ public class PlayManager : MonoBehaviour
     {
         //objectGrid.DeleteCellObject(this.key.coords);
         // key.DeleteSelf(objectGrid);
-        chests[index].SetToHaveKey(false);
+        for(int i = 0; i < chests.Length; i++)
+        {
+            chests[i].SetToHaveKey(false);
+        }
+        
     }
 
 }
